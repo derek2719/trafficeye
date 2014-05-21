@@ -1,0 +1,116 @@
+﻿body {
+	font-size:12px;
+	/*设置用户是否可以选择元素内容。none为用户不能选择元素内容，也就是不能复制粘贴*/
+	-webkit-user-select:none;
+	/*调整文本字体的大小。设置为none时，即使页面被缩放，字体大小依然不变*/
+    -webkit-text-size-adjust:none;
+	font-family:helvetica;
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+#wrapper {
+	position:absolute; z-index:1;
+	top:45px; bottom:0px; left:-9999px;
+	width:100%;
+	background:#aaa;
+	overflow:auto;
+}
+#thelist {
+	padding-bottom: 10px;
+	margin:0;
+	background-color:#fafafa;
+	font-size:14px;
+	top:10px;
+}
+#scroller {
+	position:absolute; z-index:1;
+/*	-webkit-touch-callout:none;*/
+/*	-webkit-tap-highlight-color这个属性只用于iOS (iPhone和iPad)。当你点击一个链接或者通过Javascript定义的可点击元素的时候，它就会出现一个半透明的灰色背景。要重设这个表现，你可以设置-webkit-tap-highlight-color为任何颜色。
+想要禁用这个高亮，设置颜色的alpha值为0即可。*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	width:100%;
+	padding:0;
+}
+#myFrame {
+	position:absolute;
+	top:0; left:0;
+}
+/**
+ *
+ * Pull down styles
+ *
+ */
+#pullDown, #pullUp {
+	background:#fafafa;
+	height:40px;
+	line-height:40px;
+	
+	border-bottom:1px solid #ccc;
+	font-weight:bold;
+	font-size:14px;
+	color:#888;
+	MARGIN-RIGHT: auto; MARGIN-LEFT: auto; text-align:center;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+		float:left; display:block; width:40px; height:40px; line-height:40px; padding:0px; margin:0px;
+	background:url(../images/pull_iconx.png) 0 0 no-repeat;
+	/*检索或设置对象的背景图像的尺寸大小。*/
+	-webkit-background-size:40px 80px; 
+	background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;/*指定变化的属性，*/
+	-webkit-transition-duration:250ms;	/*指定变化的时间*/
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+/*反向旋转180度ranslateZ移动0像素*/
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;/*指定变化的时间*/
+
+	-webkit-animation-name:loading;/*动画属性名，也就是keyframes定义的动画名*/
+	-webkit-animation-duration:2s;/*动画持续时间*/
+	-webkit-animation-iteration-count:infinite;/*定义循环资料，infinite为无限次*/
+	-webkit-animation-timing-function:linear;/*动画频率（匀速），和transition-timing-function是一样的*/
+}
+/*keyframes定义的动画名*/
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+.pullBox{ width:200px; margin:auto; overflow:hidden;}
+
+.pullDownLabel,.pullUpLabel{ float:right; display:block; width:130px; height:40px; line-height:40px; padding:0px; margin:0px;}
+#topNav {
+				width:100%;
+				float: left;
+				display: block;
+				z-index: 100;
+				overflow: visible;
+				position: fixed;
+				top: 0px; /* position fixed for IE6 */
+				_position: absolute;
+				_top: expression(documentElement.scrollTop + "px");
+				background-image: url( ../images/bar.png);
+				height:45px	;
+			}
+			.info{
+				margin-left:10px;
+				margin-right:10px;
+				padding-top:20px;
+			}
