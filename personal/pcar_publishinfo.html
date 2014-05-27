@@ -12,38 +12,38 @@
 <body>
 
 <div class="header">
-	<div class="tbtn-l"><a></a></div>
+	<div class="tbtn-l"  id="backpagebtn"><a></a></div>
 	发布拼车信息
 </div>
 
 <ul class="h-btn i-btn">
-	<li class="dd gay curr"><a><span></span>我要搭车</a></li>
+	<li class="dd gay"><a><span></span>我要搭车</a></li>
 	<li class="sr gay"><a><span></span>我能送人</a></li>
 </ul>
 
 <div class="tabinfo-box fb">
 	<table class="info">
 		<tr>
-			<td class="curr-">起　　点</td>
+			<td onclick="startloc(this);">起　　点</td>
 			<td class="border-left"><div></div></td>
 		</tr>
 		<tr>
-			<td>终　　点</td>
-			<td class="border-left curr"><div>发布拼车信息发布拼车信息发布拼车信息发布拼车信息发布拼车信息发布拼车信息发布拼车信息发布拼车信息发布拼车信息</div></td>
-		</tr>
-		<tr>
-			<td>周　　期</td>
+			<td onclick="endloc(this);">终　　点</td>
 			<td class="border-left"><div></div></td>
 		</tr>
 		<tr>
-			<td>时　　间</td>
+			<td onclick="weekloc(this);">周　　期</td>
+			<td class="border-left"><div></div></td>
+		</tr>
+		<tr>
+			<td onclick="timeloc(this);">时　　间</td>
 			<td class="border-left"><div></div></td>
 		</tr>
 	</table>
 </div>
 		
 <ul class="h-btn">
-	<li class="curr-"><a>发　　布</a></li>
+	<li onclick="publish(this);"><a>发　　布</a></li>
 </ul>
 
 
