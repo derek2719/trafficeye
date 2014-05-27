@@ -161,10 +161,6 @@
              //隐藏加载更多按钮
              // loadmorebtnElem.style.display="none";//("display","none");
              loadmorebtnElem.css("display", "none");
-             //查看关注列表按钮
-             looklistbtnElem.onbind("touchend", me.looklistbtnUp, me);
-             //查看粉丝列表按钮
-             fanslistbtnElem.onbind("touchend", me.fanslistbtnUp, me);
          },
          /**
           * 按钮按下事件处理器
@@ -184,9 +180,9 @@
           * 搭车信息列表请求函数
           */
          reqRideInfo: function(page,flag,type) {
-             var url = Trafficeye.BASE_RIDE_URL + "carpoolInfo/v1/findInfo";
+             var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/findInfo";
              var myInfo = Trafficeye.getMyInfo();
-             var pointStr = Trafficeye.str2Json(myInfo.dataclient);
+             var pointStr = myInfo.dataclient;
              
              var data = {
                  "ua": myInfo.ua,
@@ -197,7 +193,6 @@
                  "page": page,
                  "count": 10
              };
-             
              var me = this;
              var reqParams = Trafficeye.httpData2Str(data);
              if (url) {
@@ -309,7 +304,7 @@
                  $(elem).removeClass("curr");
                  Trafficeye.toPage("pcar_ride_info.html");
              }), Trafficeye.MaskTimeOut);
-         }
+         },
          //发布拼车信息
          publish: function(evt) {
              var me = this;
@@ -351,7 +346,7 @@
              pm.myInfo = myInfo;
              //判断缓存中是否有userinfo信息
              if (myInfo.userinfo) {
-                pm.reqRideInfo(0,pcar_flag.flag,pcar_flag.type);
+                pm.reqRideInfo("0",pcar_flag.flag,pcar_flag.type);
              } else {
                  //让用户重新登录
                  Trafficeye.toPage("pre_login.html");

@@ -416,7 +416,7 @@
     Trafficeye.fromSource = fromSource;
     Trafficeye.toPage = toPage;
     Trafficeye.trafficeyeAlert = trafficeyeAlert;
-    Trafficeye.BASE_USER_URL = BASE_USER_URL;
+    Trafficeye.BASE_RIDE_URL = BASE_RIDE_URL;
     Trafficeye.UrlPort = UrlPort;
     Trafficeye.MaskTimeOut = MaskTimeOut;
 }(window));

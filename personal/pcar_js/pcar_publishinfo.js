@@ -161,10 +161,6 @@
              //隐藏加载更多按钮
              // loadmorebtnElem.style.display="none";//("display","none");
              loadmorebtnElem.css("display", "none");
-             //查看关注列表按钮
-             looklistbtnElem.onbind("touchend", me.looklistbtnUp, me);
-             //查看粉丝列表按钮
-             fanslistbtnElem.onbind("touchend", me.fanslistbtnUp, me);
          },
          /**
           * 按钮按下事件处理器
@@ -308,7 +304,7 @@
                  $(elem).removeClass("curr");
                  Trafficeye.toPage("pcar_ride_info.html");
              }), Trafficeye.MaskTimeOut);
-         }
+         },
          //发布拼车信息
          publish: function(evt) {
              var me = this;
@@ -347,7 +343,7 @@
              pm.myInfo = myInfo;
              //判断缓存中是否有userinfo信息
              if (myInfo.userinfo) {
-                pm.reqRideInfo(0,pcar_flag.flag,pcar_flag.type);
+                // pm.reqRideInfo(0,pcar_flag.flag,pcar_flag.type);
              } else {
                  //让用户重新登录
                  Trafficeye.toPage("pre_login.html");
@@ -381,7 +377,7 @@
          };
          
          //设置终点
-         window.startloc = function(evt) {
+         window.endloc = function(evt) {
             if (Trafficeye.mobilePlatform.android) {
                 window.JSAndroidBridge.chooseLocation("end");
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
