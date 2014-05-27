@@ -47,7 +47,7 @@
                htmls.push("<div class=\"dache-box p\" >");
            }
              htmls.push("<div class=\"dache-box\" >");
-             htmls.push("<div class=\"d\" onclick=\"pcar_ride_info(this,"+data.id+");\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
+             htmls.push("<div class=\"d\" onclick=\"pcar_ride_info(this,'"+data.id+"');\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
              htmls.push("<h3>");
              htmls.push(data.username);
              htmls.push("<span></span></h3>");
@@ -95,7 +95,7 @@
                 htmls.push("<li>六</li>");
             }
             htmls.push("<span>"+data.time+"左右</span>");
-            htmls.push("</ul></div></div><div class=\"ss\" onclick=\"pcar_ride_info(this,"+data.id+");\">");
+            htmls.push("</ul></div></div><div class=\"ss\" onclick=\"pcar_ride_info(this,'"+data.id+"');\">");
             htmls.push("<h2>起点:<span>"+data.startLocation+"</span></h2>");
             htmls.push("<h2 class=\"myh2\">终点:<span>"+data.endLocation+"</span></h2>");
             htmls.push("<div class=\"add\">"+data.city+"</div></div></div>");
