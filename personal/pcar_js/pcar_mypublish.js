@@ -49,56 +49,56 @@
              htmls.push("<div class=\"dache-box\" >");
              htmls.push("<div class=\"d\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
              htmls.push("<h3>");
-             htmls.push(data.username);
+             htmls.push(data.info.username);
              htmls.push("<span></span></h3>");
              htmls.push("<ul class=\"week\">");
-             if(data.day.sun == "1"){
+             if(data.info.day.sun == "1"){
                 htmls.push("<li class=\"curr\">日</li>");
             }else
             {
                 htmls.push("<li>日</li>");
             }
-             if(data.day.mon == "1"){
+             if(data.info.day.mon == "1"){
                 htmls.push("<li class=\"curr\">一</li>");
             }else
             {
                 htmls.push("<li>一</li>");
             }
-            if(data.day.tues == "1"){
+            if(data.info.day.tues == "1"){
                 htmls.push("<li class=\"curr\">二</li>");
             }else
             {
                 htmls.push("<li>二</li>");
             }
-            if(data.day.wed == "1"){
+            if(data.info.day.wed == "1"){
                 htmls.push("<li class=\"curr\">三</li>");
             }else
             {
                 htmls.push("<li>三</li>");
             }
-            if(data.day.thur == "1"){
+            if(data.info.day.thur == "1"){
                 htmls.push("<li class=\"curr\">四</li>");
             }else
             {
                 htmls.push("<li>四</li>");
             }
-            if(data.day.fri == "1"){
+            if(data.info.day.fri == "1"){
                 htmls.push("<li class=\"curr\">五</li>");
             }else
             {
                 htmls.push("<li>五</li>");
             }
-            if(data.day.sat == "1"){
+            if(data.info.day.sat == "1"){
                 htmls.push("<li class=\"curr\">六</li>");
             }else
             {
                 htmls.push("<li>六</li>");
             }
-            htmls.push("<span>"+data.time+"左右</span>");
+            htmls.push("<span>"+data.info.time+"左右</span>");
             htmls.push("</ul></div></div><div class=\"ss\" onclick=\"pcar_ride_info(this);\">");
-            htmls.push("<h2>起点:<span>"+data.startLocation+"</span></h2>");
-            htmls.push("<h2 class=\"myh2\">终点:<span>"+data.endLocation+"</span></h2>");
-            htmls.push("<div class=\"add\">"+data.city+"</div></div></div>");
+            htmls.push("<h2>起点:<span>"+data.info.startLocation+"</span></h2>");
+            htmls.push("<h2 class=\"myh2\">终点:<span>"+data.info.endLocation+"</span></h2>");
+            htmls.push("<div class=\"add\">"+北京+"</div></div></div>");
             return htmls.join("");
          },
 
@@ -173,13 +173,14 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_ride.html");
+             var fromSource = Trafficeye.fromSource();
+             Trafficeye.toPage(fromSource.sourcepage);
          },
          /**
           * 搭车信息列表请求函数
           */
          reqRideInfo: function(page,flag,type) {
-             var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/infoDetail";
+             var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/findInfo";
              var myInfo = Trafficeye.getMyInfo();
              var pointStr = myInfo.dataclient;
              
@@ -192,7 +193,6 @@
                  "page": page,
                  "count": 10
              };
-             
              var me = this;
              var reqParams = Trafficeye.httpData2Str(data);
              if (url) {
@@ -323,7 +323,7 @@
              var presource = Trafficeye.fromSource();
              var fromSource = {
                  "sourcepage": presource.sourcepage,
-                 "currpage": "pcar_ride_info.html",
+                 "currpage": "pcar_ride.html",
                  "prepage": presource.currpage
              }
              var fromSourceStr = Trafficeye.json2Str(fromSource);
@@ -346,13 +346,30 @@
              pm.myInfo = myInfo;
              //判断缓存中是否有userinfo信息
              if (myInfo.userinfo) {
-                pm.reqRideInfo(0,pcar_flag.flag,pcar_flag.type);
+                pm.reqRideInfo("0",pcar_flag.flag,pcar_flag.type);
              } else {
                  //让用户重新登录
                  Trafficeye.toPage("pre_login.html");
              }
          }
          
+        //  // 获取SNS平台用户信息，回调函数
+        // window.callbackChooseLocation  = function(type,lon,lat,address){
+        //     // console.log(data);
+        //     Trafficeye.httpTip.closed();
+        //     var data = Trafficeye.offlineStore.get("traffic_pcar_location");
+        //     if(type=="start")
+        //     {
+        //        var tempData = {"startloc" : lon,"startlat" : lat,"startadd" : address,"endloc" : data.endloc,"endlat" : data.endlat,"endadd" : data.endadd};
+        //     }else{
+        //        var tempData = {"startloc": data.startloc, "startlat" : data.startlat,"startadd" : data.startadd, "endloc" : lon,"endlat" : lat,"endadd" : address};
+        //     }
+        //     var LocationData = Trafficeye.str2Json(data)
+
+        //     Trafficeye.offlineStore.set("traffic_pcar_location", data);
+            
+            
+        // };
          //发布
          window.pcar_ride_info = function(evt) {
              var pm = Trafficeye.pageManager;
@@ -367,18 +384,11 @@
                  pm.publish(evt);
              }
          };
-         //约她，拨打电话
-         window.callperson = function(evt) {
+         //加载更多
+         window.loadmorebtnUp = function(evt) {
              var pm = Trafficeye.pageManager;
              if (pm.init) {
-                 var myInfo = Trafficeye.getMyInfo();
-                 if (Trafficeye.mobilePlatform.android) {
-                        window.JSAndroidBridge.makeACall(myInfo.mobile);
-                    } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                        window.location.href=("objc:??makeACall::?"+myInfo.mobile);
-                    } else {
-                        alert("调用修改用户信息接口,PC不支持.");
-                    }
+                 pm.loadmorebtnUp(evt);
              }
          };
         window.initPageManager();

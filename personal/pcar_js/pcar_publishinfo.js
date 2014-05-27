@@ -318,6 +318,13 @@
 
      $(function() {
         
+        // 获取SNS平台用户信息，回调函数
+        window.callbackChooseLocation  = function(type,lon,lat,address){
+            // console.log(data);
+            Trafficeye.httpTip.closed();
+            Trafficeye.alert(type+","+lon+","+lat+","+address);
+        };
+        
         window.initPageManager = function() {
              //把来源信息存储到本地
              var presource = Trafficeye.fromSource();

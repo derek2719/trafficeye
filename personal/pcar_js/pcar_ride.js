@@ -47,58 +47,58 @@
                htmls.push("<div class=\"dache-box p\" >");
            }
              htmls.push("<div class=\"dache-box\" >");
-             htmls.push("<div class=\"d\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
+             htmls.push("<div class=\"d\" onclick=\"pcar_ride_info(this,"+data.id+");\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
              htmls.push("<h3>");
-             htmls.push(data.info.username);
+             htmls.push(data.username);
              htmls.push("<span></span></h3>");
              htmls.push("<ul class=\"week\">");
-             if(data.info.day.sun == "1"){
-                htmls.push("<li class=\"curr\">日</li>");
+             if(data.day.sun == "1"){
+                htmls.push("<li class=\"select curr\">日</li>");
             }else
             {
                 htmls.push("<li>日</li>");
             }
-             if(data.info.day.mon == "1"){
-                htmls.push("<li class=\"curr\">一</li>");
+             if(data.day.mon == "1"){
+                htmls.push("<li class=\"select curr\">一</li>");
             }else
             {
                 htmls.push("<li>一</li>");
             }
-            if(data.info.day.tues == "1"){
-                htmls.push("<li class=\"curr\">二</li>");
+            if(data.day.tues == "1"){
+                htmls.push("<li class=\"select curr\">二</li>");
             }else
             {
                 htmls.push("<li>二</li>");
             }
-            if(data.info.day.wed == "1"){
-                htmls.push("<li class=\"curr\">三</li>");
+            if(data.day.wed == "1"){
+                htmls.push("<li class=\"select curr\">三</li>");
             }else
             {
                 htmls.push("<li>三</li>");
             }
-            if(data.info.day.thur == "1"){
-                htmls.push("<li class=\"curr\">四</li>");
+            if(data.day.thur == "1"){
+                htmls.push("<li class=\"select curr\">四</li>");
             }else
             {
                 htmls.push("<li>四</li>");
             }
-            if(data.info.day.fri == "1"){
-                htmls.push("<li class=\"curr\">五</li>");
+            if(data.day.fri == "1"){
+                htmls.push("<li class=\"select curr\">五</li>");
             }else
             {
                 htmls.push("<li>五</li>");
             }
-            if(data.info.day.sat == "1"){
-                htmls.push("<li class=\"curr\">六</li>");
+            if(data.day.sat == "1"){
+                htmls.push("<li class=\"select curr\">六</li>");
             }else
             {
                 htmls.push("<li>六</li>");
             }
-            htmls.push("<span>"+data.info.time+"左右</span>");
-            htmls.push("</ul></div></div><div class=\"ss\" onclick=\"pcar_ride_info(this);\">");
-            htmls.push("<h2>起点:<span>"+data.info.startLocation+"</span></h2>");
-            htmls.push("<h2 class=\"myh2\">终点:<span>"+data.info.endLocation+"</span></h2>");
-            htmls.push("<div class=\"add\">"+北京+"</div></div></div>");
+            htmls.push("<span>"+data.time+"左右</span>");
+            htmls.push("</ul></div></div><div class=\"ss\" onclick=\"pcar_ride_info(this,"+data.id+");\">");
+            htmls.push("<h2>起点:<span>"+data.startLocation+"</span></h2>");
+            htmls.push("<h2 class=\"myh2\">终点:<span>"+data.endLocation+"</span></h2>");
+            htmls.push("<div class=\"add\">"+data.city+"</div></div></div>");
             return htmls.join("");
          },
 
@@ -110,7 +110,6 @@
              }
              return htmls.join("");
          }
-
      };
 
      function PageManager() {
@@ -297,13 +296,14 @@
              }
          },
          //进入拼车详情的onclick事件响应函数
-         pcar_ride_info: function(evt) {
-             var me = this;
-             var elem = $(evt).addClass("curr");
-             setTimeout((function() {
-                 $(elem).removeClass("curr");
-                 Trafficeye.toPage("pcar_ride_info.html");
-             }), Trafficeye.MaskTimeOut);
+         pcar_ride_info: function(evt,publishid) {
+             // var me = this;
+             // var elem = $(evt).addClass("curr");
+             // setTimeout((function() {
+             //     $(elem).removeClass("curr");
+             //     Trafficeye.toPage("pcar_ride_info.html");
+             // }), Trafficeye.MaskTimeOut);
+             Trafficeye.toPage("pcar_ride_info.html");
          },
          //发布拼车信息
          publish: function(evt) {
@@ -352,29 +352,12 @@
                  Trafficeye.toPage("pre_login.html");
              }
          }
-         
-        //  // 获取SNS平台用户信息，回调函数
-        // window.callbackChooseLocation  = function(type,lon,lat,address){
-        //     // console.log(data);
-        //     Trafficeye.httpTip.closed();
-        //     var data = Trafficeye.offlineStore.get("traffic_pcar_location");
-        //     if(type=="start")
-        //     {
-        //        var tempData = {"startloc" : lon,"startlat" : lat,"startadd" : address,"endloc" : data.endloc,"endlat" : data.endlat,"endadd" : data.endadd};
-        //     }else{
-        //        var tempData = {"startloc": data.startloc, "startlat" : data.startlat,"startadd" : data.startadd, "endloc" : lon,"endlat" : lat,"endadd" : address};
-        //     }
-        //     var LocationData = Trafficeye.str2Json(data)
-
-        //     Trafficeye.offlineStore.set("traffic_pcar_location", data);
-            
-            
-        // };
+     
          //发布
-         window.pcar_ride_info = function(evt) {
+         window.pcar_ride_info = function(evt,publishid) {
              var pm = Trafficeye.pageManager;
              if (pm.init) {
-                 pm.pcar_ride_info(evt);
+                 pm.pcar_ride_info(evt,publishid);
              }
          };
          //发布
