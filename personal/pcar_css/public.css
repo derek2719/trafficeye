@@ -56,7 +56,7 @@ a:active{color:#6d7579;}
 .carlist li p{font-size:14px;color:#a3a3a3;padding-right:60px;line-height:140%}
 .carlist div.usable, .carlist div.occupy{position:absolute;right:15px;top:50%;margin-top:-15px;height:30px;line-height:30px;color:#00c80c;padding-left:22px;background:url(../pcar_img/dpi1/b.png) no-repeat left center;}
 .carlist div.occupy{color:#ff4b4b;background:url(../pcar_img/dpi1/a.png) no-repeat left center;}
-.text-h{height:150px}
+/*.text-h{height:150px}*/
 .cont-box{margin:10px 0 0;border-bottom:1px solid #e3e3e3;}
 .dache-box{border-top:1px solid #e3e3e3;background-color:#FFF;padding:10px;}
 div.d{padding-top:3px}
@@ -131,3 +131,7 @@ div.d{padding-top:3px}
 100%{-webkit-transform:rotate(360deg);}
 /*from{-webkit-transform:rotate(0deg) translateZ(0);}
 to{-webkit-transform:rotate(360deg) translateZ(0);}*/}
+.tk{color: #adacac;font-size: 12px;line-height: 140%;margin: 0 10px;padding:10px 0}
+.tk input{-webkit-appearance: checkbox;vertical-align:middle;margin-right:5px}
+.h-btn.i-btn li.dd a,.h-btn.i-btn li.sr a{padding-right:10px;background:#dbdbdb url(../pcar_img/dpi1/vv.png) no-repeat right center;}
+.bblue{color:#0E51A3;text-decoration:underline;/*background-color:#eaeaea*/}

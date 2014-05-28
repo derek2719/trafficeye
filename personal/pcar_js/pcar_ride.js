@@ -47,7 +47,7 @@
                htmls.push("<div class=\"dache-box p\" >");
            }
              htmls.push("<div class=\"dache-box\" >");
-             htmls.push("<div class=\"d\" onclick=\"pcar_ride_info(this,'"+data.id+"');\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
+             htmls.push("<div class=\"d\" onclick=\"pcar_ride_info(this,'"+data.id+"');\"><div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
              htmls.push("<h3>");
              htmls.push(data.username);
              htmls.push("<span></span></h3>");
@@ -117,7 +117,8 @@
          this.elems = {
              "backpagebtn": null,
              "ridelist": null,
-             "loadmorebtn": null
+             "loadmorebtn": null,
+             "title" : null
          };
          //当点击请求提示框的关闭按钮，意味着中断请求，在关闭提示框后，如果请求得到响应，也不进行下一步业务处理。
          this.isStopReq = false;
@@ -261,7 +262,7 @@
                  //判断是否显示加载更多按钮
                  if (pageNumMger.getIsShowBtn()) {
                      me.elems["loadmorebtn"].css("display", "");
-                     me.elems["loadmorebtn"].html("<div id=\"loadmorebtn\" onclick=\"loadmorebtnUp(this);\">加载更多</div>");
+                     me.elems["loadmorebtn"].html("<div id=\"loadmorebtn\" class=\"bblue\" onclick=\"loadmorebtnUp(this);\">加载更多</div>");
                  } else {
                      me.elems["loadmorebtn"].css("display", "none");
                  }
@@ -303,6 +304,11 @@
              //     $(elem).removeClass("curr");
              //     Trafficeye.toPage("pcar_ride_info.html");
              // }), Trafficeye.MaskTimeOut);
+            var fromSource = {
+                 "ride_id": publishid
+             }
+             var fromSourceStr = Trafficeye.json2Str(fromSource);
+             Trafficeye.offlineStore.set("traffic_pcar_publish_id", fromSourceStr);
              Trafficeye.toPage("pcar_ride_info.html");
          },
          //发布拼车信息
@@ -344,6 +350,11 @@
              //初始化用户界面
              pm.init();
              pm.myInfo = myInfo;
+             if(pcar_flag.flag == "ride"){
+               pm.elems["title"].html("搭车");
+             }else if(pcar_flag.flag == "away"){
+               pm.elems["title"].html("送人");
+             }
              //判断缓存中是否有userinfo信息
              if (myInfo.userinfo) {
                 pm.reqRideInfo("0",pcar_flag.flag,pcar_flag.type);

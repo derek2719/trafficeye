@@ -19,7 +19,8 @@
     function PageManager() {
         //ID元素对象集合
         this.elems = {
-            "backpagebtn" : null
+            "backpagebtn" : null,
+            "ruleride" : null
         };
         //当点击请求提示框的关闭按钮，意味着中断请求，在关闭提示框后，如果请求得到响应，也不进行下一步业务处理。
         this.isStopReq = false;
@@ -80,7 +81,11 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                Trafficeye.toPage("pcar_ride.html");
+                if(document.getElementById("ruleride").checked){
+                    Trafficeye.toPage("pcar_ride.html");
+                }else{
+                    Trafficeye.trafficeyeAlert("请同意《路况交通眼》拼车服务条款");
+                }
             }),Trafficeye.MaskTimeOut);     
         },
         //我能送人，跳转到送人的节目，请求是搭车的请求，type为1
@@ -92,7 +97,12 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                Trafficeye.toPage("pcar_ride.html");
+                // Trafficeye.toPage("pcar_ride.html");
+                if(document.getElementById("ruleride").checked){
+                    Trafficeye.toPage("pcar_ride.html");
+                }else{
+                    Trafficeye.trafficeyeAlert("请同意《路况交通眼》拼车服务条款");
+                }
             }),Trafficeye.MaskTimeOut);     
         },
         //我的发布
@@ -101,7 +111,11 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                Trafficeye.toPage("pcar_mypublish.html");
+                if(document.getElementById("ruleride").checked){
+                    Trafficeye.toPage("pcar_mypublish.html");
+                }else{
+                    Trafficeye.trafficeyeAlert("请同意《路况交通眼》拼车服务条款");
+                }
             }),Trafficeye.MaskTimeOut);     
         }
     };
