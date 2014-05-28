@@ -18,6 +18,10 @@
     // var BASE_RIDE_URL = "http://mobile.trafficeye.com.cn:8000";//正式的URL
    var BASE_RIDE_URL = "http://mobile.trafficeye.com.cn:8008/TrafficeyeSevice_test";//测试的URL
  
+   //var BASE_USER_URL = "http://mobile.trafficeye.com.cn:8000/user/v4/";//正式的URL
+    var BASE_USER_URL = "http://mobile.trafficeye.com.cn:8008/TrafficeyeSevice_test/user/v4/";//测试的URL
+ 
+ 
     var MaskTimeOut = 1000; //蒙版效果等待时间
         
     /**
@@ -306,6 +310,10 @@
                 }
             }
         },
+        //清楚本地缓存
+        remove: function(key){
+            localStore.removeItem(key);
+        },
         /**
          * 根据关键字获取某值
          * @param {String} key 关键字
@@ -417,6 +425,7 @@
     Trafficeye.toPage = toPage;
     Trafficeye.trafficeyeAlert = trafficeyeAlert;
     Trafficeye.BASE_RIDE_URL = BASE_RIDE_URL;
+    Trafficeye.BASE_USER_URL = BASE_USER_URL;
     Trafficeye.UrlPort = UrlPort;
     Trafficeye.MaskTimeOut = MaskTimeOut;
 }(window));

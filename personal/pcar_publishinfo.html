@@ -17,27 +17,27 @@
 </div>
 
 <ul class="h-btn i-btn">
-	<li class="dd gay curr"><a><span></span>我要搭车</a></li>
-	<li class="sr gay"><a><span></span>我能送人</a></li>
+	<li class="dd gay" id="ride"><a><span></span>我要搭车</a></li>
+	<li class="sr gay" id="away"><a><span></span>我能送人</a></li>
 </ul>
 
 <div class="tabinfo-box fb">
 	<table class="info">
 		<tr>
 			<td onclick="startloc(this);">起　　点</td>
-			<td onclick="startloc(this);" class="border-left"><div></div></td>
+			<td onclick="startloc(this);" class="border-left"><div id="startloc"></div></td>
 		</tr>
 		<tr>
 			<td onclick="endloc(this);">终　　点</td>
-			<td onclick="endloc(this);" class="border-left"><div></div></td>
+			<td onclick="endloc(this);" class="border-left"><div id="endloc"></div></td>
 		</tr>
 		<tr>
 			<td onclick="weekloc(this);">周　　期</td>
-			<td class="border-left"><div></div></td>
+			<td onclick="weekloc(this);" class="border-left"><div id="weekloc"></div></td>
 		</tr>
 		<tr>
 			<td onclick="timeloc(this);">时　　间</td>
-			<td class="border-left"><div></div></td>
+			<td  onclick="timeloc(this);" class="border-left"><div id="timeloc"></div></td>
 		</tr>
 	</table>
 </div>

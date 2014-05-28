@@ -3,6 +3,7 @@
          this.userinfo = null;
          this.ua = null;
          this.pid = null;
+         this.type = null;
      };
      UserInfoManager.prototype = {
          setInfo: function(data) {
@@ -13,112 +14,22 @@
          },
          setUa: function(ua) {
              this.ua = ua;
+         },
+         setType: function(type) {
+             this.type = type;
          }
-     };
-
-     function UserPcarRideManager() {
-         //加载成功的用户的所有时间线数据
-         this.allPcarRideData = [];
-         //用户最近一次加载的时间线数据
-         this.newPcarRideData = [];
-     };
-
-     UserPcarRideManager.prototype = {
-
-         setNewPcarRideData: function(data) {
-             this.newPcarRideData = data;
-         },
-         mergeNewPcarRideData: function() {
-             this.allPcarRideData.concat(this.newPcarRideData);
-         },
-
-         creatRideListHtml: function(data,flag) {
-             var me = this;
-             var htmls = [];
-             var myInfo = Trafficeye.getMyInfo();
-             var dataAvatar = myInfo.userinfo.avatarUrl;
-             if(!dataAvatar)
-             {
-                 dataAvatar="per_img/mm.png";
-             }
-             if(flag == "ride"){
-               htmls.push("<div class=\"dache-box\" >");
-           }else{
-               htmls.push("<div class=\"dache-box p\" >");
-           }
-             htmls.push("<div class=\"dache-box\" >");
-             htmls.push("<div class=\"d\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
-             htmls.push("<h3>");
-             htmls.push(data.info.username);
-             htmls.push("<span></span></h3>");
-             htmls.push("<ul class=\"week\">");
-             if(data.info.day.sun == "1"){
-                htmls.push("<li class=\"curr\">日</li>");
-            }else
-            {
-                htmls.push("<li>日</li>");
-            }
-             if(data.info.day.mon == "1"){
-                htmls.push("<li class=\"curr\">一</li>");
-            }else
-            {
-                htmls.push("<li>一</li>");
-            }
-            if(data.info.day.tues == "1"){
-                htmls.push("<li class=\"curr\">二</li>");
-            }else
-            {
-                htmls.push("<li>二</li>");
-            }
-            if(data.info.day.wed == "1"){
-                htmls.push("<li class=\"curr\">三</li>");
-            }else
-            {
-                htmls.push("<li>三</li>");
-            }
-            if(data.info.day.thur == "1"){
-                htmls.push("<li class=\"curr\">四</li>");
-            }else
-            {
-                htmls.push("<li>四</li>");
-            }
-            if(data.info.day.fri == "1"){
-                htmls.push("<li class=\"curr\">五</li>");
-            }else
-            {
-                htmls.push("<li>五</li>");
-            }
-            if(data.info.day.sat == "1"){
-                htmls.push("<li class=\"curr\">六</li>");
-            }else
-            {
-                htmls.push("<li>六</li>");
-            }
-            htmls.push("<span>"+data.info.time+"左右</span>");
-            htmls.push("</ul></div></div><div class=\"ss\" onclick=\"pcar_ride_info(this);\">");
-            htmls.push("<h2>起点:<span>"+data.info.startLocation+"</span></h2>");
-            htmls.push("<h2 class=\"myh2\">终点:<span>"+data.info.endLocation+"</span></h2>");
-            htmls.push("<div class=\"add\">"+北京+"</div></div></div>");
-            return htmls.join("");
-         },
-
-         getRideListHtml: function(carList,flag) {
-             var data = carList;
-             var htmls = [];
-             for (var i = 0, len = data.length; i < len; i++) {
-                 htmls.push(this.creatRideListHtml(data[i],flag));
-             }
-             return htmls.join("");
-         }
-
      };
 
      function PageManager() {
          //ID元素对象集合
          this.elems = {
              "backpagebtn": null,
-             "ridelist": null,
-             "loadmorebtn": null
+             "ride": null,
+             "away": null,
+             "startloc": null,
+             "endloc": null,
+             "weekloc": null,
+             "timeloc": null
          };
          //当点击请求提示框的关闭按钮，意味着中断请求，在关闭提示框后，如果请求得到响应，也不进行下一步业务处理。
          this.isStopReq = false;
@@ -132,9 +43,6 @@
          init: function() {
              var me = this;
              me.userInfoManager = new UserInfoManager();
-             me.pageNumManager = new Trafficeye.PageNumManager();
-             me.UserPcarRideManager = new UserPcarRideManager();
-             me.pageNumManager.reset();
              me.initElems();
              me.initEvents();
              me.inited = true;
@@ -153,14 +61,54 @@
           */
          initEvents: function() {
              var me = this,
-                 loadmorebtnElem = me.elems["loadmorebtn"],
+                 ridebtnElem = me.elems["ride"],
+                 awaybtnElem = me.elems["away"],
                  backpagebtnElem = me.elems["backpagebtn"];
              //返回按钮
              backpagebtnElem.onbind("touchstart", me.btnDown, backpagebtnElem);
              backpagebtnElem.onbind("touchend", me.backpagebtnUp, me);
-             //隐藏加载更多按钮
-             // loadmorebtnElem.style.display="none";//("display","none");
-             loadmorebtnElem.css("display", "none");
+             //我要搭车按钮
+             ridebtnElem.onbind("touchstart", me.btnDown, ridebtnElem);
+             ridebtnElem.onbind("touchend", me.ridebtnUp, me);
+             //我要送人按钮
+             awaybtnElem.onbind("touchstart", me.btnDown, awaybtnElem);
+             awaybtnElem.onbind("touchend", me.awaybtnUp, me);
+             //填充值到页面
+             var pbweek = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_week"));
+             var pbtime = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_time"));
+             var pbstartloc = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_startloc"));
+             var pbendloc = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_endloc"));
+             var pbtype = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_type"));
+             // console.log(pbstartloc.startLocation);
+             if(pbweek){
+                // document.getElementById("weekloc").value=pbweek.weekvalue;
+                me.elems["weekloc"].html(pbweek.weekvalue);
+             }
+             if(pbtime){
+                // document.getElementById("timeloc").value=pbtime.time;
+                me.elems["timeloc"].html(pbtime.time);
+             } 
+             if(pbstartloc){
+                // document.getElementById("startloc").value=pbstartloc.startLocation;
+                me.elems["startloc"].html(pbstartloc.startLocation);
+            }
+             if(pbendloc){
+                // document.getElementById("endloc").value=pbendloc.endLocation;
+                me.elems["endloc"].html(pbendloc.endLocation);
+            }
+            if(pbtype){
+                // document.getElementById("endloc").value=pbendloc.endLocation;
+                if(pbtype == "1"){
+                    me.elems["ride"].addClass("curr");
+                    me.elems["away"].removeClass("curr");
+                }else if(pbtype = "2"){
+                    me.elems["ride"].removeClass("curr");
+                    me.elems["away"].addClass("curr");
+                }else{
+                    me.elems["ride"].removeClass("curr");
+                    me.elems["away"].removeClass("curr");
+                }
+            }
          },
          /**
           * 按钮按下事件处理器
@@ -173,27 +121,70 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             var fromSource = Trafficeye.fromSource();
-             Trafficeye.toPage(fromSource.sourcepage);
+             Trafficeye.toPage("pcar_ride.html");
          },
+         ridebtnUp : function(evt) {
+            var me = this,
+                elem = evt.currentTarget;
+                
+             me.elems["ride"].addClass("curr");
+             me.elems["away"].removeClass("curr");
+             me.userInfoManager.setType("1");
+             Trafficeye.offlineStore.set("publishInfo_type","1");
+        },
+        awaybtnUp : function(evt) {
+            var me = this,
+                elem = evt.currentTarget;
+                
+             me.elems["away"].addClass("curr");
+             me.elems["ride"].removeClass("curr");
+             me.userInfoManager.setType("2");
+             Trafficeye.offlineStore.set("publishInfo_type","2");
+        },
          /**
-          * 搭车信息列表请求函数
+          * 发布信息列表请求函数
           */
-         reqRideInfo: function(page,flag,type) {
-             var url = Trafficeye.BASE_RIDE_URL + "carpoolInfo/v1/findInfo";
+         publish: function(evt) {
+             var me =this;
+             var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/publishInfo";
              var myInfo = Trafficeye.getMyInfo();
-             var pointStr = Trafficeye.str2Json(myInfo.dataclient);
+         
+             var pbweek = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_week"));
+             var pbtime = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_time"));
+             var pbstartloc = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_startloc"));
+             var pbendloc = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_endloc"));
+             var pbtype = Trafficeye.str2Json(Trafficeye.offlineStore.get("publishInfo_type"));
              
+             if(!pbweek){
+                Trafficeye.trafficeyeAlert("您未选择周期");
+                return;
+             }
+             if(!pbtime){
+                Trafficeye.trafficeyeAlert("您未填写时间");
+                return;
+             }
+             if(!pbstartloc){
+                Trafficeye.trafficeyeAlert("您未选择起点");
+                return;
+             }
+             if(!pbendloc){
+                Trafficeye.trafficeyeAlert("您未选择终点");
+                return;
+             }
+            
              var data = {
                  "ua": myInfo.ua,
                  "pid": myInfo.pid,
-                 "point": pointStr.lon+","+pointStr.lat,
-                 "type": type,//我要搭车页面，请求应为我要送人的内容
-                 "page": page,
-                 "count": 10
+                 "uid": myInfo.uid,
+                 "type": pbtype,//我要搭车页面，请求应为我要送人的内容
+                 "startLocation": pbstartloc.startLocation,
+                 "endLocation": pbendloc.endLocation,
+                 "startPoint": pbstartloc.startPoint,
+                 "endPoint": pbendloc.endPoint,
+                 "day": pbweek.week,
+                 "time": pbtime.time
              };
              
-             var me = this;
              var reqParams = Trafficeye.httpData2Str(data);
              if (url) {
                  Trafficeye.httpTip.opened(function() {
@@ -208,10 +199,9 @@
                          if (data && !me.isStopReq) {
                              var state = data.state.code;
                              if (state == 0) {
-                                 me.reqRideListSuccess(flag,data);
-                             } else if (data.state.code == -99) { //没有加载更多
-                                 me.reqRideNo();
-                             } else {
+                                 Trafficeye.trafficeyeAlert("发布成功!");
+                                 Trafficeye.toPage("pcar_ride.html");
+                             }else {
                                  Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
                              }
                          } else {
@@ -222,97 +212,6 @@
              } else {
                  // me.reqPraiseFail();
              }
-         },
-         //没有更多数据
-         reqRideNo: function() {
-             var me = this;
-             Trafficeye.httpTip.closed();
-             me.elems["loadmorebtn"].css("display", "none");
-         },
-         /**
-          * 搭车用户显示函数
-          * @param  {String} url 服务URL
-          * flag 是ride 是搭车 ,away 是送人
-          * @param  {JSON Object} data 请求协议参数对象
-          */
-         reqRideListSuccess: function(flag,data) {
-             // var data = Trafficeye.str2Json(data);
-             var me = this,
-                 pageNumMger = me.pageNumManager, //判断是否加载更多
-                 ridelistElem = me.elems["ridelist"];
-             Trafficeye.httpTip.closed();
-
-             if (data) {
-                 //当前结果集请求的结束位置
-                 var currentEnd = pageNumMger.getEnd();
-                 //更新下次请求分页起始位置
-                 pageNumMger.start = currentEnd + 1;
-                 //用户信息更新
-                 var ridehtml = me.UserPcarRideManager.getRideListHtml(data.infoList,flag);
-                 if (data.nextPage == -1) { //nextPage 为 -1的时候，没有下一页
-                     pageNumMger.setIsShowBtn(false);
-                 } else {
-                     pageNumMger.setIsShowBtn(true);
-                 }
-                 if ((pageNumMger.start / pageNumMger.BASE_NUM) == 1) {
-                     ridelistElem.html(ridehtml);
-                 } else {
-                     ridelistElem.append(ridehtml);
-                 }
-                 //判断是否显示加载更多按钮
-                 if (pageNumMger.getIsShowBtn()) {
-                     me.elems["loadmorebtn"].css("display", "");
-                     me.elems["loadmorebtn"].html("<div id=\"loadmorebtn\" onclick=\"loadmorebtnUp(this);\">加载更多</div>");
-                 } else {
-                     me.elems["loadmorebtn"].css("display", "none");
-                 }
-             }
-         },
-         //加载更多
-         loadmorebtnUp: function(evt) {
-             var me = this,
-                 elem = evt.currentTarget;
-             var myInfo = Trafficeye.getMyInfo();
-             if (!myInfo) {
-                 return;
-             }
-             $(elem).removeClass("bblue");
-             var uid = myInfo.uid;
-             if (uid) {
-                 me.loadmoreHander(uid);
-             }
-         },
-         /**
-          * 加载更多数据处理函数
-          */
-         loadmoreHander: function(uid) {
-             var me = this;
-             var traffic_pcar_flag = Trafficeye.offlineStore.get("traffic_pcar_flag");
-             var pcar_flag = Trafficeye.str2Json(traffic_pcar_flag);
-             if (uid) {
-                 var userData = {};
-                 userData.uid = uid;
-                 userData.page = me.pageNumManager.getStart() / me.pageNumManager.BASE_NUM;
-                me.reqRideInfo(userData.page,pcar_flag.flag,pcar_flag.type);
-             }
-         },
-         //进入拼车详情的onclick事件响应函数
-         pcar_ride_info: function(evt) {
-             var me = this;
-             var elem = $(evt).addClass("curr");
-             setTimeout((function() {
-                 $(elem).removeClass("curr");
-                 Trafficeye.toPage("pcar_ride_info.html");
-             }), Trafficeye.MaskTimeOut);
-         },
-         //发布拼车信息
-         publish: function(evt) {
-             var me = this;
-             var elem = $(evt).addClass("curr");
-             setTimeout((function() {
-                 $(elem).removeClass("curr");
-                 Trafficeye.toPage("pcar_publishinfo.html");
-             }), Trafficeye.MaskTimeOut);
          }
      };
 
@@ -322,20 +221,30 @@
         window.callbackChooseLocation  = function(type,lon,lat,address){
             // console.log(data);
             Trafficeye.httpTip.closed();
-            Trafficeye.alert(type+","+lon+","+lat+","+address);
+            var pm = Trafficeye.pageManager;
+            // Trafficeye.alert(type+","+lon+","+lat+","+address);
+            var fromSource;
+            if(type == "start")
+            {
+                fromSource = {
+                 startPoint : lon+","+lat,
+                 startLocation : address
+                }
+                pm.elems["startloc"].html(address);
+            }else if(type == "end"){
+                fromSource = {
+                 endPoint : lon+","+lat,
+                 endLocation : address
+                }
+                pm.elems["endloc"].html(address);
+            }
+            
+             var fromSourceStr = Trafficeye.json2Str(fromSource);
+             Trafficeye.offlineStore.set("publishInfo_"+type+"loc", fromSourceStr);
         };
         
         window.initPageManager = function() {
-             //把来源信息存储到本地
-             var presource = Trafficeye.fromSource();
-             var fromSource = {
-                 "sourcepage": presource.sourcepage,
-                 "currpage": "pcar_publishinfo.html",
-                 "prepage": presource.currpage
-             }
-             var fromSourceStr = Trafficeye.json2Str(fromSource);
-             Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-   
+
              //获取我的用户信息
              var myInfo = Trafficeye.getMyInfo();
              if (!myInfo) {
@@ -380,6 +289,7 @@
                 window.location.href=("objc:??chooseLocation::?start");
             } else {
                 alert("调用修改用户信息接口,PC不支持.");
+                window.callbackChooseLocation("start","116.40168","39.9077","天安门东站C东南口");
             }
          };
          
@@ -390,6 +300,7 @@
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 window.location.href=("objc:??chooseLocation::?end");
             } else {
+                window.callbackChooseLocation("end","119","911","安华桥伦洋大厦");
                 alert("调用修改用户信息接口,PC不支持.");
             }
          };

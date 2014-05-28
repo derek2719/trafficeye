@@ -59,7 +59,9 @@ a:active{color:#6d7579;}
 /*.text-h{height:150px}*/
 .cont-box{margin:10px 0 0;border-bottom:1px solid #e3e3e3;}
 .dache-box{border-top:1px solid #e3e3e3;background-color:#FFF;padding:10px;}
-div.d{padding-top:3px}
+div.d{padding-top:3px;position:relative;}
+/*.d-delete{ position:absolute;top:2px;right:-10px;}*/
+.d-delete{position:absolute;top:2px;right:-10px;padding: 10px;font-size:14px;text-align: center;color: #0E51A3;text-decoration: underline;}
 .dl{float:left;padding-top:4px}
 .dr{display:table;padding-left:10px;}
 .d:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
@@ -75,7 +77,8 @@ div.d{padding-top:3px}
 .ss h2.myh2{background:url(../pcar_img/dpi1/dian_red.png) no-repeat 0 1px}
 .ss .add{font-size:14px;color:#606366;position:absolute;background-color:#FFF;right:0;padding:0 10px;height:40px;line-height:40px;top:50%;margin-top:-20px}
 .p .dr h3 span{background:url(../pcar_img/dpi1/dche.png) no-repeat center;}
-.mapdiv{background-color:#ff6600;width:100%;height:205px;margin-bottom:10px}
+.mapdiv{width:100%;height:205px;margin-bottom:10px;
+text-align:center}
 .i-btn{margin:10px 5px;}
 .i-btn li.gay a{background-color:#dbdbdb;margin:0 5px;color:#5d5d5d;}
 .i-btn li.gay.curr a{background-color:#b6b6b6;color:#5d5d5d;}
@@ -133,5 +136,5 @@ div.d{padding-top:3px}
 to{-webkit-transform:rotate(360deg) translateZ(0);}*/}
 .tk{color: #adacac;font-size: 12px;line-height: 140%;margin: 0 10px;padding:10px 0}
 .tk input{-webkit-appearance: checkbox;vertical-align:middle;margin-right:5px}
-.h-btn.i-btn li.dd a,.h-btn.i-btn li.sr a{padding-right:10px;background:#dbdbdb url(../pcar_img/dpi1/vv.png) no-repeat right center;}
+.h-btn.i-btn li.dd.curr a,.h-btn.i-btn li.sr.curr a{padding-right:10px;background:#dbdbdb url(../pcar_img/dpi1/vv.png) no-repeat right center;}
 .bblue{color:#0E51A3;text-decoration:underline;/*background-color:#eaeaea*/}

@@ -47,7 +47,7 @@
                htmls.push("<div class=\"dache-box p\" >");
            }
              // htmls.push("<div class=\"dache-box\" >");
-             htmls.push("<div class=\"d\"><div class=\"d-delete\" onclick=\"delpublish(this,'"+data.id+"');\">删除</div><div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
+             htmls.push("<div class=\"d\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
              htmls.push("<h3>");
              htmls.push(data.username);
              htmls.push("<span></span></h3>");
@@ -173,25 +173,30 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_index.html");
+             Trafficeye.toPage("pcar_ride_info.html");
          },
          /**
           * 搭车信息列表请求函数
           */
          reqRideInfo: function(page) {
+            var me = this;
              var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/findInfoByUid";
              var myInfo = Trafficeye.getMyInfo();
              var pointStr = myInfo.dataclient;
-             
+             var publishuid = Trafficeye.str2Json(Trafficeye.offlineStore.get("pcar_publish_uid"));
+             console.log(publishuid);
+             if(!publishuid){
+                publishuid = myInfo.uid;
+             }
              var data = {
                  "ua": myInfo.ua,
                  "pid": myInfo.pid,
                  "uid" : myInfo.uid,
-                 "uidFriend" : myInfo.uid,
+                 "uidFriend" : publishuid.pcar_publishuid,
                  "page": page,
                  "count": 10
              };
-             var me = this;
+             
              var reqParams = Trafficeye.httpData2Str(data);
              if (url) {
                  Trafficeye.httpTip.opened(function() {
@@ -285,6 +290,7 @@
           */
          loadmoreHander: function(uid) {
              var me = this;
+          
              if (uid) {
                  var userData = {};
                  userData.uid = uid;
@@ -300,53 +306,13 @@
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_pcar_publish_id", fromSourceStr);
              Trafficeye.toPage("pcar_ride_info.html");
-         },
-         //发布拼车信息
-         delpublish: function(evt,publishid) {
-             var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/deleteMyInfo";
-             var myInfo = Trafficeye.getMyInfo();
-
-             var data = {
-                 "ua": myInfo.ua,
-                 "pid": myInfo.pid,
-                 "uid" : myInfo.uid,
-                 "infoId" : publishid
-             };
-             var me = this;
-             var reqParams = Trafficeye.httpData2Str(data);
-             if (url) {
-                 Trafficeye.httpTip.opened(function() {
-                     me.isStopReq = true;
-                 }, me);
-                 me.isStopReq = false;
-                 var reqUrl = url + reqParams;
-                 $.ajaxJSONP({
-                     url: reqUrl,
-                     success: function(data) {
-                         Trafficeye.httpTip.closed();
-                         if (data && !me.isStopReq) {
-                             var state = data.state.code;
-                             if (state == 0) {
-                                 Trafficeye.trafficeyeAlert("删除成功!");
-                             } else {
-                                 Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
-                             }
-                         } else {
-                             //me.reqPraiseFail();
-                         }
-                     }
-                 })
-             } else {
-                 // me.reqPraiseFail();
-             }
          }
      };
 
      $(function() {
         
         window.initPageManager = function() {
-             
-             
+          
              //获取我的用户信息
              var myInfo = Trafficeye.getMyInfo();
              if (!myInfo) {
@@ -392,13 +358,7 @@
                  pm.pcar_ride_info(evt,id);
              }
          };
-         //发布
-         window.delpublish = function(evt,id) {
-             var pm = Trafficeye.pageManager;
-             if (pm.init) {
-                 pm.delpublish(evt,id);
-             }
-         };
+
          //加载更多
          window.loadmorebtnUp = function(evt) {
              var pm = Trafficeye.pageManager;

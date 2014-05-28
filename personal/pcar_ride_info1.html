@@ -12,68 +12,45 @@
 <body>
 
 <div class="header">
-	<div class="tbtn-l"><a></a></div>
-	搭车信息详情
+	<div class="tbtn-l" id="backpagebtn"><a></a></div>
+	<p id="title" />
 </div>
-<div class="cont-box">
-
-	<div class="dache-box"><!--默认是搭车样式-->
-		<div class="d">
-			<div class="dl"><img src="pcar_img/img01.jpg" alt="" width="40" height="40"/></div>
-			<div class="dr">
-				<h3>发布者昵称<span></span></h3>
-				<ul class="week"><!--周都有点击的效果加curr 选中的样式是select 当点击选中的星期时也有点击效果也是加CURR-->
-					<li class="curr">日</li><!--星期有点击的效果加curr-->
-					<li>一</li>
-					<li class="select">二</li><!--选中的样式是select -->
-					<li class="select">三</li>
-					<li class="select">四</li>
-					<li class="select curr">五</li><!--当点击选中的星期时也有点击效果也是加CURR-->
-					<li>六</li>
-					<span>18:30 左右</span>
-				</ul>
-			</div>
-		</div>
-		<div class="ss">
-			<h2>起点：<span>安华桥伦华桥伦华桥伦华桥伦洋大厦</span></h2>
-			<h2 class="myh2">终点：<span>首体南路一号</span></h2>
-			<div class="add">北京</div>
-		</div>
-	</div>
+<div class="cont-box" id = "ridelist">
+	
 </div>
 <div class="tabinfo-box">
 	<table class="info">
 		<tr>
-			<td class="curr-">真实姓名</td>
-			<td class="border-left">老王</td>
+			<td >真实姓名</td>
+			<td onclick="username(this);" id="username" class="border-left"></td>
 		</tr>
 		<tr>
 			<td>手机号码</td>
-			<td class="border-left"></td>
+			<td onclick="mobile(this);" id="mobile" class="border-left"></td>
 		</tr>
 		<tr>
 			<td>所在城市</td>
-			<td class="border-left"></td>
+			<td onclick="city(this);" id="city" class="border-left"></td>
 		</tr>
 		<tr>
 			<td>性　　别</td>
-			<td class="border-left"></td>
+			<td onclick="sex(this);" id="sex" class="border-left"></td>
 		</tr>
 		<tr>
 			<td>出生日期</td>
-			<td class="border-left"></td>
+			<td onclick="birthday(this);" id="birthday" class="border-left"></td>
 		</tr>
 		<tr>
 			<td>车牌号码</td>
-			<td class="border-left"></td>
+			<td onclick="carnumber(this);" id="carnumber" class="border-left"></td>
 		</tr>
 		<tr>
 			<td>微信号码</td>
-			<td class="border-left"></td>
+			<td onclick="weixin(this);" id="weixin" class="border-left"></td>
 		</tr>
 		<tr>
 			<td>QQ 号码</td>
-			<td class="border-left"></td>
+			<td onclick="qqnum(this);" id="qqnum" class="border-left"></td>
 		</tr>
 	</table>
 </div>
@@ -87,4 +64,8 @@
 
 
 </body>
+<script type="text/javascript" src="libs/zepto.js"></script>
+<script type="text/javascript" src="libs/gmu.js"></script>
+<script type="text/javascript" src="pcar_js/base.js"></script>
+<script type="text/javascript" src="pcar_js/pcar_ride_info1.js"></script>
 </html>

@@ -28,5 +28,5 @@
 /*--------------loading full----------------*/
 .loadimg span{background:url(../pcar_img/dpi2/ld.png) no-repeat center top;background-size:20px 60px;}
 .loadqx{background:url(../pcar_img/dpi2/ld.png) no-repeat 20px -30px;background-size:20px 60px;}
-.h-btn.i-btn li.dd a,.h-btn.i-btn li.sr a{background:#dbdbdb url(../pcar_img/dpi2/vv.png) no-repeat right center;background-size:30px 20px;}
+.h-btn.i-btn li.dd.curr a,.h-btn.i-btn li.sr.curr a{background:#dbdbdb url(../pcar_img/dpi2/vv.png) no-repeat right center;background-size:30px 20px;}
 /*}*/

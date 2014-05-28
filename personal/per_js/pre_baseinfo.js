@@ -50,7 +50,17 @@
             "baseinfonicknameheader" : null,
             "baseinfobirthdate" : null,
             "baseinfodescript" : null,
-            "car" : null
+            "car" : null,
+            "pcardescid" : null,
+            "pcarbaseid" : null,
+            "pcarusername" : null,
+            "pcarmobile" : null,
+            "pcarcity" : null,
+            "pcarsex" : null,
+            "pcarbirthday" : null,
+            "pcarcarnumber" : null,
+            "pcarweixin" : null,
+            "pcarqqnum" : null
         };
         //当点击请求提示框的关闭按钮，意味着中断请求，在关闭提示框后，如果请求得到响应，也不进行下一步业务处理。
         this.isStopReq = false;
@@ -84,6 +94,7 @@
             var me = this,
                 baseinfobtnElem = me.elems["baseinfo"],
                 surveybtnElem = me.elems["survey"],
+                carbtnElem = me.elems["car"],
                 backpagebtnElem = me.elems["backpagebtn"];
             //返回按钮
             backpagebtnElem.onbind("touchstart",me.btnDown,backpagebtnElem);
@@ -92,6 +103,8 @@
             baseinfobtnElem.onbind("touchend",me.baseinfobtnUp,me);
             //查看调查问卷列表按钮
             surveybtnElem.onbind("touchend",me.surveybtnUp,me);
+            //查看拼车列表按钮
+            carbtnElem.onbind("touchend",me.carbtnUp,me);
         },
         /**
          * 按钮按下事件处理器
@@ -134,10 +147,14 @@
                 infousernameElem = me.elems["infousername"],
                 surveybaseidElem = me.elems["surveybaseid"],
                 surveyextidElem = me.elems["surveyextid"],
+                pcarElem = me.elems["car"],
+                pcardescidElem = me.elems["pcardescid"],
+                pcarbaseidElem = me.elems["pcarbaseid"],
                 modifyPwdidElem = me.elems["modifyPwdid"];
             
             baseinfoElem.addClass("curr");
             surveyElem.removeClass("curr");
+            pcarElem.removeClass("curr");
             baseinfolistElem.css("display","");
             if(myInfo.userinfo.userType == "trafficeye"){
                 modifyPwdidElem.css("display","");
@@ -146,6 +163,8 @@
             surveydescidhtml.css("display","none");
             surveybaseidElem.css("display","none");
             surveyextidElem.css("display","none");
+            pcardescidElem.css("display","none");
+            pcarbaseidElem.css("display","none");
             var myInfo = Trafficeye.getMyInfo();
             var dataAvatar = myInfo.userinfo.avatarUrl;
             if(!dataAvatar)
@@ -188,10 +207,14 @@
                 infousernameElem = me.elems["infousername"],
                 surveybaseidElem = me.elems["surveybaseid"],
                 surveyextidElem = me.elems["surveyextid"],
+                pcarElem = me.elems["car"],
+                pcardescidElem = me.elems["pcardescid"],
+                pcarbaseidElem = me.elems["pcarbaseid"],
                 modifyPwdidElem = me.elems["modifyPwdid"];
             
             surveyElem.addClass("curr");
             baseinfoElem.removeClass("curr");
+            pcarElem.removeClass("curr");
             
             baseinfolistElem.css("display","none");
             modifyPwdidElem.css("display","none");
@@ -199,7 +222,8 @@
             surveydescidhtml.css("display","");
             surveybaseidElem.css("display","");
             surveyextidElem.css("display","");
-                    
+            pcardescidElem.css("display","none");
+            pcarbaseidElem.css("display","none");
             var myInfo = Trafficeye.getMyInfo();
             
             me.elems["suveryusername"].html(myInfo.userinfo.realName);
@@ -220,6 +244,61 @@
                 }
             me.elems["suverybirthdate"].html(myInfo.userinfo.birthdate);
             me.reqSurveyInfo(myInfo.ua,myInfo.uid,myInfo.pid);
+        },
+        /**
+         * 选择拼车列表处理器
+         * @param  {Event} evt
+         */
+        carbtnUp : function(evt) {
+            var myInfo = Trafficeye.getMyInfo();
+            var me = this,
+                baseinfoElem = me.elems["baseinfo"],
+                surveyElem = me.elems["survey"],
+                 baseinfolistElem = me.elems["baseinfolist"],
+                surveydescidElem = me.elems["surveydescid"],
+                surveydescidhtml = me.elems["surveydescidhtml"],
+                infousernameElem = me.elems["infousername"],
+                surveybaseidElem = me.elems["surveybaseid"],
+                surveyextidElem = me.elems["surveyextid"],
+                pcarElem = me.elems["car"],
+                pcardescidElem = me.elems["pcardescid"],
+                pcarbaseidElem = me.elems["pcarbaseid"],
+                modifyPwdidElem = me.elems["modifyPwdid"];
+            
+            surveyElem.removeClass("curr");
+            baseinfoElem.removeClass("curr");
+            pcarElem.addClass("curr");
+            // Trafficeye.offlineStore.set("traffic_infosurveycar","car");
+            
+            baseinfolistElem.css("display","none");
+            modifyPwdidElem.css("display","none");
+            surveydescidElem.css("display","none");
+            surveydescidhtml.css("display","none");
+            surveybaseidElem.css("display","none");
+            surveyextidElem.css("display","none");
+            pcardescidElem.css("display","");
+            pcarbaseidElem.css("display","");
+            var myInfo = Trafficeye.getMyInfo();
+            
+            me.elems["pcarusername"].html(myInfo.userinfo.realName);
+            me.elems["pcarmobile"].html(myInfo.userinfo.mobile);
+            me.elems["pcarcity"].html(myInfo.userinfo.city);
+            var carGender = myInfo.userinfo.gender;
+            switch(carGender)
+                {
+                    case "M" :
+                        me.elems["pcarsex"].html("男");
+                        break;
+                    case "F" :
+                        me.elems["pcarsex"].html("女");
+                        break;
+                    case "S" :
+                        break;
+                }
+            me.elems["pcarbirthday"].html(myInfo.userinfo.birthdate);
+            me.elems["pcarcarnumber"].html(myInfo.userinfo.carNum);
+            me.elems["pcarweixin"].html(myInfo.userinfo.wxNum);
+            me.elems["pcarqqnum"].html(myInfo.userinfo.qq);
         },
         /**
          * 查询调查问卷问题的内容
@@ -459,14 +538,87 @@
             }),Trafficeye.MaskTimeOut);     
         },
         //跳转到拼车的onclick事件响应函数
-        toPageCar : function(evt) {
-            var me = this;
-            var elem = $(evt).addClass("curr");
-            setTimeout((function(){
-                $(elem).removeClass("curr");  
-                Trafficeye.toPage("pcar_index.html");
-            }),Trafficeye.MaskTimeOut);     
-        }
+        //查看他发布的动态
+         pcarusername: function(evt) {
+
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 Trafficeye.toPage("pcar_relname.html");
+             }), Trafficeye.MaskTimeOut);
+
+         },
+         //查看他发布的动态
+         pcarmobile: function(evt) {
+
+          
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 Trafficeye.toPage("pcar_mobile.html");
+             }), Trafficeye.MaskTimeOut);
+
+         },
+         //查看他发布的动态
+         pcarcity: function(evt) {
+
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 Trafficeye.toPage("pcar_city.html");
+             }), Trafficeye.MaskTimeOut);
+           
+         },
+         //查看他发布的动态
+         pcarsex: function(evt) {
+
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 Trafficeye.toPage("pcar_sex.html");
+             }), Trafficeye.MaskTimeOut);
+        
+         },
+         //查看他发布的动态
+         pcarbirthday: function(evt) {
+
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 Trafficeye.toPage("pcar_birthday.html");
+             }), Trafficeye.MaskTimeOut);
+          
+         },
+         //查看他发布的动态
+         pcarcarnumber: function(evt) {
+ 
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 Trafficeye.toPage("pcar_carnum.html");
+             }), Trafficeye.MaskTimeOut);
+           
+         },
+         //查看他发布的动态
+         pcarweixin: function(evt) {
+
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 Trafficeye.toPage("pcar_weixin.html");
+             }), Trafficeye.MaskTimeOut);
+           
+         },
+         //查看他发布的动态
+         pcarqqnum: function(evt) {
+
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 Trafficeye.toPage("pcar_qqnum.html");
+             }), Trafficeye.MaskTimeOut);
+          
+         }
     };
     
     $(function(){
@@ -491,12 +643,15 @@
         pm.myInfo = myInfo;
         var   baseinfobtnElem = pm.elems["baseinfo"],
                 surveybtnElem = pm.elems["survey"],
+                carbtnElem = pm.elems["car"],
                 baseinfolistElem = pm.elems["baseinfolist"],
                 surveydescidElem = pm.elems["surveydescid"],
                 surveydescidhtml = pm.elems["surveydescidhtml"],
                 infousernameElem = pm.elems["infousername"],
                 surveybaseidElem = pm.elems["surveybaseid"],
                 surveyextidElem = pm.elems["surveyextid"],
+                pcardescidElem = pm.elems["pcardescid"],
+                pcarbaseidElem = pm.elems["pcarbaseid"],
                 modifyPwdidElem = pm.elems["modifyPwdid"];
             //info表示点击个人信息编辑按钮跳转过来的，survey表示点击调查问卷按钮跳转过来的,car表示拼车
             var baseinfoPageFlag = Trafficeye.offlineStore.get("traffic_infosurveycar");
@@ -508,6 +663,7 @@
                 // console.log(myInfo);
                     baseinfobtnElem.addClass("curr");
                     surveybtnElem.removeClass("curr");
+                    carbtnElem.removeClass("curr");
                     baseinfolistElem.css("display","");
                     if(myInfo.userinfo.userType == "trafficeye"){
                         modifyPwdidElem.css("display","");
@@ -516,21 +672,37 @@
                     surveydescidhtml.css("display","none");
                     surveybaseidElem.css("display","none");
                     surveyextidElem.css("display","none");
+                    pcardescidElem.css("display","none");
+                    pcarbaseidElem.css("display","none");
                     pm.baseinfobtnUp();
                     break;
                 case "survey":
                     baseinfobtnElem.removeClass("curr");
                     surveybtnElem.addClass("curr");
+                    carbtnElem.removeClass("curr");
                     baseinfolistElem.css("display","none");
                     modifyPwdidElem.css("display","none");
                     surveydescidElem.css("display","");
                     surveydescidhtml.css("display","");
                     surveybaseidElem.css("display","");
                     surveyextidElem.css("display","");
+                    pcardescidElem.css("display","none");
+                    pcarbaseidElem.css("display","none");
                     pm.surveybtnUp();
                     break;
                 case "car":
-                    Trafficeye.toPage("pcar_index.html");
+                    baseinfobtnElem.removeClass("curr");
+                    surveybtnElem.removeClass("curr");
+                    carbtnElem.addClass("curr");
+                    baseinfolistElem.css("display","none");
+                    modifyPwdidElem.css("display","none");
+                    surveydescidElem.css("display","none");
+                    surveydescidhtml.css("display","none");
+                    surveybaseidElem.css("display","none");
+                    surveyextidElem.css("display","none");
+                    pcardescidElem.css("display","");
+                    pcarbaseidElem.css("display","");
+                    pm.carbtnUp();
                     break;
                 default:
                     baseinfobtnElem.addClass("curr");
@@ -703,12 +875,63 @@
                 pm.surveyextmanyClick(evt);
             }
         };
-        window.toPageCar = function(evt) {
+        //拼车
+        //真实姓名
+         window.pcarusername = function(evt) {
              var pm = Trafficeye.pageManager;
-            if (pm.init) {
-                pm.toPageCar(evt);
-            }
-        };
+             if (pm.init) {
+                 pm.pcarusername(evt);
+             }
+         };
+         //手机号码
+         window.pcarmobile = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.pcarmobile(evt);
+             }
+         };
+         //所在城市
+         window.pcarcity = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.pcarcity(evt);
+             }
+         };
+         //性别
+         window.pcarsex = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.pcarsex(evt);
+             }
+         };
+         //生日
+         window.pcarbirthday = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.pcarbirthday(evt);
+             }
+         };
+         //车牌
+         window.pcarcarnumber = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.pcarcarnumber(evt);
+             }
+         };
+         //微信
+         window.pcarweixin = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.pcarweixin(evt);
+             }
+         };
+         //qq
+         window.pcarqqnum = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.pcarqqnum(evt);
+             }
+         };
     }); 
     
  }(window));

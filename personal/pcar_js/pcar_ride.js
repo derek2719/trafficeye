@@ -42,11 +42,11 @@
                  dataAvatar="per_img/mm.png";
              }
              if(flag == "ride"){
-               htmls.push("<div class=\"dache-box\" >");
-           }else{
                htmls.push("<div class=\"dache-box p\" >");
+           }else{
+               htmls.push("<div class=\"dache-box\" >");
            }
-             htmls.push("<div class=\"dache-box\" >");
+             // htmls.push("<div class=\"dache-box\" >");
              htmls.push("<div class=\"d\" onclick=\"pcar_ride_info(this,'"+data.id+"');\"><div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
              htmls.push("<h3>");
              htmls.push(data.username);
@@ -298,12 +298,7 @@
          },
          //进入拼车详情的onclick事件响应函数
          pcar_ride_info: function(evt,publishid) {
-             // var me = this;
-             // var elem = $(evt).addClass("curr");
-             // setTimeout((function() {
-             //     $(elem).removeClass("curr");
-             //     Trafficeye.toPage("pcar_ride_info.html");
-             // }), Trafficeye.MaskTimeOut);
+
             var fromSource = {
                  "ride_id": publishid
              }
@@ -317,6 +312,12 @@
              var elem = $(evt).addClass("curr");
              setTimeout((function() {
                  $(elem).removeClass("curr");
+                 //清楚缓存信息
+                 Trafficeye.offlineStore.remove("publishInfo_week");
+                 Trafficeye.offlineStore.remove("publishInfo_time");
+                 Trafficeye.offlineStore.remove("publishInfo_startloc");
+                 Trafficeye.offlineStore.remove("publishInfo_endloc");
+                 Trafficeye.offlineStore.remove("publishInfo_type");
                  Trafficeye.toPage("pcar_publishinfo.html");
              }), Trafficeye.MaskTimeOut);
          }

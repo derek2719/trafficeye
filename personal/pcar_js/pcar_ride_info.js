@@ -136,10 +136,17 @@
                  var ridehtml = me.creatRideListHtml(data.info);
                  ridelistElem.html(ridehtml);
                  // var map = "<img src="+data.info.imageUrl+" alt=\"\" width=\"40\" height=\"40\"/>";
+                
                  if(data.info.imageUrl){
-                    ridemapElem.css("sytle","");
-                    ridemapElem.html(data.info.imageUrl);
+                    // console.log(ridemapElem);
+                    ridemapElem.css("display","");
+                    ridemapElem.html( "<img src="+data.info.imageUrl+" alt=\"\" width=\"320\" height=\"205\"/>");
                 }
+                 var fromSource = {
+                     "pcar_publishuid": data.info.uid
+                 }
+                 var fromSourceStr = Trafficeye.json2Str(fromSource);
+                 Trafficeye.offlineStore.set("pcar_publish_uid", fromSourceStr);
             }
          },
          
@@ -157,7 +164,7 @@
            }else{
                htmls.push("<div class=\"dache-box p\" >");
            }
-             htmls.push("<div class=\"dache-box\" >");
+             // htmls.push("<div class=\"dache-box\" >");
              htmls.push("<div class=\"d\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
              htmls.push("<h3>");
              htmls.push(data.username);
@@ -228,7 +235,7 @@
              var elem = $(evt).addClass("curr");
              setTimeout((function() {
                  $(elem).removeClass("curr");
-                 Trafficeye.toPage("pcar_mypublish.html");
+                 Trafficeye.toPage("pcar_hepublish.html");
              }), Trafficeye.MaskTimeOut);
          }
      };
