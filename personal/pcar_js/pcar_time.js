@@ -76,8 +76,11 @@
              var me = this;
              var elem = $(evt).addClass("curr");
              
-             var textHourId = me.elems["hourId"].attr("value");
-             var textMinuteId = me.elems["minuteId"].attr("value");
+             
+             var hourId = document.getElementById("hourId");
+             var minuteId = document.getElementById("minuteId");
+             var textHourId=hourId.options[hourId.selectedIndex].innerHTML;
+             var textMinuteId = minuteId.options[minuteId.selectedIndex].innerHTML;
             if(!textHourId || !textMinuteId)
              {
                 Trafficeye.trafficeyeAlert("请您输入时间");
@@ -87,6 +90,7 @@
               var publishInfo_time = {
                     "time" : textHourId+":"+textMinuteId
                 };
+                // alert(textHourId+":"+textMinuteId);
                 var dataStr = Trafficeye.json2Str(publishInfo_time);
                 Trafficeye.offlineStore.set("publishInfo_time", dataStr);
 
