@@ -352,9 +352,9 @@
              pm.init();
              pm.myInfo = myInfo;
              if(pcar_flag.flag == "ride"){
-               pm.elems["title"].html("搭车");
+               pm.elems["title"].html("司机列表");
              }else if(pcar_flag.flag == "away"){
-               pm.elems["title"].html("送人");
+               pm.elems["title"].html("乘客列表");
              }
              //判断缓存中是否有userinfo信息
              if (myInfo.userinfo) {
