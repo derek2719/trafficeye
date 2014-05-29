@@ -865,7 +865,6 @@
         window.invite = function() {
               Trafficeye.toPage("invite.html");
         };
-        
     });
     
  }(window));

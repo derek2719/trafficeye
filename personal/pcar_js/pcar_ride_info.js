@@ -3,6 +3,7 @@
          this.userinfo = null;
          this.ua = null;
          this.pid = null;
+         this.mobile = null;
      };
      UserInfoManager.prototype = {
          setInfo: function(data) {
@@ -13,6 +14,9 @@
          },
          setUa: function(ua) {
              this.ua = ua;
+         },
+         setMobile : function(mobile){
+             this.mobile = mobile;
          }
      };
 
@@ -159,6 +163,9 @@
              {
                  dataAvatar="per_img/mm.png";
              }
+             if(data.mobile){
+                me.userInfoManager.setMobile(data.mobile);
+             }
              if(data.type == "1"){
                htmls.push("<div class=\"dache-box\" >");
            }else{
@@ -264,12 +271,12 @@
              var elem = $(evt).addClass("curr");
              setTimeout((function() {
                  $(elem).removeClass("curr");
-                 
-                 var myInfo = Trafficeye.getMyInfo();
+                 var mobile = me.userInfoManager.mobile;
+                 // var myInfo = Trafficeye.getMyInfo();
                  if (Trafficeye.mobilePlatform.android) {
-                        window.JSAndroidBridge.makeACall(myInfo.mobile);
+                        window.JSAndroidBridge.makeACall(mobile);
                     } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                        window.location.href=("objc:??makeACall::?"+myInfo.mobile);
+                        window.location.href=("objc:??makeACall::?"+mobile);
                     } else {
                         alert("调用修改用户信息接口,PC不支持.");
                     }
