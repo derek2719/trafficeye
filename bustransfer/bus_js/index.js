@@ -92,7 +92,7 @@
 						startSiteCleanBtnElemZ.hide();
 					}	
 				}
-			}, 30000);
+			}, 3000);
 		},
 		fireAutoTip : function() {
 			var me = this;
@@ -175,7 +175,7 @@
 						endSiteCleanBtnElemZ.hide();
 					}	
 				}
-			}, 30000);
+			}, 3000);
 		},
 		fireAutoTip : function() {
 			var me = this;
