@@ -14,7 +14,7 @@
         wphone: /Windows Phone/i.test(navigator.userAgent)
     };
     
-    var UrlPort = 8008; //正式URL端口号为21290,测试URL端口号为8008
+    var UrlPort = 21290; //正式URL端口号为21290,测试URL端口号为8008
     
     var MaskTimeOut = 1000; //蒙版效果等待时间
     /**

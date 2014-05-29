@@ -225,11 +225,22 @@
             pcardescidElem.css("display","none");
             pcarbaseidElem.css("display","none");
             var myInfo = Trafficeye.getMyInfo();
-            
-            me.elems["suveryusername"].html(myInfo.userinfo.realName);
+            if(myInfo.userinfo.realName){
+                me.elems["suveryusername"].html(myInfo.userinfo.realName);
+            }else{
+                me.elems["suveryusername"].html("用于发放奖励");
+            }
             me.elems["baseinfonicknameheader"].html(myInfo.userinfo.username);
-            me.elems["suveryphonenumber"].html(myInfo.userinfo.mobile);
-            me.elems["suverycity"].html(myInfo.userinfo.city);
+            if(myInfo.userinfo.mobile){
+                me.elems["suveryphonenumber"].html(myInfo.userinfo.mobile);
+            }else{
+                me.elems["suveryphonenumber"].html("用于发放奖励");
+            }
+            if(myInfo.userinfo.city){
+                me.elems["suverycity"].html(myInfo.userinfo.city);
+            }else{
+                me.elems["suverycity"].html("用于调查地区分布");
+            }
             var baseinfoGender = myInfo.userinfo.gender;
             switch(baseinfoGender)
                 {
@@ -242,7 +253,11 @@
                     case "S" :
                         break;
                 }
-            me.elems["suverybirthdate"].html(myInfo.userinfo.birthdate);
+            if(myInfo.userinfo.birthdate){
+                me.elems["suverybirthdate"].html(myInfo.userinfo.birthdate);
+            }else{
+                me.elems["suverybirthdate"].html("用于调查年龄分布");
+            }
             me.reqSurveyInfo(myInfo.ua,myInfo.uid,myInfo.pid);
         },
         /**
@@ -296,9 +311,21 @@
                         break;
                 }
             me.elems["pcarbirthday"].html(myInfo.userinfo.birthdate);
-            me.elems["pcarcarnumber"].html(myInfo.userinfo.carNum);
-            me.elems["pcarweixin"].html(myInfo.userinfo.wxNum);
-            me.elems["pcarqqnum"].html(myInfo.userinfo.qq);
+            if(myInfo.userinfo.carNum){
+                me.elems["pcarcarnumber"].html(myInfo.userinfo.carNum);
+            }else{
+                me.elems["pcarcarnumber"].html("选填，用于线上交流");
+            }
+            if(myInfo.userinfo.wxNum){
+                me.elems["pcarweixin"].html(myInfo.userinfo.wxNum);
+            }else{
+                me.elems["pcarweixin"].html("选填，用于线上交流");
+            }
+            if(myInfo.userinfo.qq){
+                me.elems["pcarqqnum"].html(myInfo.userinfo.qq);
+            }else{
+                me.elems["pcarqqnum"].html("选填，用于线上交流");
+            }
         },
         /**
          * 查询调查问卷问题的内容
