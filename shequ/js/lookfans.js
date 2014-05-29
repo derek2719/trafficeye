@@ -249,7 +249,7 @@
                 }
             }else{
                 // Trafficeye.toPage(fromSource.prepage);
-                Trafficeye.toPage("com_index.html");
+                Trafficeye.toPage("index.html");
             }
         },
          /**

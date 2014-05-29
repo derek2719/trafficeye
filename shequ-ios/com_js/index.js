@@ -866,7 +866,6 @@
               Trafficeye.toPage("invite.html");
         };
         
-        // window.initPageManager(29178,"BA9AB2FB-0D91-41D3-A69E-33CE931B338F",320,568);
     });
     
  }(window));

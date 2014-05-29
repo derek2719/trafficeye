@@ -1004,8 +1004,6 @@
             }
         };
         window.initPageManager();
-        // window.personalGotoCommunityPage("{\"prepage\":\"trafficeye_personal\",\"pid\":\"BB7CAB21-2A8C-48D0-860B-C8B79EB2DE9C\",\"uid\":\"40324\",\"traffic_timeline\":\"40293\",\"myInfo\":{\"badgeNum\":1,\"avatarUrl\":\"\",\"wxNum\":\"1234\",\"level\":1,\"eventNum\":0,\"mobile\":\"13581604288\",\"frineds\":0,\"idNum\":\"\",\"totalMilage\":0,\"nextLevel\":2,\"city\":\"甘肃 兰州市\",\"realName\":\"张3\",\"ownedBadges\":[{\"name\":\"新人徽章\",\"id\":1,\"obtainTime\":\"2014-05-28 22:33:56\",\"smallImgName\":\"badge_register.png\",\"imgName\":\"badge_big_register.png\",\"desc\":\"注册账号\"}],\"email\":\"wgy52@wgy.wgy\",\"totalBadges\":30,\"totalTrackMilage\":0,\"fans\":0,\"carNum\":\"345345\",\"totalCoins\":0,\"username\":\"Wgy52\",\"userType\":\"trafficeye\",\"levelPoint\":30,\"levelPercent\":11,\"uid\":\"40324\",\"birthdate\":\"2014-01-09\",\"gender\":\"M\",\"totalPoints\":34,\"nextLevelPoint\":65,\"mobileValidate\":1,\"qq\":\"123321444\",\"description\":\"\",\"userGroup\":0}}");
-        
     }); 
     
  }(window));
