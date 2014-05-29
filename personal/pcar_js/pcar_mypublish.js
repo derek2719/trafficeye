@@ -344,7 +344,8 @@
                              var state = data.state.code;
                              if (state == 0) {
                                  Trafficeye.trafficeyeAlert("删除成功!");
-                                 window.initPageManager();
+                                 // window.initPageManager();
+                                 window.location.reload();
                              } else {
                                  Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
                              }
