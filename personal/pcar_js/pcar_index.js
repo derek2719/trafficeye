@@ -117,7 +117,22 @@
                     Trafficeye.trafficeyeAlert("请同意《路况交通眼》拼车服务条款");
                 }
             }),Trafficeye.MaskTimeOut);     
-        }
+        },
+         //发布拼车信息
+         publishInfo: function(evt) {
+             var me = this;
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 //清楚缓存信息
+                 Trafficeye.offlineStore.remove("publishInfo_week");
+                 Trafficeye.offlineStore.remove("publishInfo_time");
+                 Trafficeye.offlineStore.remove("publishInfo_startloc");
+                 Trafficeye.offlineStore.remove("publishInfo_endloc");
+                 Trafficeye.offlineStore.remove("publishInfo_type");
+                 Trafficeye.toPage("pcar_publishinfo.html");
+             }), Trafficeye.MaskTimeOut);
+         }
     };
     
     $(function(){
@@ -215,8 +230,16 @@
             }
         };
         
+        //发布
+         window.publishInfo = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.publishInfo(evt);
+             }
+         };
+        
         window.initPageManager();
-        // window.callbackInitPage(1,"{\"badgeNum\":1,\"avatarUrl\":\"\",\"wxNum\":\"123456\",\"level\":1,\"eventNum\":0,\"mobile\":\"\",\"frineds\":0,\"idNum\":\"\",\"totalMilage\":-0,\"nextLevel\":2,\"city\":\"贵州 贵阳市\",\"realName\":\"dong1\",\"ownedBadges\":[{\"name\":\"新人徽章\",\"id\":1,\"obtainTime\":\"2014-05-29 09:59:17\",\"smallImgName\":\"badge_register.png\",\"imgName\":\"badge_big_register.png\",\"desc\":\"注册账号\"}],\"email\":\"wgy53@wgy.wgy\",\"totalBadges\":30,\"totalTrackMilage\":-0,\"fans\":0,\"carNum\":\"1234567\",\"totalCoins\":0,\"username\":\"Wgy53\",\"userType\":\"trafficeye\",\"levelPoint\":30,\"levelPercent\":2,\"uid\":\"40326\",\"birthdate\":\"2014-01-11\",\"gender\":\"M\",\"totalPoints\":31,\"nextLevelPoint\":65,\"mobileValidate\":0,\"qq\":\"567789\",\"description\":\"\",\"userGroup\":0}","I_7.1,i_2.2.6","B3D26DA1-BE69-4DAA-8924-A62CA8705787","{\"lon\":\"0.000000\",\"lat\":\"0.000000\"}");
+        window.callbackInitPage(1,"{\"badgeNum\":1,\"avatarUrl\":\"\",\"wxNum\":\"123456\",\"level\":1,\"eventNum\":0,\"mobile\":\"\",\"frineds\":0,\"idNum\":\"\",\"totalMilage\":-0,\"nextLevel\":2,\"city\":\"贵州 贵阳市\",\"realName\":\"dong1\",\"ownedBadges\":[{\"name\":\"新人徽章\",\"id\":1,\"obtainTime\":\"2014-05-29 09:59:17\",\"smallImgName\":\"badge_register.png\",\"imgName\":\"badge_big_register.png\",\"desc\":\"注册账号\"}],\"email\":\"wgy53@wgy.wgy\",\"totalBadges\":30,\"totalTrackMilage\":-0,\"fans\":0,\"carNum\":\"1234567\",\"totalCoins\":0,\"username\":\"Wgy53\",\"userType\":\"trafficeye\",\"levelPoint\":30,\"levelPercent\":2,\"uid\":\"40326\",\"birthdate\":\"2014-01-11\",\"gender\":\"M\",\"totalPoints\":31,\"nextLevelPoint\":65,\"mobileValidate\":0,\"qq\":\"567789\",\"description\":\"\",\"userGroup\":0}","I_7.1,i_2.2.6","B3D26DA1-BE69-4DAA-8924-A62CA8705787","{\"lon\":\"0.000000\",\"lat\":\"0.000000\"}");
         }); 
     
  }(window));

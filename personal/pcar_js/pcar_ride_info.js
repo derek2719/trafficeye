@@ -247,10 +247,10 @@
                  };
                  var dataStr = Trafficeye.json2Str(data);
                  if (Trafficeye.mobilePlatform.android) {
-                     window.JSAndroidBridge.gotoCommunity("lookfans", dataStr);
+                     window.JSAndroidBridge.gotoCommunity("timeline", dataStr);
                  } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                      var rewardContent = encodeURI(encodeURI(dataStr));
-                     Trafficeye.toPage("objc:??gotoCommunity::?lookfans:?" + rewardContent);
+                     Trafficeye.toPage("objc:??gotoCommunity::?timeline:?" + rewardContent);
                  } else {
                      alert("调用修改用户信息接口,PC不支持.");
                  }
