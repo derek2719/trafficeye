@@ -166,43 +166,43 @@
              htmls.push("<span></span></h3>");
              htmls.push("<ul class=\"week\">");
              if(data.day.sun == "1"){
-                htmls.push("<li class=\"curr\">日</li>");
+                htmls.push("<li class=\"select curr\">日</li>");
             }else
             {
                 htmls.push("<li>日</li>");
             }
              if(data.day.mon == "1"){
-                htmls.push("<li class=\"curr\">一</li>");
+                htmls.push("<li class=\"select curr\">一</li>");
             }else
             {
                 htmls.push("<li>一</li>");
             }
             if(data.day.tues == "1"){
-                htmls.push("<li class=\"curr\">二</li>");
+                htmls.push("<li class=\"select curr\">二</li>");
             }else
             {
                 htmls.push("<li>二</li>");
             }
             if(data.day.wed == "1"){
-                htmls.push("<li class=\"curr\">三</li>");
+                htmls.push("<li class=\"select curr\">三</li>");
             }else
             {
                 htmls.push("<li>三</li>");
             }
             if(data.day.thur == "1"){
-                htmls.push("<li class=\"curr\">四</li>");
+                htmls.push("<li class=\"select curr\">四</li>");
             }else
             {
                 htmls.push("<li>四</li>");
             }
             if(data.day.fri == "1"){
-                htmls.push("<li class=\"curr\">五</li>");
+                htmls.push("<li class=\"select curr\">五</li>");
             }else
             {
                 htmls.push("<li>五</li>");
             }
             if(data.day.sat == "1"){
-                htmls.push("<li class=\"curr\">六</li>");
+                htmls.push("<li class=\"select curr\">六</li>");
             }else
             {
                 htmls.push("<li>六</li>");

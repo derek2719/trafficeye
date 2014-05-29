@@ -171,43 +171,43 @@
              htmls.push("<span></span></h3>");
              htmls.push("<ul class=\"week\">");
              if(data.day.sun == "1"){
-                htmls.push("<li class=\"curr\">日</li>");
+                htmls.push("<li class=\"select curr\">日</li>");
             }else
             {
                 htmls.push("<li>日</li>");
             }
              if(data.day.mon == "1"){
-                htmls.push("<li class=\"curr\">一</li>");
+                htmls.push("<li class=\"select curr\">一</li>");
             }else
             {
                 htmls.push("<li>一</li>");
             }
             if(data.day.tues == "1"){
-                htmls.push("<li class=\"curr\">二</li>");
+                htmls.push("<li class=\"select curr\">二</li>");
             }else
             {
                 htmls.push("<li>二</li>");
             }
             if(data.day.wed == "1"){
-                htmls.push("<li class=\"curr\">三</li>");
+                htmls.push("<li class=\"select curr\">三</li>");
             }else
             {
                 htmls.push("<li>三</li>");
             }
             if(data.day.thur == "1"){
-                htmls.push("<li class=\"curr\">四</li>");
+                htmls.push("<li class=\"select curr\">四</li>");
             }else
             {
                 htmls.push("<li>四</li>");
             }
             if(data.day.fri == "1"){
-                htmls.push("<li class=\"curr\">五</li>");
+                htmls.push("<li class=\"select curr\">五</li>");
             }else
             {
                 htmls.push("<li>五</li>");
             }
             if(data.day.sat == "1"){
-                htmls.push("<li class=\"curr\">六</li>");
+                htmls.push("<li class=\"select curr\">六</li>");
             }else
             {
                 htmls.push("<li>六</li>");
@@ -236,6 +236,24 @@
              setTimeout((function() {
                  $(elem).removeClass("curr");
                  Trafficeye.toPage("pcar_hepublish.html");
+             }), Trafficeye.MaskTimeOut);
+         },
+         //查看他发布的动态
+         callperson: function(evt) {
+             var me = this;
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 
+                 var myInfo = Trafficeye.getMyInfo();
+                 if (Trafficeye.mobilePlatform.android) {
+                        window.JSAndroidBridge.makeACall(myInfo.mobile);
+                    } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                        window.location.href=("objc:??makeACall::?"+myInfo.mobile);
+                    } else {
+                        alert("调用修改用户信息接口,PC不支持.");
+                    }
+                 
              }), Trafficeye.MaskTimeOut);
          }
      };
@@ -303,14 +321,7 @@
          window.callperson = function(evt) {
              var pm = Trafficeye.pageManager;
              if (pm.init) {
-                 var myInfo = Trafficeye.getMyInfo();
-                 if (Trafficeye.mobilePlatform.android) {
-                        window.JSAndroidBridge.makeACall(myInfo.mobile);
-                    } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                        window.location.href=("objc:??makeACall::?"+myInfo.mobile);
-                    } else {
-                        alert("调用修改用户信息接口,PC不支持.");
-                    }
+                 pm.callperson(evt);
              }
          };
         window.initPageManager();

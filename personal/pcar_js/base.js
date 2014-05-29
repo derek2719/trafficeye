@@ -18,7 +18,7 @@
     // var BASE_RIDE_URL = "http://mobile.trafficeye.com.cn:8000";//正式的URL
    var BASE_RIDE_URL = "http://mobile.trafficeye.com.cn:8008/TrafficeyeSevice_test";//测试的URL
  
-   //var BASE_USER_URL = "http://mobile.trafficeye.com.cn:8000/user/v4/";//正式的URL
+   // var BASE_USER_URL = "http://mobile.trafficeye.com.cn:8000/user/v4/";//正式的URL
     var BASE_USER_URL = "http://mobile.trafficeye.com.cn:8008/TrafficeyeSevice_test/user/v4/";//测试的URL
  
  
