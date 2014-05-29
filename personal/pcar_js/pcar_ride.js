@@ -36,7 +36,7 @@
              var me = this;
              var htmls = [];
              var myInfo = Trafficeye.getMyInfo();
-             var dataAvatar = myInfo.userinfo.avatarUrl;
+             var dataAvatar = data.avatarUrl;
              if(!dataAvatar)
              {
                  dataAvatar="per_img/mm.png";
