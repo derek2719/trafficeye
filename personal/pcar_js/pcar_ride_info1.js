@@ -162,7 +162,7 @@
              // htmls.push("<div class=\"dache-box\" >");
              htmls.push("<div class=\"d\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
              htmls.push("<h3>");
-             htmls.push(data.username);
+             htmls.push(data.realName);
              htmls.push("<span></span></h3>");
              htmls.push("<ul class=\"week\">");
              if(data.day.sun == "1"){
