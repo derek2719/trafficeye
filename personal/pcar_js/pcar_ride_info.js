@@ -273,6 +273,7 @@
                  $(elem).removeClass("curr");
                  var mobile = me.userInfoManager.mobile;
                  // var myInfo = Trafficeye.getMyInfo();
+                 // alert(mobile);
                  if (Trafficeye.mobilePlatform.android) {
                         window.JSAndroidBridge.makeACall(mobile);
                     } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
