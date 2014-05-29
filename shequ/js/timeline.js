@@ -941,12 +941,14 @@
             }
         }
         window.gotoTimeline = function(uid,evt) {
+            var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.lookOtherTimeline(uid,evt);
             }
         };
 
         window.gotoEvtdetail = function(publishId,evt) {
+            var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.lookAllCommentbtnUp(publishId,evt);
             }
@@ -967,18 +969,21 @@
         };
 
         window.addLook = function(uid,evt) {
+            var pm = Trafficeye.pageManager;
                     if (pm.init) {
                         pm.addLook(uid,evt);
                     }
                 };
 
         window.cancelLook = function(uid,evt) {
+            var pm = Trafficeye.pageManager;
                     if (pm.init) {
                         pm.cancelLook(uid,evt);
                     }
                 };
                 
         window.reqAddLookSuccess = function(data,uid,evt) {
+            var pm = Trafficeye.pageManager;
                     if (pm.init) {
                         pm.reqAddLookSuccess(data,uid,evt);
                     }
@@ -992,6 +997,7 @@
         };
 
         window.backPage = function() {
+            var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.backPage();
             }

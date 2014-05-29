@@ -119,7 +119,7 @@
          * 返回上一页面
          */
         backPage : function() {
-            var fromSource = Trafficeye.fromSource();
+            // var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage("timeline.html");
             // Trafficeye.toPage(fromSource.prepage);
         },

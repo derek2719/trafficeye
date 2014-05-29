@@ -120,7 +120,8 @@
              "ridelist": null,
              "loadmorebtn": null,
              "publishinfo" : null,
-             "publishtext" : null
+             "publishtext" : null,
+             "publishpic" : null
          };
          //当点击请求提示框的关闭按钮，意味着中断请求，在关闭提示框后，如果请求得到响应，也不进行下一步业务处理。
          this.isStopReq = false;
@@ -158,6 +159,7 @@
                  loadmorebtnElem = me.elems["loadmorebtn"],
                  publishtextbtnElem = me.elems["publishtext"],
                  publishinfobtnElem = me.elems["publishinfo"],
+                 publishpicbtnElem = me.elems["publishpic"],
                  backpagebtnElem = me.elems["backpagebtn"];
              //返回按钮
              backpagebtnElem.onbind("touchstart", me.btnDown, backpagebtnElem);
@@ -167,6 +169,7 @@
              loadmorebtnElem.css("display", "none");
              publishinfobtnElem.css("display", "none");
              publishtextbtnElem.css("display", "none");
+             publishpicbtnElem.css("display", "none");
          },
          /**
           * 按钮按下事件处理器
@@ -217,7 +220,8 @@
                                     me.reqRideListSuccess(data);
                                 }else{
                                     me.elems["publishinfo"].css("display", "");
-                                    me.elems["publishtext"].css("display","")
+                                    me.elems["publishtext"].css("display","");
+                                    me.elems["publishpic"].css("display","");
                                 }
                              } else if (data.state.code == -99) { //没有加载更多
                                  me.reqRideNo();
