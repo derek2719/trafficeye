@@ -121,7 +121,7 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_ride.html");
+             Trafficeye.toPage("pcar_index.html");
          },
          ridebtnUp : function(evt) {
             var me = this,
@@ -170,12 +170,12 @@
                          if (data && !me.isStopReq) {
                              var state = data.state.code;
                              if (state == 2) {
-                                 Trafficeye.trafficeyeAlert(data.state.desc);
+                                 // Trafficeye.trafficeyeAlert(data.state.desc);
                                  
                                   Trafficeye.toPage("pcar_userinfo.html");
                                  
                              }else {
-                                 Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
+                                 // Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
                              }
                          } else {
                              //me.reqPraiseFail();
