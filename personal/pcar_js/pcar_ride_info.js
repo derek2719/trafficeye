@@ -235,7 +235,26 @@
              var elem = $(evt).addClass("curr");
              setTimeout((function() {
                  $(elem).removeClass("curr");
-                 Trafficeye.toPage("pcar_hepublish.html");
+                 // Trafficeye.toPage("pcar_hepublish.html");
+                 //********跳转到社区个人时间线***********
+                 var myInfo = Trafficeye.getMyInfo();
+                 var data = {
+                     "prepage": "trafficeye_personal",
+                     "pid": myInfo.pid,
+                     "uid": myInfo.uid,
+                     "uidFriend": myInfo.userinfo.uid,
+                     "traffic_lookfans": "look"
+                 };
+                 var dataStr = Trafficeye.json2Str(data);
+                 if (Trafficeye.mobilePlatform.android) {
+                     window.JSAndroidBridge.gotoCommunity("lookfans", dataStr);
+                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                     var rewardContent = encodeURI(encodeURI(dataStr));
+                     Trafficeye.toPage("objc:??gotoCommunity::?lookfans:?" + rewardContent);
+                 } else {
+                     alert("调用修改用户信息接口,PC不支持.");
+                 }
+             //********跳转到社区个人时间线***********
              }), Trafficeye.MaskTimeOut);
          },
          //查看他发布的动态

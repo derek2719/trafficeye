@@ -35,6 +35,13 @@
 	function getTimetemp() {
 		return new Date().getTime();
 	};
+
+	myCommon.platform = {
+		isAndroid : /android/i.test(navigator.userAgent),
+		isIpad : /ipad/i.test(navigator.userAgent),
+		isIphone : /iphone/i.test(navigator.userAgent)
+	};
+
 	/**
 	 * 兼容移动浏览器的事件机制
 	 */

@@ -8,6 +8,7 @@
 	var os = global.offlineStore;
 	var pu = global.pageUtil;
 	var gsu = global.getServerUrl;
+	var pf = global.platform;
 
 	/**
 	 * 输入关键字自动补全处理
@@ -91,7 +92,7 @@
 						startSiteCleanBtnElemZ.hide();
 					}	
 				}
-			}, 1000);
+			}, 30000);
 		},
 		fireAutoTip : function() {
 			var me = this;
@@ -174,7 +175,7 @@
 						endSiteCleanBtnElemZ.hide();
 					}	
 				}
-			}, 1000);
+			}, 30000);
 		},
 		fireAutoTip : function() {
 			var me = this;
@@ -241,4 +242,13 @@
 			pu.toPage("bus_selectsite.html");
 		}
 	});
+
+	window.toPrePage = function() {
+		if (pf.isAndroid) {
+			window.JSAndroidBridge.closePage();
+		}
+		if (pf.isIpad || pf.isIphone) {
+			closePage();
+		}
+	};
 }());
