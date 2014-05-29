@@ -890,105 +890,122 @@
     var BASE_FRIENDSSHIP_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/friendships/";
 
     $(function(){
-        //请求用户信息协议
-        var userInfo_url = BASE_URL + "userinfo";
-        var friendsshipInfo_url = BASE_FRIENDSSHIP_URL + "find";
-        var data = Trafficeye.offlineStore.get("traffic_timeline");
-        if (data) {
-            var arr = data.split(",");
-            var userTimeline_uid = arr[arr.length - 1];
-            var userTimeline_data = {"uid":userTimeline_uid};
+        
+        // 获取从个人项目跳转过来的数据，回调函数
+        window.personalGotoCommunityPage  = function(dataClient){
+            Trafficeye.httpTip.closed();
+            var dataStr = Trafficeye.str2Json(dataClient);
+    
+            Trafficeye.offlineStore.set("traffic_myinfo", Trafficeye.json2Str(dataStr.myInfo));
+            Trafficeye.offlineStore.set("traffic_timeline",dataStr.traffic_timeline);
+            Trafficeye.offlineStore.set("traffic_fromsource",dataStr.prepage);
+            window.initPageManager();
+        };
+        
+        window.initPageManager = function(){
+            //请求用户信息协议
+            var userInfo_url = BASE_URL + "userinfo";
+            var friendsshipInfo_url = BASE_FRIENDSSHIP_URL + "find";
+            var data = Trafficeye.offlineStore.get("traffic_timeline");
+            if (data) {
+                var arr = data.split(",");
+                var userTimeline_uid = arr[arr.length - 1];
+                var userTimeline_data = {"uid":userTimeline_uid};
 
-            //存储当前显示时间线页面的用户信息
-            Trafficeye.offlineStore.set("traffic_timeline_user", userTimeline_uid);
+                //存储当前显示时间线页面的用户信息
+                Trafficeye.offlineStore.set("traffic_timeline_user", userTimeline_uid);
 
-            //获取本人UID
-            var myInfo = Trafficeye.getMyInfo();
-            //存储跳转到消息关注页面需要的数据
-            var chatData = {
-                "uid" : myInfo.uid,
-                "friend_id" : userTimeline_uid
-            };
-            
-            var chatDataStr = Trafficeye.json2Str(chatData);
+                //获取本人UID
+                var myInfo = Trafficeye.getMyInfo();
+                //存储跳转到消息关注页面需要的数据
+                var chatData = {
+                    "uid" : myInfo.uid,
+                    "friend_id" : userTimeline_uid
+                };
+                
+                var chatDataStr = Trafficeye.json2Str(chatData);
 
-            Trafficeye.offlineStore.set("traffic_chat", chatDataStr);
+                Trafficeye.offlineStore.set("traffic_chat", chatDataStr);
 
-            var flag = false;
-            
-            if (myInfo.uid != userTimeline_uid) {
-                flag = true;
+                var flag = false;
+                
+                if (myInfo.uid != userTimeline_uid) {
+                    flag = true;
+                }
+                var pm = new PageManager();
+
+                Trafficeye.pageManager = pm;
+                //初始化用户界面
+                pm.init(flag);
+                //请求用户数据，填充用户界面元素
+                pm.reqUserInfo(userInfo_url, userTimeline_data);
+                //判断是否是本人的时间线页面，如果是，不显示消息关注按钮，否则显示
+                if (myInfo.uid != userTimeline_uid) {
+                    //请求用户界面关系内容
+                    pm.reqRelationShipInfo(friendsshipInfo_url,chatData);
+                }            
             }
-            var pm = new PageManager();
-
-            Trafficeye.pageManager = pm;
-            //初始化用户界面
-            pm.init(flag);
-            //请求用户数据，填充用户界面元素
-            pm.reqUserInfo(userInfo_url, userTimeline_data);
-            //判断是否是本人的时间线页面，如果是，不显示消息关注按钮，否则显示
-            if (myInfo.uid != userTimeline_uid) {
-                //请求用户界面关系内容
-                pm.reqRelationShipInfo(friendsshipInfo_url,chatData);
-            }            
-
-            window.gotoTimeline = function(uid,evt) {
-                if (pm.init) {
-                    pm.lookOtherTimeline(uid,evt);
-                }
-            };
-
-            window.gotoEvtdetail = function(publishId,evt) {
-                if (pm.init) {
-                    pm.lookAllCommentbtnUp(publishId,evt);
-                }
-            };
-
-            window.gotoPraise = function(publishId, friendId, evt) {
-                var pm = Trafficeye.pageManager;
-                if (pm.init) {               
-                    $(evt.firstChild).addClass("curr");
-                    if (praiseTimer) {
-                        window.clearTimeout(praiseTimer);
-                        praiseTimer = null;
-                    }
-                    praiseTimer = window.setTimeout(function() {
-                        pm.praisebtnUp(publishId, friendId,evt);
-                    }, 1000);
-                }
-            };
-
-            window.addLook = function(uid,evt) {
-                        if (pm.init) {
-                            pm.addLook(uid,evt);
-                        }
-                    };
-
-            window.cancelLook = function(uid,evt) {
-                        if (pm.init) {
-                            pm.cancelLook(uid,evt);
-                        }
-                    };
-                    
-            window.reqAddLookSuccess = function(data,uid,evt) {
-                        if (pm.init) {
-                            pm.reqAddLookSuccess(data,uid,evt);
-                        }
-                    };
-                    
-             window.loadmorebtnUp = function(evt) {
-                 var pm = Trafficeye.pageManager;
-                if (pm.init) {
-                    pm.loadmorebtnUp(evt);
-                }
-            };
-
-            window.backPage = function() {
-                if (pm.init) {
-                    pm.backPage();
-                }
-            };
         }
+
+        window.gotoTimeline = function(uid,evt) {
+            if (pm.init) {
+                pm.lookOtherTimeline(uid,evt);
+            }
+        };
+
+        window.gotoEvtdetail = function(publishId,evt) {
+            if (pm.init) {
+                pm.lookAllCommentbtnUp(publishId,evt);
+            }
+        };
+
+        window.gotoPraise = function(publishId, friendId, evt) {
+            var pm = Trafficeye.pageManager;
+            if (pm.init) {               
+                $(evt.firstChild).addClass("curr");
+                if (praiseTimer) {
+                    window.clearTimeout(praiseTimer);
+                    praiseTimer = null;
+                }
+                praiseTimer = window.setTimeout(function() {
+                    pm.praisebtnUp(publishId, friendId,evt);
+                }, 1000);
+            }
+        };
+
+        window.addLook = function(uid,evt) {
+                    if (pm.init) {
+                        pm.addLook(uid,evt);
+                    }
+                };
+
+        window.cancelLook = function(uid,evt) {
+                    if (pm.init) {
+                        pm.cancelLook(uid,evt);
+                    }
+                };
+                
+        window.reqAddLookSuccess = function(data,uid,evt) {
+                    if (pm.init) {
+                        pm.reqAddLookSuccess(data,uid,evt);
+                    }
+                };
+                
+         window.loadmorebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.loadmorebtnUp(evt);
+            }
+        };
+
+        window.backPage = function() {
+            if (pm.init) {
+                pm.backPage();
+            }
+        };
+        window.initPageManager();
+        // window.personalGotoCommunityPage("{\"prepage\":\"trafficeye_personal\",\"pid\":\"BB7CAB21-2A8C-48D0-860B-C8B79EB2DE9C\",\"uid\":\"40324\",\"traffic_timeline\":\"40293\",\"myInfo\":{\"badgeNum\":1,\"avatarUrl\":\"\",\"wxNum\":\"1234\",\"level\":1,\"eventNum\":0,\"mobile\":\"13581604288\",\"frineds\":0,\"idNum\":\"\",\"totalMilage\":0,\"nextLevel\":2,\"city\":\"甘肃 兰州市\",\"realName\":\"张3\",\"ownedBadges\":[{\"name\":\"新人徽章\",\"id\":1,\"obtainTime\":\"2014-05-28 22:33:56\",\"smallImgName\":\"badge_register.png\",\"imgName\":\"badge_big_register.png\",\"desc\":\"注册账号\"}],\"email\":\"wgy52@wgy.wgy\",\"totalBadges\":30,\"totalTrackMilage\":0,\"fans\":0,\"carNum\":\"345345\",\"totalCoins\":0,\"username\":\"Wgy52\",\"userType\":\"trafficeye\",\"levelPoint\":30,\"levelPercent\":11,\"uid\":\"40324\",\"birthdate\":\"2014-01-09\",\"gender\":\"M\",\"totalPoints\":34,\"nextLevelPoint\":65,\"mobileValidate\":1,\"qq\":\"123321444\",\"description\":\"\",\"userGroup\":0}}");
+        
     }); 
     
  }(window));

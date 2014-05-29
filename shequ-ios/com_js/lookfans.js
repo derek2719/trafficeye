@@ -880,7 +880,7 @@
         
         // 获取从个人项目跳转过来的数据，回调函数
         window.personalGotoCommunityPage  = function(dataClient){
-            console.log(dataClient);
+
             Trafficeye.httpTip.closed();
             var dataStr = Trafficeye.str2Json(dataClient);
             var data ={

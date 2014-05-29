@@ -118,7 +118,9 @@
          this.elems = {
              "backpagebtn": null,
              "ridelist": null,
-             "loadmorebtn": null
+             "loadmorebtn": null,
+             "publishinfo" : null,
+             "publishtext" : null
          };
          //当点击请求提示框的关闭按钮，意味着中断请求，在关闭提示框后，如果请求得到响应，也不进行下一步业务处理。
          this.isStopReq = false;
@@ -154,6 +156,8 @@
          initEvents: function() {
              var me = this,
                  loadmorebtnElem = me.elems["loadmorebtn"],
+                 publishtextbtnElem = me.elems["publishtext"],
+                 publishinfobtnElem = me.elems["publishinfo"],
                  backpagebtnElem = me.elems["backpagebtn"];
              //返回按钮
              backpagebtnElem.onbind("touchstart", me.btnDown, backpagebtnElem);
@@ -161,6 +165,8 @@
              //隐藏加载更多按钮
              // loadmorebtnElem.style.display="none";//("display","none");
              loadmorebtnElem.css("display", "none");
+             publishinfobtnElem.css("display", "none");
+             publishtextbtnElem.css("display", "none");
          },
          /**
           * 按钮按下事件处理器
@@ -206,7 +212,13 @@
                          if (data && !me.isStopReq) {
                              var state = data.state.code;
                              if (state == 0) {
-                                 me.reqRideListSuccess(data);
+                                //如何有值，那么显示列表，否则现实发布按钮
+                                if(data.infoList.length>0){
+                                    me.reqRideListSuccess(data);
+                                }else{
+                                    me.elems["publishinfo"].css("display", "");
+                                    me.elems["publishtext"].css("display","")
+                                }
                              } else if (data.state.code == -99) { //没有加载更多
                                  me.reqRideNo();
                              } else {
@@ -340,6 +352,21 @@
              } else {
                  // me.reqPraiseFail();
              }
+         },
+         //发布拼车信息
+         publishInfo: function(evt) {
+             var me = this;
+             var elem = $(evt).addClass("curr");
+             setTimeout((function() {
+                 $(elem).removeClass("curr");
+                 //清楚缓存信息
+                 Trafficeye.offlineStore.remove("publishInfo_week");
+                 Trafficeye.offlineStore.remove("publishInfo_time");
+                 Trafficeye.offlineStore.remove("publishInfo_startloc");
+                 Trafficeye.offlineStore.remove("publishInfo_endloc");
+                 Trafficeye.offlineStore.remove("publishInfo_type");
+                 Trafficeye.toPage("pcar_publishinfo.html");
+             }), Trafficeye.MaskTimeOut);
          }
      };
 
@@ -405,6 +432,14 @@
              var pm = Trafficeye.pageManager;
              if (pm.init) {
                  pm.loadmorebtnUp(evt);
+             }
+         };
+         
+         //发布
+         window.publishInfo = function(evt) {
+             var pm = Trafficeye.pageManager;
+             if (pm.init) {
+                 pm.publishInfo(evt);
              }
          };
         window.initPageManager();

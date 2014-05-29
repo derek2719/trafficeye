@@ -235,15 +235,16 @@
              var elem = $(evt).addClass("curr");
              setTimeout((function() {
                  $(elem).removeClass("curr");
-                 // Trafficeye.toPage("pcar_hepublish.html");
+                 var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
+                var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
                  //********跳转到社区个人时间线***********
                  var myInfo = Trafficeye.getMyInfo();
                  var data = {
                      "prepage": "trafficeye_personal",
                      "pid": myInfo.pid,
                      "uid": myInfo.uid,
-                     "uidFriend": myInfo.userinfo.uid,
-                     "traffic_lookfans": "look"
+                     "traffic_timeline": pcar_publish_uid.pcar_publishuid,
+                     "myInfo": myInfo.userinfo
                  };
                  var dataStr = Trafficeye.json2Str(data);
                  if (Trafficeye.mobilePlatform.android) {
@@ -257,7 +258,7 @@
              //********跳转到社区个人时间线***********
              }), Trafficeye.MaskTimeOut);
          },
-         //查看他发布的动态
+         //电话他
          callperson: function(evt) {
              var me = this;
              var elem = $(evt).addClass("curr");
