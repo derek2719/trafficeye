@@ -141,6 +141,52 @@
              me.userInfoManager.setType("2");
              Trafficeye.offlineStore.set("publishInfo_type","2");
         },
+        
+        /**
+          * 判断个人信息是否完整
+          */
+         reqUserInfo: function() {
+             var me =this;
+             var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/validateUserInfo";
+             var myInfo = Trafficeye.getMyInfo();
+
+             var data = {
+                 "ua": myInfo.ua,
+                 "pid": myInfo.pid,
+                 "uid": myInfo.uid
+             };
+             
+             var reqParams = Trafficeye.httpData2Str(data);
+             if (url) {
+                 Trafficeye.httpTip.opened(function() {
+                     me.isStopReq = true;
+                 }, me);
+                 me.isStopReq = false;
+                 var reqUrl = url + reqParams;
+                 $.ajaxJSONP({
+                     url: reqUrl,
+                     success: function(data) {
+                         Trafficeye.httpTip.closed();
+                         if (data && !me.isStopReq) {
+                             var state = data.state.code;
+                             if (state == 2) {
+                                 Trafficeye.trafficeyeAlert(data.state.desc);
+                                 
+                                  Trafficeye.toPage("pcar_userinfo.html");
+                                 
+                             }else {
+                                 Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
+                             }
+                         } else {
+                             //me.reqPraiseFail();
+                         }
+                     }
+                 })
+             } else {
+                 // me.reqPraiseFail();
+             }
+         },
+        
          /**
           * 发布信息列表请求函数
           */
@@ -265,6 +311,7 @@
              //判断缓存中是否有userinfo信息
              if (myInfo.userinfo) {
                 // pm.reqRideInfo(0,pcar_flag.flag,pcar_flag.type);
+                pm.reqUserInfo();
              } else {
                  //让用户重新登录
                  Trafficeye.toPage("pre_login.html");

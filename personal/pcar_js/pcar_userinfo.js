@@ -21,7 +21,6 @@
          //ID元素对象集合
          this.elems = {
              "backpagebtn": null,
-             "ridelist": null,
              "username": null,
              "mobile": null,
              "city": null,
@@ -79,152 +78,19 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_ride_info.html");
-         },
-        /**
-          * 搭车信息列表请求函数
-          */
-         reqRideInfo: function(publishid) {
-             var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/infoDetail";
-             var myInfo = Trafficeye.getMyInfo();
-             var pointStr = myInfo.dataclient;
-             
-             var data = {
-                 "ua": myInfo.ua,
-                 "pid": myInfo.pid,
-                 "uid" : myInfo.uid,
-                 "infoId": publishid
-             };
-             
-             var me = this;
-             var reqParams = Trafficeye.httpData2Str(data);
-             if (url) {
-                 Trafficeye.httpTip.opened(function() {
-                     me.isStopReq = true;
-                 }, me);
-                 me.isStopReq = false;
-                 var reqUrl = url + reqParams;
-                 $.ajaxJSONP({
-                     url: reqUrl,
-                     success: function(data) {
-                         Trafficeye.httpTip.closed();
-                         if (data && !me.isStopReq) {
-                             var state = data.state.code;
-                             if (state == 0) {
-                                 me.reqRideListSuccess(data);
-                             }  else {
-                                 Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
-                             }
-                         } else {
-                             //me.reqPraiseFail();
-                         }
-                     }
-                 })
-             } else {
-                 // me.reqPraiseFail();
-             }
-         },
-        
-         /**
-          * 搭车用户显示函数
-          * @param  {String} url 服务URL
-          * flag 是ride 是搭车 ,away 是送人
-          * @param  {JSON Object} data 请求协议参数对象
-          */
-         reqRideListSuccess: function(data) {
-             // var data = Trafficeye.str2Json(data);
-             var me = this,
-                 ridelistElem = me.elems["ridelist"],
-                 ridemapElem = me.elems["ridemap"];
-             Trafficeye.httpTip.closed();
-
-             if (data) {
-             //用户信息更新
-                 var ridehtml = me.creatRideListHtml(data.info);
-                 ridelistElem.html(ridehtml);
-            }
-         },
-         
-         creatRideListHtml: function(data) {
-             var me = this;
-             var htmls = [];
-             var myInfo = Trafficeye.getMyInfo();
-             var dataAvatar = myInfo.userinfo.avatarUrl;
-             if(!dataAvatar)
-             {
-                 dataAvatar="per_img/mm.png";
-             }
-             if(data.type == "1"){
-               htmls.push("<div class=\"dache-box\" >");
-           }else{
-               htmls.push("<div class=\"dache-box p\" >");
-           }
-             // htmls.push("<div class=\"dache-box\" >");
-             htmls.push("<div class=\"d\">\<div class=\"dl\"><img src="+dataAvatar+" alt=\"\" width=\"40\" height=\"40\"/></div><div class=\"dr\">");
-             htmls.push("<h3>");
-             htmls.push(data.username);
-             htmls.push("<span></span></h3>");
-             htmls.push("<ul class=\"week\">");
-             if(data.day.sun == "1"){
-                htmls.push("<li class=\"select curr\">日</li>");
-            }else
-            {
-                htmls.push("<li>日</li>");
-            }
-             if(data.day.mon == "1"){
-                htmls.push("<li class=\"select curr\">一</li>");
-            }else
-            {
-                htmls.push("<li>一</li>");
-            }
-            if(data.day.tues == "1"){
-                htmls.push("<li class=\"select curr\">二</li>");
-            }else
-            {
-                htmls.push("<li>二</li>");
-            }
-            if(data.day.wed == "1"){
-                htmls.push("<li class=\"select curr\">三</li>");
-            }else
-            {
-                htmls.push("<li>三</li>");
-            }
-            if(data.day.thur == "1"){
-                htmls.push("<li class=\"select curr\">四</li>");
-            }else
-            {
-                htmls.push("<li>四</li>");
-            }
-            if(data.day.fri == "1"){
-                htmls.push("<li class=\"select curr\">五</li>");
-            }else
-            {
-                htmls.push("<li>五</li>");
-            }
-            if(data.day.sat == "1"){
-                htmls.push("<li class=\"select curr\">六</li>");
-            }else
-            {
-                htmls.push("<li>六</li>");
-            }
-            htmls.push("<span>"+data.time+"左右</span>");
-            htmls.push("</ul></div></div><div class=\"ss\">");
-            htmls.push("<h2>起点:<span>"+data.startLocation+"</span></h2>");
-            htmls.push("<h2 class=\"myh2\">终点:<span>"+data.endLocation+"</span></h2>");
-            htmls.push("<div class=\"add\">"+data.city+"</div></div></div>");
-            return htmls.join("");
+             Trafficeye.toPage("pcar_index.html");
          },
          /**
          * 用户信息请求函数
          */
-        reqUserInfo : function(uidfriend) {
+        reqUserInfo : function() {
             var url = Trafficeye.BASE_USER_URL + "userInfo";
             var myInfo = Trafficeye.getMyInfo();
             var data = {
                 "ua" : myInfo.ua,
                 "pid" : myInfo.pid,
                 "uid" : myInfo.uid,
-                "uidFriend" : uidfriend
+                "uidFriend" : myInfo.uid
             };
             var me = this;
             var reqParams = Trafficeye.httpData2Str(data);
@@ -310,115 +176,83 @@
         },
          //查看他发布的动态
          username: function(evt) {
-             var me = this;
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             var myInfo = Trafficeye.getMyInfo();
-             if(myInfo.uid == pcar_publish_uid.pcar_publishuid){
+
                  var elem = $(evt).addClass("curr");
                  setTimeout((function() {
                      $(elem).removeClass("curr");
                      Trafficeye.toPage("pcar_relname.html");
                  }), Trafficeye.MaskTimeOut);
-            }
+ 
          },
          //查看他发布的动态
          mobile: function(evt) {
-             var me = this;
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             var myInfo = Trafficeye.getMyInfo();
-             if(myInfo.uid == pcar_publish_uid.pcar_publishuid){
+   
                  var elem = $(evt).addClass("curr");
                  setTimeout((function() {
                      $(elem).removeClass("curr");
                      Trafficeye.toPage("pcar_mobile.html");
                  }), Trafficeye.MaskTimeOut);
-            }
+     
          },
          //查看他发布的动态
          city: function(evt) {
-             var me = this;
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             var myInfo = Trafficeye.getMyInfo();
-             if(myInfo.uid == pcar_publish_uid.pcar_publishuid){
+
                  var elem = $(evt).addClass("curr");
                  setTimeout((function() {
                      $(elem).removeClass("curr");
                      Trafficeye.toPage("pcar_city.html");
                  }), Trafficeye.MaskTimeOut);
-            }
+      
          },
          //查看他发布的动态
          sex: function(evt) {
-             var me = this;
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             var myInfo = Trafficeye.getMyInfo();
-             if(myInfo.uid == pcar_publish_uid.pcar_publishuid){
+
                  var elem = $(evt).addClass("curr");
                  setTimeout((function() {
                      $(elem).removeClass("curr");
                      Trafficeye.toPage("pcar_sex.html");
                  }), Trafficeye.MaskTimeOut);
-            }
+     
          },
          //查看他发布的动态
          birthday: function(evt) {
-             var me = this;
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             var myInfo = Trafficeye.getMyInfo();
-             if(myInfo.uid == pcar_publish_uid.pcar_publishuid){
+
                  var elem = $(evt).addClass("curr");
                  setTimeout((function() {
                      $(elem).removeClass("curr");
                      Trafficeye.toPage("pcar_birthday.html");
                  }), Trafficeye.MaskTimeOut);
-            }
+          
          },
          //查看他发布的动态
          carnumber: function(evt) {
-             var me = this;
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             var myInfo = Trafficeye.getMyInfo();
-             if(myInfo.uid == pcar_publish_uid.pcar_publishuid){
+
                  var elem = $(evt).addClass("curr");
                  setTimeout((function() {
                      $(elem).removeClass("curr");
                      Trafficeye.toPage("pcar_carnum.html");
                  }), Trafficeye.MaskTimeOut);
-            }
+
          },
          //查看他发布的动态
          weixin: function(evt) {
-             var me = this;
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             var myInfo = Trafficeye.getMyInfo();
-             if(myInfo.uid == pcar_publish_uid.pcar_publishuid){
+
                  var elem = $(evt).addClass("curr");
                  setTimeout((function() {
                      $(elem).removeClass("curr");
                      Trafficeye.toPage("pcar_weixin.html");
                  }), Trafficeye.MaskTimeOut);
-            }
+
          },
          //查看他发布的动态
          qqnum: function(evt) {
-             var me = this;
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             var myInfo = Trafficeye.getMyInfo();
-             if(myInfo.uid == pcar_publish_uid.pcar_publishuid){
+
                  var elem = $(evt).addClass("curr");
                  setTimeout((function() {
                      $(elem).removeClass("curr");
                      Trafficeye.toPage("pcar_qqnum.html");
                  }), Trafficeye.MaskTimeOut);
-            }
+
          }
      };
 
@@ -427,18 +261,11 @@
         window.initPageManager = function() {
 //把来源信息存储到本地
 
-             var fromSource = {"sourcepage":"pcar_index.html","currpage" : "pcar_ride_info1.html","prepage" : "pcar_ride_info.html"}
+             var fromSource = {"sourcepage":"pcar_index.html","currpage" : "pcar_userinfo.html","prepage" : "pcar_publishinfo.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
              
-             var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
-             var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-             
-             var publish_id = Trafficeye.offlineStore.get("traffic_pcar_publish_id");
-             var pcar_publishid = Trafficeye.str2Json(publish_id);
-             
-             var traffic_pcar_flag = Trafficeye.offlineStore.get("traffic_pcar_flag");
-             var pcar_flag = Trafficeye.str2Json(traffic_pcar_flag);
+    
              
              //获取我的用户信息
              var myInfo = Trafficeye.getMyInfo();
@@ -452,15 +279,10 @@
              //初始化用户界面
              pm.init();
              pm.myInfo = myInfo;
-             if(pcar_flag.flag == "ride"){
-               pm.elems["title"].html("搭车详细信息");
-             }else if(pcar_flag.flag == "away"){
-               pm.elems["title"].html("送人详细信息");
-             }
+          
              //判断缓存中是否有userinfo信息
              if (myInfo.userinfo) {
-                pm.reqRideInfo(pcar_publishid.ride_id);
-                pm.reqUserInfo(pcar_publish_uid.pcar_publishuid);
+                pm.reqUserInfo();
              } else {
                  //让用户重新登录
                  Trafficeye.toPage("pre_login.html");
