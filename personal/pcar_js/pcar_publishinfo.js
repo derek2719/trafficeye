@@ -200,7 +200,12 @@
                              var state = data.state.code;
                              if (state == 0) {
                                  Trafficeye.trafficeyeAlert("发布成功!");
-                                 Trafficeye.toPage("pcar_ride.html");
+                                 if(Trafficeye.fromSource){
+                                      var presource = Trafficeye.fromSource();
+                                     Trafficeye.toPage(presource.currpage);
+                                 }else{
+                                    Trafficeye.toPage("pcar_index.html");
+                                 }
                              }else {
                                  Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
                              }
