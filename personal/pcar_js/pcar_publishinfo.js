@@ -219,7 +219,7 @@
              }
              if(!pbtype){
                 // document.getElementById("endloc").value=pbendloc.endLocation;
-                Trafficeye.trafficeyeAlert("您为选择发布类别");
+                Trafficeye.trafficeyeAlert("您未选择发布类别");
                 return;
             }
              var data = {
