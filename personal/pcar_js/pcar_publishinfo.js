@@ -217,7 +217,11 @@
                 Trafficeye.trafficeyeAlert("您未选择终点");
                 return;
              }
-            
+             if(!pbtype){
+                // document.getElementById("endloc").value=pbendloc.endLocation;
+                Trafficeye.trafficeyeAlert("您为选择发布类别");
+                return;
+            }
              var data = {
                  "ua": myInfo.ua,
                  "pid": myInfo.pid,
