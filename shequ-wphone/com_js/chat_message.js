@@ -265,8 +265,12 @@
 
 
     $(function(){
-
-        window.initPageManager = function(uid,friend_id){
+        //wphone 初始化参数，uid,friend_id
+        initPageManager = function(wphonestr){
+             Trafficeye.httpTip.closed();
+            var datawphoneStr = Trafficeye.str2Json(wphonestr);
+            var uid = datawphoneStr.uid;
+            var friend_id = datawphoneStr.friend_id;
             var messageInfo_url = BASE_URL + "findList";
             var dataStr = Trafficeye.offlineStore.get("traffic_chat");
             var messageInfo_data = {"uid" : uid ,"friend_id" : friend_id , "page" : "0","count":"10"};

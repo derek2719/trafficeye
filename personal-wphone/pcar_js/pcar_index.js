@@ -142,7 +142,7 @@
     $(function(){
 
          // 初始化页面函数isLogin,usersInfoClient,ua,pid,dataClient
-        window.callbackInitPage = function(datawphone){
+        callbackInitPage = function(datawphone){
             Trafficeye.httpTip.closed();
             var datawphoneStr = Trafficeye.str2Json(datawphone);
             var usersInfoClient = datawphoneStr.usersInfoClient;

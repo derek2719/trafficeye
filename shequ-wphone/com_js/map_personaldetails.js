@@ -184,7 +184,9 @@
                     window.init.finish();
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://closeSelf");
-                } else {
+                } else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("closeSelf");
+                }else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }       
         },
@@ -490,8 +492,17 @@
     var BASE_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/user/timeLine/";
     var BASE_PRAISE_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/";
     $(function(){
-        //客户端本地调用接口 
-        window.initPageManagerClient = function(publishId,width,height,uid,pid,source,publishType){
+        //客户端本地调用接口 ,publishId,width,height,uid,pid,source,publishType
+        initPageManagerClient = function(wphonestr){
+            Trafficeye.httpTip.closed();
+            var datawphoneStr = Trafficeye.str2Json(wphonestr);
+            var publishId = datawphoneStr.publishId;
+            var width = datawphoneStr.width;
+            var height = datawphoneStr.height;
+            var uid = datawphoneStr.uid;
+            var pid = datawphoneStr.pid;
+            var source = datawphoneStr.source;
+            var publishType = datawphoneStr.publishType;
             //把来源信息存储到本地
              var fromSource = {"source" : source,"prepage" : "map_personaldetails.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);

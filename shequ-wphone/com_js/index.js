@@ -268,6 +268,8 @@
                 window.init.finish();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 Trafficeye.toPage("objc://closeSelf");
+            }  else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("closeSelf");
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
@@ -280,6 +282,8 @@
                 window.init.goPersonal();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 Trafficeye.toPage("objc://goUserCenter");
+            }  else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("goUserCenter");
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
@@ -293,7 +297,9 @@
                     window.init.goPersonal();
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://goUserCenter");
-                } else {
+                }  else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("goUserCenter");
+            } else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
             }),Trafficeye.MaskTimeOut);       
@@ -315,6 +321,8 @@
                 window.init.goUserInfoMgr();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 Trafficeye.toPage("objc://goUserEdit");
+            }  else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("goUserEdit");
             } else {
                 alert("调用本地goUserInfoMgr方法,PC不支持.");
             }
@@ -822,10 +830,17 @@
                 pm.headimgbtnUp(evt);
             }
         };
-
-        window.initPageManager = function(uid, pid,width,height,source) {
+        //wphone调用的入口函数,uid, pid,width,height,source
+        initPageManager = function(wphonestr) {
+             Trafficeye.httpTip.closed();
+            var datawphoneStr = Trafficeye.str2Json(wphonestr);
+            var uid = datawphoneStr.uid;
+            var pid = datawphoneStr.pid;
+            var width = datawphoneStr.width;
+            var height = datawphoneStr.height;
+            var source = datawphoneStr.source;
             //把来源信息存储到本地
-             var fromSource = {"source" : source,"prepage" : "com_index.html"}
+             var fromSource = {"source" : datawphoneStr,"prepage" : "com_index.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
             //请求用户信息协议

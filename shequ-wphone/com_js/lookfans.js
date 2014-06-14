@@ -242,6 +242,8 @@
                     window.init.finish();
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://closeSelf");
+                }  else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("closeSelf");
                 } else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
@@ -396,7 +398,9 @@
                 window.init.goPersonal();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 Trafficeye.toPage("objc://goUserCenter");
-            } else {
+            }  else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("goUserCenter");
+                } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
         },
@@ -714,7 +718,9 @@
                     window.init.goPersonal();
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://goUserCenter");
-                } else {
+                } else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("goUserCenter");
+                }else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
             }),Trafficeye.MaskTimeOut);

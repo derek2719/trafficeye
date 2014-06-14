@@ -134,7 +134,11 @@
                                     var rewardContent = encodeURI(encodeURI(dataReward));
                                     var content = encodeURI(encodeURI(dataUserInfo));
                                     window.location.href=("objc:??updateUserInfo::?"+content+":?"+rewardContent);
-                                } else {
+                                }  else if (Trafficeye.mobilePlatform.wphone) {
+                                    var rewardContent = encodeURI(encodeURI(dataReward));
+                                    var content = encodeURI(encodeURI(dataUserInfo));
+                                    window.external.notify("updateUserInfo?content="+content+"&rewardContent="+rewardContent);
+                                }else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
                                 Trafficeye.offlineStore.set("traffic_infosurveycar","car");

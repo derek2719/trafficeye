@@ -286,6 +286,8 @@
                 window.invitation.getList('sinaweibo',0,50);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 Trafficeye.toPage("objc://lookupfriends::/0:/50:/sinaweibo");
+            }  else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("lookupfriends?start=0&count=50&inviteUserType=sinaweibo");
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
@@ -342,6 +344,8 @@
                     } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                         var content = encodeURI(encodeURI(userData));
                         Trafficeye.toPage("objc://invitation::/"+content+":/"+inviteUserType);
+                    }  else if (Trafficeye.mobilePlatform.wphone) {
+                        window.external.notify("invitation?content="+content+"&inviteUserType="+inviteUserType);
                     } else {
                         alert("调用本地invation方法,PC不支持.");
                     }
@@ -364,7 +368,9 @@
                      window.invitation.binding(billingUserType);
                  } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                      Trafficeye.toPage("objc://bingdingStep1::/"+billingUserType);
-                 } else {
+                 }  else if (Trafficeye.mobilePlatform.wphone) {
+                        window.external.notify("bingdingStep1?billingUserType="+billingUserType);
+                    } else {
                      alert("调用本地goPersonal方法,PC不支持.");
                  }
                  window.initPageManager(false);
@@ -394,6 +400,8 @@
                 window.invitation.getList('qqweibo',0,50);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 Trafficeye.toPage("objc://lookupfriends::/0:/50:/qqweibo");
+            }  else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("lookupfriends?start=0&count=50&inviteUserType=qqweibo");
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
@@ -412,6 +420,8 @@
                 window.invitation.getList('trafficeye',0,10);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 Trafficeye.toPage("objc://invitation");
+            } else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("invitation");
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
@@ -701,6 +711,8 @@
                     window.invitation.getList('sinaweibo',page,count);
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://lookupfriends::/"+page+":/"+count+":/sinaweibo");
+                }   else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("lookupfriends?page="+page+"&count="+count+"&inviteUserType=sinaweibo");
                 } else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
@@ -709,6 +721,8 @@
                     window.invitation.getList('qqweibo',page,count);
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://lookupfriends::/"+page+":/"+count+":/qqweibo");
+                }   else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("lookupfriends?page="+page+"&count="+count+"&inviteUserType=qqweibo");
                 } else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
@@ -747,6 +761,8 @@
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://lookupfriends::/0:/50:/all");
                     //   Trafficeye.toPage("invite.html");
+                }   else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("lookupfriends?start=0&count=50&inviteUserType=all");
                 } else {            
                     alert("调用邀请.");
                 }  
@@ -812,7 +828,7 @@
                 }
             }else{
                     var content = encodeURI(encodeURI("缓存过期,获取列表失败"));
-                    Trafficeye.toPage("objc://showAlert::/"+content); 
+                    // Trafficeye.toPage("objc://showAlert::/"+content); 
                     bindingillingbtnElem.css("display", "");
                     sendtextElem.css("display", "none");
                     billingtextElem.css("display", "");
@@ -846,6 +862,8 @@
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://lookupfriends::/0:/50:/"+inviteUserType);
                     //   Trafficeye.toPage("invite.html");
+                }   else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("lookupfriends?start=0&count=50&inviteUserType="+inviteUserType);
                 } else {            
                     alert("调用邀请.");
                 } 

@@ -280,7 +280,9 @@
                         window.init.goPersonal();
                     } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                         Trafficeye.toPage("objc://goUserCenter");
-                    } else {
+                    } else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("goUserCenter");
+                }else {
                         alert("调用本地goPersonal方法,PC不支持.");
                     }
                 }else{
@@ -294,7 +296,10 @@
                     } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                         var content = encodeURI(encodeURI(dataStr));
                         Trafficeye.toPage("objc://gotoPersonalDetail::/"+content);
-                    } else {
+                    } else if (Trafficeye.mobilePlatform.wphone) {
+                        var content = encodeURI(encodeURI(dataStr));
+                    window.external.notify("gotoPersonalDetail?content="+content);
+                }else {
                         alert("调用本地goPersonal方法,PC不支持.");
                     }
                 }
@@ -313,7 +318,9 @@
                         window.init.goPersonal();
                     } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                         Trafficeye.toPage("objc://goUserEdit");
-                    } else {
+                    } else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("goUserEdit");
+                }else {
                         alert("调用本地goPersonal方法,PC不支持.");
                     }
                     }),Trafficeye.MaskTimeOut);
@@ -733,7 +740,9 @@
                     window.init.finish();
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                     Trafficeye.toPage("objc://closeSelf");
-                } else {
+                } else if (Trafficeye.mobilePlatform.wphone) {
+                    window.external.notify("closeSelf");
+                }else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
             }else{

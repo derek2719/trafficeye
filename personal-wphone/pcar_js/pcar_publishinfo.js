@@ -343,6 +343,8 @@
                 window.JSAndroidBridge.chooseLocation("start");
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 window.location.href=("objc:??chooseLocation::?start");
+            } else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("chooseLocation?start=start");
             } else {
                 alert("调用修改用户信息接口,PC不支持.");
                 window.callbackChooseLocation("start","116.40168","39.9077","天安门东站C东南口");
@@ -355,6 +357,8 @@
                 window.JSAndroidBridge.chooseLocation("end");
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 window.location.href=("objc:??chooseLocation::?end");
+            } else if (Trafficeye.mobilePlatform.wphone) {
+                window.external.notify("chooseLocation?end=end");
             } else {
                 window.callbackChooseLocation("end","119","911","安华桥伦洋大厦");
                 alert("调用修改用户信息接口,PC不支持.");
