@@ -18,6 +18,12 @@
 		pu.toPage("bus_index.html");
 	});
 
+	//注册加载取消按钮事件
+	var loadingidbtnElemZ = $("#loadingid");
+	eu.addEventListener(loadingidbtnElemZ, "mousedown", function() {
+		loadingidbtnElemZ.hide();
+	});
+	
 	/**
 	 * 关键字搜索
 	 * @param {String} key 关键字

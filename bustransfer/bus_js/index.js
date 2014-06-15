@@ -45,7 +45,11 @@
 		driverbtnElemZ.removeClass("curr");
 		searchType = 3;
 	});
-	
+	//注册加载取消按钮事件
+	var loadingidbtnElemZ = $("#loadingid");
+	eu.addEventListener(loadingidbtnElemZ, "mousedown", function() {
+		loadingidbtnElemZ.hide();
+	});
 
 	//注册互换起始点按钮事件
 	var changebtnElemZ = $("#changebtn");

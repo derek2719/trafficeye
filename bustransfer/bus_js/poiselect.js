@@ -24,6 +24,12 @@
 		os.remove("busEndData");
 	};
 
+	//注册加载取消按钮事件
+	var loadingidbtnElemZ = $("#loadingid");
+	eu.addEventListener(loadingidbtnElemZ, "mousedown", function() {
+		loadingidbtnElemZ.hide();
+	});
+	
 	//本地代码调用JS方法
 	window.callbackInitSearchPage = function(intisLogin,stringuserInfoJSON,stringua,stringpid,Stringjson) {
 		var obj = global.jsonUtil.toJsonObj(Stringjson);
