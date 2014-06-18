@@ -140,7 +140,7 @@
     };
     
     $(function(){
-
+         Trafficeye.httpTip.closed();
          // 初始化页面函数
         window.callbackInitPage = function(isLogin,usersInfoClient,ua,pid,dataClient){
             Trafficeye.httpTip.closed();
@@ -189,6 +189,7 @@
         };
         
         window.initPageManager = function() {
+            Trafficeye.httpTip.closed();
             //把来源信息存储到本地
              var fromSource = {"sourcepage" : "pcar_index.html","currpage" : "pcar_index.html","prepage" : "pcar_index.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
