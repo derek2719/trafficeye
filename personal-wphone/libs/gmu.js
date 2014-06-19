@@ -116,7 +116,7 @@
   ;['swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown', 'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(m){
     $.fn[m] = function(callback){ return this.bind(m, callback) }
   })
-})(Zepto);
+})(jQuery);
 
 /*!Extend zepto.extend.js*/
 /**
@@ -139,7 +139,7 @@
                 : parent !== node && parent.contains(node)
         }
     });
-})(Zepto);
+})(jQuery);
 
 
 //Core.js
@@ -391,7 +391,7 @@
 
     var toString = $.toString;
 
-})(Zepto);
+})(jQuery);
 
 //Support.js
 (function($, undefined) {
@@ -419,7 +419,7 @@
         uc: /UC/i.test(ua) || /UC/i.test(na)
     } );
 
-    br.uc = br.uc || !br.qq && !br.chrome && !br.firefox && !/safari/i.test(ua);
+    // br.uc = br.uc || !br.qq && !br.chrome && !br.firefox && !/safari/i.test(ua);
 
     try {
         br.version = br.uc ? na.match(/UC(?:Browser)?\/([\d.]+)/)[1] : br.qq ? ua.match(/MQQBrowser\/([\d.]+)/)[1] : br.version;
@@ -442,13 +442,13 @@
      * }
      */
     $.support = $.extend($.support || {}, {
-        orientation: !(br.uc || (parseFloat($.os.version)<5 && (br.qq || br.chrome))) && !($.os.android && parseFloat($.os.version) > 3) && "orientation" in window && "onorientationchange" in window,
+        // orientation: !(br.uc || (parseFloat($.os.version)<5 && (br.qq || br.chrome))) && !($.os.android && parseFloat($.os.version) > 3) && "orientation" in window && "onorientationchange" in window,
         touch: "ontouchend" in document,
         cssTransitions: "WebKitTransitionEvent" in window,
         has3d: 'WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix()
     });
 
-})(Zepto);
+})(jQuery);
 
 //Event.js
 (function($) {
@@ -558,5 +558,5 @@
             $(document).off('touchstart', _touchstartHander).one('touchstart', _touchstartHander);
         }
     });
-})(Zepto);
+})(jQuery);
 
