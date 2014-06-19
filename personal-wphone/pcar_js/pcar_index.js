@@ -204,7 +204,7 @@
             //初始化用户界面
             pm.init();
             //启动等待动画，等待客户端回调函数            
-            Trafficeye.httpTip.opened();
+            // Trafficeye.httpTip.opened();
         };
         
         window.publish = function(evt) {
