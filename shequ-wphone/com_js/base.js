@@ -61,7 +61,7 @@
                 return false;
             });
         };
-    })(Zepto);
+    })(jQuery);
 
     /**
      * 通过元素ID查找元素对象

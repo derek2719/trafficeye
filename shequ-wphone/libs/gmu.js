@@ -116,7 +116,7 @@
   ;['swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown', 'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(m){
     $.fn[m] = function(callback){ return this.bind(m, callback) }
   })
-})(Zepto);
+})(jQuery);
 
 /*!Extend zepto.extend.js*/
 /**
@@ -139,7 +139,7 @@
                 : parent !== node && parent.contains(node)
         }
     });
-})(Zepto);
+})(jQuery);
 
 
 //Core.js
@@ -391,7 +391,7 @@
 
     var toString = $.toString;
 
-})(Zepto);
+})(jQuery);
 
 //Support.js
 (function($, undefined) {
@@ -448,7 +448,7 @@
         has3d: 'WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix()
     });
 
-})(Zepto);
+})(jQuery);
 
 //Event.js
 (function($) {
@@ -558,5 +558,5 @@
             $(document).off('touchstart', _touchstartHander).one('touchstart', _touchstartHander);
         }
     });
-})(Zepto);
+})(jQuery);
 
