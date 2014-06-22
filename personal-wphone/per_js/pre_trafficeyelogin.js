@@ -89,12 +89,12 @@
 
             var textMail = me.elems["mail"].attr("value");
             var textPwd = me.elems["pwd"].attr("value");
-            var regMail=/^\w+([-\.]\w+)*@\w+([\.-]\w+)*\.\w{2,4}$/;
+            // var regMail=/^\w+([-\.]\w+)*@\w+([\.-]\w+)*\.\w{2,4}$/;
              //判断邮箱格式，昵称长度，密码长度是否符合《路况交通眼账号系统字段规则》
-             if(!regMail.test(textMail)){
-                Trafficeye.trafficeyeAlert("邮箱格式有误,请您重新输入");
-                return;
-             }
+             // if(!regMail.test(textMail)){
+             //    Trafficeye.trafficeyeAlert("邮箱格式有误,请您重新输入");
+             //    return;
+             // }
              if(textPwd.length>16 || textPwd.length < 6)
              {
                 Trafficeye.trafficeyeAlert("密码请您输入6-16个字符");

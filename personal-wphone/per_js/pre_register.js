@@ -93,12 +93,12 @@
             var textNickname = me.elems["nickname"].attr("value");
             var textPwd = me.elems["pwd"].attr("value");
             // var regMail ="/^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/";
-            var regMail=/^\w+([-\.]\w+)*@\w+([\.-]\w+)*\.\w{2,4}$/;
-             //判断邮箱格式，昵称长度，密码长度是否符合《路况交通眼账号系统字段规则》
-             if(!regMail.test(textMail)){
-                Trafficeye.trafficeyeAlert("邮箱格式有误,请您重新输入");
-                return;
-             }
+            // var regMail=/^\w+([-\.]\w+)*@\w+([\.-]\w+)*\.\w{2,4}$/;
+            //  //判断邮箱格式，昵称长度，密码长度是否符合《路况交通眼账号系统字段规则》
+            //  if(!regMail.test(textMail)){
+            //     Trafficeye.trafficeyeAlert("邮箱格式有误,请您重新输入");
+            //     return;
+            //  }
              if(textNickname.length>30 || textNickname.length < 2)
              {
                 Trafficeye.trafficeyeAlert("昵称请您输入2-30个字符");
