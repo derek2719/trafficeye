@@ -208,7 +208,7 @@
                  }, me);
                  me.isStopReq = false;
                  var reqUrl = url + reqParams;
-                 $.ajaxJSONP({
+                 $.ajax({dataType: "jsonp",
                      url: reqUrl,
                      success: function(data) {
                          Trafficeye.httpTip.closed();
@@ -336,7 +336,7 @@
                  }, me);
                  me.isStopReq = false;
                  var reqUrl = url + reqParams;
-                 $.ajaxJSONP({
+                 $.ajax({dataType: "jsonp",
                      url: reqUrl,
                      success: function(data) {
                          Trafficeye.httpTip.closed();

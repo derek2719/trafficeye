@@ -358,7 +358,8 @@
         };
         var reqParams = httpData2Str(data);
         var reqUrl = BASE_URL + reqParams;
-        $.ajaxJSONP({
+        $.ajax({
+        dataType: "jsonp",
             url : reqUrl,
             success: function(data){
                 

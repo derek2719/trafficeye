@@ -125,7 +125,7 @@
                 var reqUrl = url + reqParams;
                 // alert("-------------------------- :"+reqUrl+"--------------------------");
                 // console.log("-------------------------- :"+reqUrl+"--------------------------");
-                $.ajaxJSONP({
+                $.ajax({dataType: "jsonp",
                     url : reqUrl,
                     success: function(data){
                         Trafficeye.httpTip.closed();

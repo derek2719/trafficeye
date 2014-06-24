@@ -604,7 +604,7 @@
                 }, me);
                 me.isStopReq = false;
                 var reqUrl = url + reqParams;
-                $.ajaxJSONP({
+                $.ajax({dataType: "jsonp",
                     url : reqUrl,
                     success: function(data){
                         if (data && !me.isStopReq) {
@@ -658,7 +658,7 @@
                 }, me);
                 me.isStopReq = false;
                 var reqUrl = url + reqParams;
-                $.ajaxJSONP({
+                $.ajax({dataType: "jsonp",
                     url : reqUrl,
                     success: function(data){
                         if (data && !me.isStopReq) {

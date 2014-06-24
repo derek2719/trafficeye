@@ -127,8 +127,10 @@
     $(function(){
         // 初始化页面函数，isLogin,dataClient,isEdit,ua,pid,param,baseinfoflag
         callbackInitPage = function(datawphone){
+            console.log(datawphone);
             Trafficeye.httpTip.closed();
-            var datawphoneStr = Trafficeye.str2Json(datawphone);
+            // var datawphoneStr = Trafficeye.str2Json(datawphone);
+            var datawphoneStr = datawphone;
             var isLogin = datawphoneStr.isLogin;
             var dataClient = datawphoneStr.dataClient;
             var isEdit = datawphoneStr.isEdit;
@@ -289,8 +291,8 @@
             }
         };
       window.initPageManager();
-       // window.callbackInitPage(0,"",0,"I_7.1,i_2.2.6","A527E98B-27AC-47AA-9293-AACAE23BAB59","","info");
-      
+      window.callbackInitPage({"isLogin":1,"dataClient":"{\"uid\":\"43559\",\"userGroup\":0,\"username\":\"Asdfdse\",\"email\":\"aaaa@aaa.com\",\"carNum\":\"\",\"idNum\":\"\",\"qq\":\"\",\"wxNum\":\"\",\"gender\":\"S\",\"frineds\":0,\"fans\":0,\"description\":\"\",\"totalPoints\":33,\"totalCoins\":0,\"avatarUrl\":\"http://mobile.trafficeye.com.cn/media/avatars/43559/2014/06/1403448888194imageL.jpg\",\"totalMilage\":0.0,\"realName\":\"\",\"mobile\":\"\",\"mobileValidate\":0,\"birthdate\":\"\",\"totalTrackMilage\":0.0,\"eventNum\":3,\"userType\":\"trafficeye\",\"badgeNum\":2,\"level\":1,\"nextLevel\":2,\"levelPoint\":30,\"nextLevelPoint\":65,\"levelPercent\":8,\"city\":\"\",\"ownedBadges\":[{\"id\":17,\"imgName\":\"badge_big_event_1.png\",\"name\":\"首次上报交通事件\",\"desc\":\"首次上报交通事件\",\"obtainTime\":\"2014-06-22 23:24:12\",\"smallImgName\":\"badge_event_1.png\"},{\"id\":1,\"imgName\":\"badge_big_register.png\",\"name\":\"新人徽章\",\"desc\":\"注册账号\",\"obtainTime\":\"2014-06-21 21:32:08\",\"smallImgName\":\"badge_register.png\"}],\"totalBadges\":30}","isEdit":0,"ua":"NOKIA RM-822_apac_prc_204,WindowsPhone,WindowsPhone8.0.10211.0,1.0.0.0,WindowsPhone_2.0.0","pid":"F9F0F18B7E3D2020702278712A9EC304BF9BE4E3","param":"","baseinfoflag":""});
+      // window.callbackInitPage("{\"isLogin\":1,\"dataClient\":\"{\"uid\":\"43559\",\"userGroup\":0,\"username\":\"Asdfdse\",\"email\":\"aaaa@aaa.com\",\"carNum\":\"\",\"idNum\":\"\",\"qq\":\"\",\"wxNum\":\"\",\"gender\":\"S\",\"frineds\":0,\"fans\":0,\"description\":\"\",\"totalPoints\":33,\"totalCoins\":0,\"avatarUrl\":\"http://mobile.trafficeye.com.cn/media/avatars/43559/2014/06/1403448888194imageL.jpg\",\"totalMilage\":0.0,\"realName\":\"\",\"mobile\":\"\",\"mobileValidate\":0,\"birthdate\":\"\",\"totalTrackMilage\":0.0,\"eventNum\":3,\"userType\":\"trafficeye\",\"badgeNum\":2,\"level\":1,\"nextLevel\":2,\"levelPoint\":30,\"nextLevelPoint\":65,\"levelPercent\":8,\"city\":\"\",\"ownedBadges\":[{\"id\":17,\"imgName\":\"badge_big_event_1.png\",\"name\":\"首次上报交通事件\",\"desc\":\"首次上报交通事件\",\"obtainTime\":\"2014-06-22 23:24:12\",\"smallImgName\":\"badge_event_1.png\"},{\"id\":1,\"imgName\":\"badge_big_register.png\",\"name\":\"新人徽章\",\"desc\":\"注册账号\",\"obtainTime\":\"2014-06-21 21:32:08\",\"smallImgName\":\"badge_register.png\"}],\"totalBadges\":30}\",\"isEdit\":0,\"ua\":\"NOKIA RM-822_apac_prc_204,WindowsPhone,WindowsPhone8.0.10211.0,1.0.0.0,WindowsPhone_2.0.0\",\"pid\":\"F9F0F18B7E3D2020702278712A9EC304BF9BE4E3\",\"param\":\"\",\"baseinfoflag\":\"\"}");
       // window.callbackInitPage(1,"{\"badgeNum\":1,\"avatarUrl\":\"\",\"wxNum\":\"\",\"level\":0,\"eventNum\":0,\"mobile\":\"\",\"frineds\":0,\"idNum\":\"\",\"totalMilage\":0,\"nextLevel\":1,\"city\":\"\",\"realName\":\"\",\"ownedBadges\":[{\"name\":\"新人徽章\",\"id\":1,\"obtainTime\":\"2014-05-28 22:33:56\",\"smallImgName\":\"badge_register.png\",\"imgName\":\"badge_big_register.png\",\"desc\":\"注册账号\"}],\"email\":\"wgy52@wgy.wgy\",\"totalBadges\":30,\"totalTrackMilage\":0,\"fans\":0,\"carNum\":\"\",\"totalCoins\":0,\"username\":\"Wgy52\",\"userType\":\"trafficeye\",\"levelPoint\":0,\"levelPercent\":36,\"uid\":\"40324\",\"birthdate\":\"\",\"gender\":\"S\",\"totalPoints\":11,\"nextLevelPoint\":30,\"mobileValidate\":0,\"qq\":\"\",\"description\":\"\",\"userGroup\":0}",0,"I_7.1,i_2.2.6","58D8C0E9-1DD1-4141-8D17-984DC9057037","","info");
       });
  }(window));

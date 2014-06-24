@@ -383,7 +383,8 @@
                 me.isStopReq = false;
                 var reqUrl = url + reqParams;
               
-                $.ajaxJSONP({
+                $.ajax({
+                	dataType: "jsonp",
                     url : reqUrl,
                     success: function(data){
                         if (data && !me.isStopReq) {
@@ -411,7 +412,8 @@
                 }, me);
                 me.isStopReq = false;
                 var reqUrl = url + reqParams;
-                $.ajaxJSONP({
+                $.ajax({
+                	dataType: "jsonp",
                     url : reqUrl,
                     success: function(data){
                         if (data && !me.isStopReq) {
@@ -453,7 +455,8 @@
                 }, me);
                 me.isStopReq = false;
                 var reqUrl = url + reqParams;
-                $.ajaxJSONP({
+                $.ajax({
+                	dataType: "jsonp",
                     url : reqUrl,
                     success: function(data){
                         $(evt).removeClass("curr");
@@ -557,7 +560,8 @@
             var reqParams = Trafficeye.httpData2Str(data);
             if (url) {
                 var reqUrl = url + reqParams;
-                $.ajaxJSONP({
+                $.ajax({
+                	dataType: "jsonp",
                     url : reqUrl,
                     success: function(data){
                         Trafficeye.httpTip.closed();
@@ -671,7 +675,8 @@
             };
             var reqParams = Trafficeye.httpData2Str(data);
             var reqUrl = BASE_PRAISE_URL + reqParams;
-            $.ajaxJSONP({
+            $.ajax({
+            	dataType: "jsonp",
                 url : reqUrl,
                 success: function(data){
                     $(elem).removeClass("curr");
