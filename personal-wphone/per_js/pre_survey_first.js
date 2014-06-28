@@ -78,8 +78,8 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                // var textNickname = me.elems["inputValue"].attr("value");
-                var textNickname = me.elems["year"].attr("value")+"-"+me.elems["month"].attr("value");
+                // var textNickname = me.elems["inputValue"].val();
+                var textNickname = me.elems["year"].val()+"-"+me.elems["month"].val();
                 var fromSource = {"licenseTime" : textNickname}
                 var fromSourceStr = Trafficeye.json2Str(fromSource);
                 Trafficeye.offlineStore.set("survey_licenseTime", fromSourceStr);
@@ -197,6 +197,12 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.saveFunction(evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

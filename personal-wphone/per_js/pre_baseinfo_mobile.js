@@ -86,7 +86,7 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                var textNickname = me.elems["inputname"].attr("value");
+                var textNickname = me.elems["inputname"].val();
                 // console.log(textNickname.length);
                 if(textNickname.length!=11)
                  {
@@ -141,6 +141,12 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.trunce(evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

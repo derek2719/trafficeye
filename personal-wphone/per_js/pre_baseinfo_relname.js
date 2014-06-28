@@ -77,7 +77,7 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                // me.elems["inputname"].attr("value") = "";
+                // me.elems["inputname"].val() = "";
                 Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         },
@@ -96,7 +96,7 @@
          */
         saveNameFunctionReq : function(evt) {
             var me = this;
-            var textNickname = me.elems["inputname"].attr("value");
+            var textNickname = me.elems["inputname"].val();
             if(textNickname.length>30 || textNickname.length < 2)
              {
                 Trafficeye.trafficeyeAlert("真实姓名请您输入2-30个字符");
@@ -208,6 +208,12 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.trunceName(evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

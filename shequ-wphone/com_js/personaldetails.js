@@ -201,7 +201,7 @@
             var publish_id = obj.publishid;
             var myInfo = Trafficeye.getMyInfo();
 
-            var textContent = me.elems["inputtext"].attr("value");
+            var textContent = me.elems["inputtext"].val();
             var sumbitBtnUp_url = BASE_PRAISE_URL + "comments/create";
             var sumbitBtnUp_data = {"uid" : myInfo.uid,"publish_uid" : uid,"publish_id" : publish_id,"publish_type" : "event","comment_type" : 1,"pid" : myInfo.pid,"comment_content":$.trim(textContent)};
                 
@@ -524,6 +524,12 @@
             var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.lookOtherTimeline(uid,evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
         //window.initPageManagerClient(337,800,400,22376,123123);

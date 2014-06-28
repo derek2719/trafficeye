@@ -86,9 +86,9 @@
             var pid = myInfo.pid;
             var ua = myInfo.ua;
 
-            // var textMail = me.elems["mail"].attr("value");
-            var textNickname = me.elems["nickname"].attr("value");
-            // var textPwd = me.elems["pwd"].attr("value");
+            // var textMail = me.elems["mail"].val();
+            var textNickname = me.elems["nickname"].val();
+            // var textPwd = me.elems["pwd"].val();
             
              if(textNickname.length>30 || textNickname.length < 2)
              {
@@ -231,6 +231,12 @@
             }
         };
         window.registerReq();
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
     }); 
     
  }(window));

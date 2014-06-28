@@ -437,6 +437,12 @@
                 pm.loadmorebtnUp(evt);
             }
         };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
     }); 
     
  }(window));

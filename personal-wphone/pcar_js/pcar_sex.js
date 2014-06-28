@@ -86,7 +86,7 @@
          */
         saveNameFunction : function() {
             var me = this;
-             var textNickname = me.elems["selectValue"].attr("value");
+             var textNickname = me.elems["selectValue"].val();
                 var url = Trafficeye.BASE_RIDE_URL + "/carpoolInfo/v1/updateUserInfo";
                 var myInfo = Trafficeye.getMyInfo();
                 var data = {
@@ -189,6 +189,12 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.saveFunction(evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

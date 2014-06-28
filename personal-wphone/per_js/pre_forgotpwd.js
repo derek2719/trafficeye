@@ -85,7 +85,7 @@
             var pid = myInfo.pid;
             var ua = myInfo.ua;
 
-            var textMail = me.elems["mail"].attr("value");
+            var textMail = me.elems["mail"].val();
             // var regMail=/^\w+([-\.]\w+)*@\w+([\.-]\w+)*\.\w{2,4}$/;
             //  //判断邮箱格式，昵称长度，密码长度是否符合《路况交通眼账号系统字段规则》
             //  if(!regMail.test(textMail)){
@@ -167,6 +167,12 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.forgotpwd(evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

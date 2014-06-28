@@ -100,6 +100,13 @@
             //让用户重新登录
             Trafficeye.toPage("pre_login.html");
         }
+
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
     }); 
     
  }(window));

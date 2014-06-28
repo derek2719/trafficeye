@@ -312,7 +312,7 @@
           
             var uid = myInfo.uid;
 
-            var textContent = me.elems["inputsearch"].attr("value");
+            var textContent = me.elems["inputsearch"].val();
             if(textContent){
                 me.pageNumManager.reset();
                 var sumbitBtnUp_url = BASE_SEARCH_URL + "searchUser";
@@ -774,7 +774,7 @@
                         me.reqFriendsInfo(reqUrl, reqData);
                     }
                 }else{//请求搜索用户结果界面
-                    var textContent = me.elems["inputsearch"].attr("value");
+                    var textContent = me.elems["inputsearch"].val();
                     if(textContent){
                         userData.nickName = textContent;
                         var sumbitBtnUp_url = BASE_SEARCH_URL + "searchUser";
@@ -992,7 +992,12 @@
                 pm.headimgbtnUp(evt);
             }
         };
-        
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
         window.initPageManager();
         //window.personalGotoCommunityPage("{\"prepage\":\"trafficeye_personal\",\"pid\":\"7A0743A7-DD4A-426C-901D-4C9B143465A5\",\"uid\":\"3862\",\"uidFriend\":\"3862\",\"traffic_lookfans\":\"look\"}");
     //window.personalGotoCommunityPage('{\"prepage\":\"trafficeye_personal\",\"pid\":\"7A0743A7-DD4A-426C-901D-4C9B143465A5\",\"uid\":\"3862\",\"uidFriend\":\"3862\",\"traffic_lookfans\":\"look\"}');

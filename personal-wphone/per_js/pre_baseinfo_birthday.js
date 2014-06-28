@@ -89,7 +89,7 @@
          */
         saveNameFunction : function() {
             var me = this;
-            var textNickname = me.elems["year"].attr("value")+"-"+me.elems["month"].attr("value")+"-"+me.elems["day"].attr("value");
+            var textNickname = me.elems["year"].val()+"-"+me.elems["month"].val()+"-"+me.elems["day"].val();
             // alert(textNickname);
             var url = Trafficeye.BASE_USER_URL + "update";
             var myInfo = Trafficeye.getMyInfo();
@@ -177,7 +177,7 @@
         pm.init();
                 //判断缓存中是否有userinfo信息
         if(myInfo.userinfo){
-            // pm.elems["inputValue"].attr("value")=myInfo.birthdate;
+            // pm.elems["inputValue"].val()=myInfo.birthdate;
             // if(myInfo.userinfo.birthdate){
             //    // document.getElementById("inputValue").value=myInfo.userinfo.birthdate;
             // }
@@ -191,6 +191,12 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.saveFunction(evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

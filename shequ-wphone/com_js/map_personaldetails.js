@@ -204,7 +204,7 @@
                 var content = encodeURI(encodeURI("请您登录后再操作"));
                 Trafficeye.toPage("objc://showAlert::/"+content); 
             }else{                
-                var textContent = me.elems["inputtext"].attr("value");
+                var textContent = me.elems["inputtext"].val();
                 var sumbitBtnUp_url = BASE_PRAISE_URL + "comments/create";
                 var sumbitBtnUp_data = {"uid" : myInfo.uid,"publish_uid" : uid,"publish_id" : publish_id,"publish_type" : "event","comment_type" : 1,"pid" : myInfo.pid,"comment_content":$.trim(textContent)};
                     
@@ -557,6 +557,12 @@
                 }else{
                     pm.lookOtherTimeline(uid,evt);
                 }
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
        //window.initPageManagerClient('25589',480,800,'38660','864589009055960');

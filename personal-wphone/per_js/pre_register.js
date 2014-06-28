@@ -82,6 +82,7 @@
             var me = this;
             
             var myInfo = Trafficeye.getMyInfo();
+            // console.log(myInfo);
             if (!myInfo) {
                 return;
             }
@@ -89,9 +90,10 @@
             var pid = myInfo.pid;
             var ua = myInfo.ua;
 
-            var textMail = me.elems["mail"].attr("value");
-            var textNickname = me.elems["nickname"].attr("value");
-            var textPwd = me.elems["pwd"].attr("value");
+            var textMail = me.elems["mail"].val();
+            var textNickname = me.elems["nickname"].val();
+            // var textNickname =document.getElementById("nickname").value;
+            var textPwd = me.elems["pwd"].val();
             // var regMail ="/^[a-zA-Z0-9_-]+\@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/";
             // var regMail=/^\w+([-\.]\w+)*@\w+([\.-]\w+)*\.\w{2,4}$/;
             //  //判断邮箱格式，昵称长度，密码长度是否符合《路况交通眼账号系统字段规则》
@@ -99,6 +101,7 @@
             //     Trafficeye.trafficeyeAlert("邮箱格式有误,请您重新输入");
             //     return;
             //  }
+            // alert(textNickname);
              if(textNickname.length>30 || textNickname.length < 2)
              {
                 Trafficeye.trafficeyeAlert("昵称请您输入2-30个字符");
@@ -205,10 +208,10 @@
          var fromSource = {"sourcepage" : presource.sourcepage,"currpage" : "pre_register.html","prepage" : presource.currpage}
          var fromSourceStr = Trafficeye.json2Str(fromSource);
          Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-         
+         // console.log(presource);
          //获取我的用户信息, by dongyl
         var myInfo = Trafficeye.getMyInfo();
-        
+        // console.log(myInfo);
         var pm = new PageManager();
 
         Trafficeye.pageManager = pm;
@@ -220,6 +223,13 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.registerfun(evt);
+            }
+        };
+
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

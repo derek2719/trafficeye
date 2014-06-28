@@ -254,12 +254,12 @@
                  infousernameElem.html("交通眼用户登录");
              }
              //关注与粉丝
-             if (dataSource.frineds) {
-                 looknumElem.html(dataSource.frineds);
-             }
-             if (dataSource.fans) {
-                 fansnumElem.html(dataSource.fans);
-             }
+             // if (dataSource.frineds) {
+             //     looknumElem.html(dataSource.frineds);
+             // }
+             // if (dataSource.fans) {
+             //     fansnumElem.html(dataSource.fans);
+             // }
              //头像设置
              Trafficeye.imageLoaded(headimgidElem, dataSource.avatarUrl);
              //性别
@@ -613,6 +613,12 @@
                  pm.loadmorebtnUp(evt);
              }
          };
+         window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
      });
 
  }(window));

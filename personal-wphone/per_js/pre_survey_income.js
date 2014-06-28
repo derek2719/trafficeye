@@ -338,6 +338,12 @@
                 pm.incomelistRes(result,evt);
             }
         };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
     }); 
     
  }(window));

@@ -102,7 +102,7 @@
          */
         sendcheckServer : function(url,data) {
             var me = this;
-              var textNickname = me.elems["verifynumber"].attr("value");
+              var textNickname = me.elems["verifynumber"].val();
                 if(textNickname.length!=6)
                  {
                     Trafficeye.trafficeyeAlert("请输入6位验证码");
@@ -275,6 +275,12 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.trunce(evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

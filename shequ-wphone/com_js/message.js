@@ -586,7 +586,12 @@
                 pm.loadmorebtnUp(evt,flag);
             }
         };
-        
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
        //window.initPageManager(30508,30508,0,10,true,'a1000033e99ec40');
        // window.initPageManager(3862,3862,0,10,true,'1CF4A942-04BC-4579-832A-CB27F6BBF206');
     //    window.initPageManager(39062,39062,0,10,true,'8E9BF58F-C799-467C-AD78-0C625AB0B9F7');

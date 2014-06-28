@@ -121,7 +121,7 @@
          */
         sendbtnUp : function(evt) {
             var me = this;
-            var textContent = me.elems["inputtext"].attr("value");
+            var textContent = me.elems["inputtext"].val();
             var sumbitBtnUp_url = BASE_URL + "create";
             var dataStr = Trafficeye.offlineStore.get("traffic_chat");
             var obj = Trafficeye.str2Json(dataStr);
@@ -270,6 +270,12 @@
             }
         };
 
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
         var dataStr = Trafficeye.offlineStore.get("traffic_chat");
         var obj1 = Trafficeye.str2Json(dataStr);
         window.initPageManager(obj1.uid,obj1.friend_id);    

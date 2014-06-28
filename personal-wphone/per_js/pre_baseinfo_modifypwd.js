@@ -87,8 +87,8 @@
          */
         saveNameFunction : function() {
             var me = this;
-            var oldpwd = me.elems["oldpwd"].attr("value");
-            var newpwd = me.elems["newpwd"].attr("value");
+            var oldpwd = me.elems["oldpwd"].val();
+            var newpwd = me.elems["newpwd"].val();
             var url = Trafficeye.BASE_USER_URL + "updatePwd";
             var myInfo = Trafficeye.getMyInfo();
             var data = {
@@ -154,6 +154,12 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.saveFunction(evt);
+            }
+        };
+        window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
             }
         };
     }); 

@@ -364,6 +364,12 @@
                 alert("调用修改用户信息接口,PC不支持.");
             }
          };
+         window.backpagebtnUp = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.backpagebtnUp(evt);
+            }
+        };
         window.initPageManager();
      });
 
