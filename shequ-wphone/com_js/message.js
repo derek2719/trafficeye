@@ -98,8 +98,11 @@
             } else {
                 avaterSrc = data.avatar;
             }
-            htmls.push("<li><div class='h-img' onclick=\"gotoChat("+data.friend_id+");\"><img src='" + avaterSrc + "' alt='' width='40' height='40' /></div>");
-            
+            if(data.nums>0){
+                htmls.push("<li><div class='h-img' onclick=\"gotoChat("+data.friend_id+",this);\"><img src='" + avaterSrc + "' alt='' width='40' height='40' /><span>"+data.nums+"</span></div>");
+            }else{
+                htmls.push("<li><div class='h-img' onclick=\"gotoChat("+data.friend_id+",this);\"><img src='" + avaterSrc + "' alt='' width='40' height='40' /></div>");
+            }
             htmls.push("<div class='h-text xt' onclick=\"gotoChat("+data.friend_id+");\"><h3>" + data.username + "</h3>"+data.time+"前</div>");
             htmls.push("</li>");
             return htmls.join("");
@@ -123,6 +126,8 @@
             "refreshbtn" : null,
             "backpagebtn" : null,
             "loadmorebtn" : null,
+            "messagenum" : null,
+            "letternum" : null,
             "messagelist" : null
         };
         //当点击请求提示框的关闭按钮，意味着中断请求，在关闭提示框后，如果请求得到响应，也不进行下一步业务处理。
@@ -166,7 +171,8 @@
                 backpagebtnElem = me.elems["backpagebtn"],
                 refreshbtnElem = me.elems["refreshbtn"],
                 messagelist = me.elems["messagelist"];
-
+              me.elems["messagenum"].hide();
+              me.elems["letternum"].hide();
             //返回按钮
             backpagebtnElem.onbind("touchstart",me.btnDown,backpagebtnElem);
             backpagebtnElem.onbind("touchend",me.backpagebtnUp,me);
@@ -285,6 +291,38 @@
             }),Trafficeye.MaskTimeOut);
         },
         
+        /**
+         * 进入首页显示未读消息或私信数字
+         * @param  {String} url 服务URL
+         * @param  {JSON Object} data 请求协议参数对象
+         */
+        reqMessagesNum : function(url, data) {
+            var me = this, 
+                messagenumElem = me.elems["messagenum"],
+                letternumElem = me.elems["letternum"];
+               // lookcss = me.getElementsByTagName("lookbtn");
+
+            var reqParams = Trafficeye.httpData2Str(data);
+            if (url) {
+                Trafficeye.httpTip.opened(function() {
+                    me.isStopReq = true;
+                }, me);
+                me.isStopReq = false;
+                var reqUrl = url + reqParams;
+                $.ajax({dataType: "jsonp",
+                    url : reqUrl,
+                    success: function(data){
+                        if (data && !me.isStopReq) {
+                           $(messagenumElem).html(data.newsNum);
+                           $(letternumElem).html(data.lettersNum);
+                
+                            // me.reqMessagesInfoSuccess(data);
+                        } else {
+                        }
+                    }
+                })
+            }
+        },
 
         /**
          * 请求消息列表
@@ -524,13 +562,22 @@
              var dataStr = Trafficeye.json2Str(userData);
                 //console.log(dataStr);
              Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
-
+             //**********获取消息和私信数量的请求*****************
+             var messageInfo_url = BASE_URL + "findNewCount";
+                //  var followersInfo_url = BASE_URL + "followers";
+                var messageInfo_data = {"uid" : uid
+                };               
+                //获取消息和私信数量的请求
+                pm.reqMessagesNum(messageInfo_url, messageInfo_data);
+             //**********获取消息和私信数量的请求结束*****************
+                
             if(flag){
                  //请求用户信息协议
                 var messageInfo_url = BASE_URL + "message/find";
                 //  var followersInfo_url = BASE_URL + "followers";
                 var messageInfo_data = {"uid" : uid,
                 "page" : 0,
+                "type" : "",
                 "count" : 10
                 };               
                 //请求用户数据，填充用户界面元素

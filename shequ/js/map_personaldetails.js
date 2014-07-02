@@ -541,7 +541,7 @@
             }
         };
         
-       //window.initPageManagerClient('25589',480,800,'38660','864589009055960');
+       window.initPageManagerClient('25589',480,800,'38660','864589009055960');
 
     }); 
     

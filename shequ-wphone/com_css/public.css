@@ -244,3 +244,39 @@ ul.cg li.curr { color:#fff; background-color:#00D5F5 }
 .index-li li .l-text span { margin-top:6px; display:block }
 .l-list ul.l-pl .l-text { font-size:16px }
 .imgwidth { width:100% }
+/*---------------6.18--------------*/
+.h-btn li {
+	position:relative
+}
+.h-btn li  span{
+	position:absolute;
+	min-width:14px;
+	padding:2px;
+	height:14px;line-height:14px;
+	left:50%;
+	margin-left:18px;
+	font-size:12px;
+	top:-6px;
+	background-color:#ff0000;
+	color:#FFF;border-radius: 18px;text-align:center;
+	z-index:99
+}
+.h-list li .h-img {
+	position:relative
+}
+.h-list li .h-img span{
+	position:absolute;
+	min-width:14px;
+	padding:2px;
+	height:14px;line-height:14px;
+	right:-8px;
+	margin-left:15px;
+	font-size:12px;
+	top:-8px;
+	background-color:#ff0000;
+	color:#FFF;border-radius: 18px;
+	text-align:center
+}
+.h-list li.unread {
+	background-color:#e7fafd
+}

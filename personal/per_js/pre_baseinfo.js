@@ -858,6 +858,13 @@
                 pm.infodescriptionClick(evt);
             }
         };
+        //修改工作流
+        window.surveyextfirstClick = function(evt) {
+             var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.surveyextfirstClick(evt);
+            }
+        };
         //修改密码
         window.modifyPassword = function(evt) {
              var pm = Trafficeye.pageManager;
