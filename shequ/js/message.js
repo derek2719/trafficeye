@@ -297,7 +297,6 @@
             var me = this, 
                 messagenumElem = me.elems["messagenum"],
                 letternumElem = me.elems["letternum"];
-               // lookcss = me.getElementsByTagName("lookbtn");
 
             var reqParams = Trafficeye.httpData2Str(data);
             if (url) {
@@ -306,14 +305,19 @@
                 }, me);
                 me.isStopReq = false;
                 var reqUrl = url + reqParams;
-                $.ajax({dataType: "jsonp",
+                
+                $.ajaxJSONP({
                     url : reqUrl,
                     success: function(data){
                         if (data && !me.isStopReq) {
+                            if(data.newsNum>0){
+                           $(messagenumElem).show();
                            $(messagenumElem).html(data.newsNum);
+                            }
+                            if(data.lettersNum>0){
+                           $(letternumElem).show();
                            $(letternumElem).html(data.lettersNum);
-                
-                            // me.reqMessagesInfoSuccess(data);
+                             }
                         } else {
                         }
                     }
@@ -535,7 +539,9 @@
     };
 
     //基础URL
-    var BASE_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/";
+     // var BASE_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/";
+    //测试服务器URL
+    var BASE_URL = "http://211.151.84.15:8080/TrafficeyeCommunityService/sns/v1/";
     $(function(){
         //flag 为true 的时候是消息, 为false的时候是私信
         window.initPageManager = function(uid,friend_id,start,count,flag,pid,source){
@@ -559,17 +565,15 @@
              var dataStr = Trafficeye.json2Str(userData);
                 //console.log(dataStr);
              Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
-//**********获取消息和私信数量的请求*****************
-             var messageInfo_url = BASE_URL + "findNewCount";
-                //  var followersInfo_url = BASE_URL + "followers";
-                var messageInfo_data = {"uid" : uid
-                };               
-                //获取消息和私信数量的请求
-                pm.reqMessagesNum(messageInfo_url, messageInfo_data);
+            //**********获取消息和私信数量的请求*****************
+             var messageNum_url = BASE_URL + "findNewCountJs";
+             var messageNum_data = {"uid" : uid};               
+            //获取消息和私信数量的请求
+             pm.reqMessagesNum(messageNum_url, messageNum_data);
              //**********获取消息和私信数量的请求结束*****************
             if(flag){
                  //请求用户信息协议
-                var messageInfo_url = BASE_URL + "findNewCount";
+                var messageInfo_url = BASE_URL + "message/find";
                 //  var followersInfo_url = BASE_URL + "followers";
                 var messageInfo_data = {
                     "uid" : uid
@@ -628,7 +632,7 @@
             }
         };
         
-      // window.initPageManager(22456,22455,0,10,true,'a1000033e99ec40');
+       window.initPageManager(30508,30508,0,10,true,'353617052835307','client');
      // window.initPageManager(22456,22456,0,10,true,'357513052005130');
 
     }); 

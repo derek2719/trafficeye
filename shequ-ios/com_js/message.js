@@ -392,14 +392,19 @@
                 }, me);
                 me.isStopReq = false;
                 var reqUrl = url + reqParams;
-                $.ajax({dataType: "jsonp",
+                
+                $.ajaxJSONP({
                     url : reqUrl,
                     success: function(data){
                         if (data && !me.isStopReq) {
+                            if(data.newsNum>0){
+                           $(messagenumElem).show();
                            $(messagenumElem).html(data.newsNum);
+                            }
+                            if(data.lettersNum>0){
+                           $(letternumElem).show();
                            $(letternumElem).html(data.lettersNum);
-                
-                            // me.reqMessagesInfoSuccess(data);
+                            }
                         } else {
                         }
                     }
@@ -561,12 +566,10 @@
                 //console.log(dataStr);
              Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
 //**********获取消息和私信数量的请求*****************
-             var messageInfo_url = BASE_URL + "findNewCount";
-                //  var followersInfo_url = BASE_URL + "followers";
-                var messageInfo_data = {"uid" : uid
-                };               
-                //获取消息和私信数量的请求
-                pm.reqMessagesNum(messageInfo_url, messageInfo_data);
+             var messageNum_url = BASE_URL + "findNewCountJs";
+             var messageNum_data = {"uid" : uid};               
+            //获取消息和私信数量的请求
+             pm.reqMessagesNum(messageNum_url, messageNum_data);
              //**********获取消息和私信数量的请求结束*****************
             if(flag){
                  //请求用户信息协议

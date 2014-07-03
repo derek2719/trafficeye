@@ -197,6 +197,7 @@
             var obj = Trafficeye.str2Json(dataStr);
             var uid = me.userInfoManager.uid;
             var publish_id = obj.publishid;
+            var publish_type = obj.publishType;
             var myInfo = Trafficeye.getMyInfo();
             if(myInfo.uid == 0){
                 var content = encodeURI(encodeURI("请您登录后再操作"));
@@ -204,7 +205,7 @@
             }else{                
                 var textContent = me.elems["inputtext"].attr("value");
                 var sumbitBtnUp_url = BASE_PRAISE_URL + "comments/create";
-                var sumbitBtnUp_data = {"uid" : myInfo.uid,"publish_uid" : uid,"publish_id" : publish_id,"publish_type" : "event","comment_type" : 1,"pid" : myInfo.pid,"comment_content":$.trim(textContent)};
+                var sumbitBtnUp_data = {"uid" : myInfo.uid,"publish_uid" : uid,"publish_id" : publish_id,"publish_type" : publish_type,"comment_type" : 1,"pid" : myInfo.pid,"comment_content":$.trim(textContent)};
                     
                 if(textContent){
                     me.reqSumbitbut(sumbitBtnUp_url, sumbitBtnUp_data);
@@ -262,8 +263,9 @@
             var obj = Trafficeye.str2Json(dataStr);
             var uid = me.userInfoManager.uid;
             var publish_id = obj.publishid;
+            var publish_type = obj.publishType;
             var myInfo = Trafficeye.getMyInfo();
-            var praiseBtnUp_data = {"uid" : myInfo.uid,"friend_id" : uid,"publish_id" : publish_id,"type" : "event","pid" : myInfo.pid,"requestType" : "info"};
+            var praiseBtnUp_data = {"uid" : myInfo.uid,"friend_id" : uid,"publish_id" : publish_id,"type" : publish_type,"pid" : myInfo.pid,"requestType" : "info"};
             if(myInfo.uid == 0){
                 var content = encodeURI(encodeURI("请您登录后再操作"));
                 Trafficeye.toPage("objc://showAlert::/"+content); 
@@ -314,7 +316,7 @@
             var obj = Trafficeye.str2Json(dataStr);
             //请求用户信息协议
             var userInfo_url = BASE_URL + "info";
-            var userInfo_data = {"publishId" : obj.publishid,"publishType" : me.userInfoManager.publishType};
+            var userInfo_data = {"publishId" : obj.publishid,"publishType" : obj.publishType};
             
             var pm = Trafficeye.pageManager;
 
@@ -509,7 +511,8 @@
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
             var dataEvtdetail ={
                 "uid" : uid,
-                "publishid" : publishId
+                "publishid" : publishId,
+                "publishType" : publishType
             };
             
             var dataEvtdetailStr = Trafficeye.json2Str(dataEvtdetail);
