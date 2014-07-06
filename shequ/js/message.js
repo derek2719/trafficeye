@@ -632,7 +632,7 @@
             }
         };
         
-       window.initPageManager(30508,30508,0,10,true,'353617052835307','client');
+       // window.initPageManager(30508,30508,0,10,true,'353617052835307','client');
      // window.initPageManager(22456,22456,0,10,true,'357513052005130');
 
     }); 
