@@ -206,6 +206,8 @@
 
 						//初始化纵向滚动
 						var code = scope.cityList[pageX];
+						Trafficeye.toPage("objc:??setCurrentCity::?" + code);
+
 						var iScrollY = scope.iScrollY[pageX];
 						if(iScrollY == null){
 							iScrollY = new IScroll("#city_" + code,{
@@ -222,6 +224,8 @@
 					scrollbars:false
 				});
 				this.iScrollY[this.cityIndex] = iScrollY;
+				//通知平台显示城市
+				Trafficeye.toPage("objc:??setCurrentCity::?" + this.currentCityCode);
 			}
 		},
 		/**
