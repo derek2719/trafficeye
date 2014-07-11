@@ -88,9 +88,6 @@
 			//返回按钮按下弹起
 			//this.$backbtn.onbind("touchstart",this.btnDown,this);
 			//this.$backbtn.onbind("touchend",this.pageBack,this);
-			//编辑
-			//this.$editbtn.onbind("touchstart",this.btnDown,this);
-			//this.$editbtn.onbind("touchend",this.editBtnUp,this);
 		},
 		pageLoad:function(evt){
 			var w = $(window).width();
@@ -100,7 +97,7 @@
 			this.bodyHeight = h;
 
 			//测试调用
-			//callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
+			//callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101_101280601");
 		},
 		
 		//手指move
@@ -253,10 +250,6 @@
 		getCurrentCity:function(lon,lat,city){
 			this.lon = lon;
 			this.lat = lat;
-			//var citys = city.split("_");
-			//this.buildVisibleCityHtml(citys);
-
-			//return;
 
 			//根据经纬度去请求当前城市信息
 			var options = {};
@@ -264,7 +257,6 @@
 			options.lat = lat;
 			var reqUrl = this.bulidSendUrl("adminZoneQuery",options);
 			
-			//var reqUrl = 'http://119.254.195.135:8080/AdminZoneQuery_trafficeye/q?callback=?&lon=' + lon + '&lat=' + lat;
 			//console.log(reqUrl);
 			//显示loading
 			Trafficeye.httpTip.opened();
@@ -387,14 +379,13 @@
 			this.sendCityServer(0);
 
 			//开启刷新定时器
-			//this.sendServerTime();
+			this.sendServerTime();
 		},
 		/**
 		 * 并发请求城市交通数据
 		 * index第几个城市从0开始
 		*/
 		sendCityServer:function(index){
-			//console.log("aa" + index)
 			//保存请求城市下标
 			this.cityIndex = index;
 			//首先判断当前显示城市是否已请求数据,如果等于0就标识已经请求过一次了
@@ -402,12 +393,10 @@
 			if(send !== 0){
 				var len = this.cityServer.length;
 				if(len > 0){
-					//console.log("bb" + index)
 					var sf = this.cityServer[index];
 					for(var i = 0,sLen = sf.length; i < sLen; i++){
 						sf[i].apply(this,arguments);
 					}
-
 					//修改请求标识
 					this.sendServer[index] = 0;
 				}
@@ -689,14 +678,14 @@
 		*/
 		getTrafficInfoHtml:function(id){
 			var w = parseInt(this.bodyWidth * 0.35) || 106;
-			var h = parseInt(w * 0.75) || 70;
+			var h = parseInt(w * 0.7) || 70;
 			var html = [];
 			html.push('<div class="map_2_box">');
 			html.push('<div id="trafficInfo' + id + '" class="map_2">');
 			html.push('<h3 class="map_bt">交通资讯</h3>');
 			html.push('<div class="zixun">');
 			html.push('<img src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
-			html.push('<h3>路况播报</h3>');
+			html.push('<h3></h3>');
 			html.push('<p></p></div>');
 			html.push('<p class="jiaot"><span></span></p>');
 			html.push('</div></div>');
@@ -706,37 +695,34 @@
 			var code = this.cityList[this.cityIndex];
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.35) || 106;
+			//options.width = 106;
 			options.code = code;
 			var reqUrl = this.bulidSendUrl("trafficMessage",options);
-			//console.log(reqUrl);
-			/*
 			$.ajaxJSONP({
 				url:reqUrl,
 				context:this,
 				success:function(data){
-					//debugger
-					//Trafficeye.httpTip.closed();
-					this.trafficInfoCallback(data,code);
+					var state = data.state.code - 0;
+					if(state === 0){
+						this.trafficInfoCallback(data,code);
+					}
+					else{
+						var msg = data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
+					}
 				}
 			});
-			*/
 		},
 		trafficInfoCallback:function(data,code){
 			//交通资讯数据
-			var info = {
-				img:"http://a2.att.hudong.com/56/76/20300000258678134865761607541.jpg",
-				title:"路况播报001",
-				content:"目前阿拉丁快捷阿拉分开阿拉善房贷款逻辑,目前阿拉丁快捷阿拉分开阿拉善房贷款逻辑",
-				address:"背景交通",
-				time:"06-23 23:34"
-			};
-			var w = parseInt(this.bodyWidth * this.ratio * 0.35) || 106;
-			var h = parseInt(w * 0.75) || 70;
+			var w = parseInt(this.bodyWidth * 0.35) || 106;
+			var h = parseInt(w * 0.7) || 70;
 
-			var title = info.title || "路况播报";
-			var content = info.content || "";
-			var address = info.address || "交通北京";
-			var time = info.time || "";
+			var obj = data.trafficMessage || {};
+			var title = obj.title || "路况播报";
+			var content = obj.content || "";
+			var address = obj.source || "";
+			var time = obj.publishedTime || "";
 			var html = [];
 			html.push('<h3 class="map_bt">交通资讯</h3>');
 			html.push('<div class="zixun">');
@@ -750,8 +736,13 @@
 
 			//异步加载交通资讯图片
 			var img = $("#trafficInfoImg" + code);
-			var url = info.img || "";
+			var url = obj.url || "";
 			Trafficeye.imageLoaded(img,url);
+
+			var iScrollY = this.iScrollY[this.cityIndex];
+			if(iScrollY != null){
+				iScrollY.refresh();
+			}
 		},
 		/**
 		 * 获取打车指数html
@@ -905,7 +896,6 @@
 			//格式化请求参数
 			var reqParams = Trafficeye.httpData2Str(data);
 			var reqUrl = url + reqParams;
-			//var reqUrl = "http://mobile.trafficeye.com.cn:8000/user/v4/update?ua=A_4.0.4,a_2.3.1&pid=864737010861021&uid=43943&username=aaaaaa&callback=?&timer=1404782256288";
 			return reqUrl;
 		},
 		/**
@@ -942,7 +932,6 @@
 			//Trafficeye.pageManager.buildVisibleCityHtml(citys);
 			// callbackInitTrafficPage("116.37313","39.835876","101010100");
 			// callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
-
 			
 		};
 	});

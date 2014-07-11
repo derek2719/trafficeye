@@ -11,7 +11,8 @@
         android: /android/i.test(navigator.userAgent),
         ipad: /ipad/i.test(navigator.userAgent),
         iphone: /iphone/i.test(navigator.userAgent),
-        wphone: /Windows Phone/i.test(navigator.userAgent)
+        wphone: /Windows Phone/i.test(navigator.userAgent),
+        chrome: /Chrome/i.test(navigator.userAgent)
     };
     
     var UrlPort = 21290; //正式URL端口号为21290,测试URL端口号为8008,此处为了消息,加关注使用
@@ -414,10 +415,12 @@
      * @return {[type]}     [description]
      */
     function toPage(url) {
-        if (url) {
-            setTimeout(function() {
-                window.location.href = url;
-            }, 1);
+        if(!mobilePlatform.chrome){
+            if (url) {
+                setTimeout(function() {
+                    window.location.href = url;
+                }, 1);
+            }
         }
     };
 
