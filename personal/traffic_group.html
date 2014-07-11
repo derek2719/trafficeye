@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE HTML PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<meta content="telephone=no" name="format-detection" />
+	<title>交通眼</title>
+	<link href="traffic_css/public.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:1.5)" href="traffic_css/mdpi.css" />
+	<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:2.0)" href="traffic_css/hdpi.css" />
+
+	<style type="text/css">
+		html {
+			-ms-touch-action: none;
+		}
+		#viewport {
+			position: relative;
+			width: 0px;
+			height: 0px;
+			margin:0 auto;
+			overflow:hidden;
+		}
+
+		
+		#scroller {
+			z-index: 1;
+			width: 0px;
+			height: 0px;
+			-webkit-transform: translateZ(0);
+			-moz-transform: translateZ(0);
+			-ms-transform: translateZ(0);
+			-o-transform: translateZ(0);
+			transform: translateZ(0);
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-webkit-text-size-adjust: none;
+			-moz-text-size-adjust: none;
+			-ms-text-size-adjust: none;
+			-o-text-size-adjust: none;
+			text-size-adjust: none;
+		}
+		
+
+		.slide {
+			width: 0px;
+			height: 0px;
+			float: left;
+		}
+		
+		.scroller{
+			width:0px;
+		}
+		
+		.wrapper_content {
+			position:absolute;
+			top:0px;
+			bottom:0px;
+			overflow:hidden;
+		}
+
+		#wrapper2 {
+			position:absolute;
+			top:0px;
+			bottom:0px;
+			overflow:hidden;
+		}
+
+	</style>
+</head>
+<body>
+	<!-- 横向轮播结构 -->
+	<div id="viewport">
+		<div id="wrapper">
+			<div id="scroller">
+				
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="libs/iscroll5.js"></script>
+	<script type="text/javascript" src="libs/zepto.js"></script>
+	<script type="text/javascript" src="libs/gmu.js"></script>
+	<script type="text/javascript" src="traffic_js/base.js"></script>
+	<script type="text/javascript" src="traffic_js/traffic_group.js"></script>
+</body>
+</html>

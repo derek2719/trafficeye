@@ -460,6 +460,17 @@
                 me.reqExit();
             }),Trafficeye.MaskTimeOut);     
         },
+
+        //跳转到事件聚合页
+        trafficHtml:function(evt){
+            var me = this;
+            var elem = $(evt).addClass("curr");
+            setTimeout((function(){
+                $(elem).removeClass("curr");  
+                Trafficeye.toPage("traffic_group.html");
+            }),Trafficeye.MaskTimeOut);
+        },
+        
         //
         /**
          * 用户退出登录请求函数
@@ -641,6 +652,15 @@
              var pm = Trafficeye.pageManager;
             if (pm.init) {
                 pm.eventHtml(evt);
+            }
+        };
+
+
+        //跳转事件聚合页
+        window.trafficHtml = function(evt){
+            var pm = Trafficeye.pageManager;
+            if (pm.init) {
+                pm.trafficHtml(evt);
             }
         };
 }); 
