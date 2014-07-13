@@ -49,8 +49,8 @@
 			// toPage("objc:??setCurrentCity::?10101010")
 			
 			//返回按钮事件
-			$("#backBtn").onbind("touchstart",this.btnDown,this);
-			$("#backBtn").onbind("touchend",this.pageBack,this);
+			//$("#backBtn").onbind("touchstart",this.btnDown,this);
+			//$("#backBtn").onbind("touchend",this.pageBack,this);
 
 			//个人资料选项事件
 			$("#hUl > li").onbind("touchstart",this.btnDown,this);
@@ -175,14 +175,14 @@
 	$(function(){
 		Trafficeye.pageManager = new PageManager();
 		//页面初始化平台回调函数,返回经纬度,选择城市数据citys = 10101010_101020100
-		window.callbackInitTrafficPage = function(lon,lat,citys){
+		//window.callbackInitTrafficPage = function(lon,lat,citys){
 			//根据经纬度获取当前城市信息
-			Trafficeye.pageManager.getCurrentCity(lon,lat,citys);
+			//Trafficeye.pageManager.getCurrentCity(lon,lat,citys);
 			//生成页面结构
 			//Trafficeye.pageManager.buildVisibleCityHtml(citys);
 			// callbackInitTrafficPage("116.37313","39.835876","101010100");
 			// callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
 			
-		};
+		//};
 	});
 }(window));

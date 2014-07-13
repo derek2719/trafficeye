@@ -49,8 +49,8 @@
 			// toPage("objc:??setCurrentCity::?10101010")
 			
 			//返回按钮事件
-			$("#backBtn").onbind("touchstart",this.btnDown,this);
-			$("#backBtn").onbind("touchend",this.pageBack,this);
+			//$("#backBtn").onbind("touchstart",this.btnDown,this);
+			//$("#backBtn").onbind("touchend",this.pageBack,this);
 
 			//个人资料选项事件
 			$("#personalUl > li").onbind("touchstart",this.btnDown,this);
@@ -59,10 +59,8 @@
 			$("#systemUl > li").onbind("touchend",this.itemBtnUp,this);
 		},
 		pageLoad:function(evt){
-			//请求个人资料信息
-			this.getPersonalInfo();
 			//测试调用
-			//callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
+			//callbackInitMePage("http://c.hiphotos.baidu.com/image/pic/item/e1fe9925bc315c600eb7011c8fb1cb1349547726.jpg","闹闹");
 		},
 		pageMove:function(evt){
 			this.moved = true;
@@ -113,31 +111,14 @@
 		},
 		/**
 		 * 获取个人信息请求服务
+		 * url头像地址
+		 * name用户名称
 		*/
-		getPersonalInfo:function(){
-
-			/*
-			//根据经纬度去请求当前城市信息
-			var options = {};
-			var reqUrl = this.bulidSendUrl("adminZoneQuery",options);
-			
-			//console.log(reqUrl);
-			//显示loading
-			Trafficeye.httpTip.opened();
-			$.ajaxJSONP({
-				url:reqUrl,
-				context:this,
-				success:function(data){}
-			});
-			*/
-
-			var url = "http://c.hiphotos.baidu.com/image/pic/item/e1fe9925bc315c600eb7011c8fb1cb1349547726.jpg";
+		getPersonalInfo:function(url,name){
 			var img = $("#perImg");
+			$("#perName").html(name);
 			//加载图片
 			Trafficeye.imageLoaded(img,url);
-		},
-		getPersonalInfoCallback:function(){
-
 		},
 		/**
 		 * 生成请求地址
@@ -146,9 +127,6 @@
 		*/
 		bulidSendUrl:function(server,options){
 			var url = this.SERVERURL + server;
-			if(server == "adminZoneQuery"){
-				url = "http://mobile.trafficeye.com.cn:8092/AdminZoneQuery_trafficeye/q";
-			}
 			//个人信息
 			var myInfo = Trafficeye.getMyInfo();
 			var data = {
@@ -172,15 +150,9 @@
 	//页面加载完成执行函数
 	$(function(){
 		Trafficeye.pageManager = new PageManager();
-		//页面初始化平台回调函数,返回经纬度,选择城市数据citys = 10101010_101020100
-		window.callbackInitTrafficPage = function(lon,lat,citys){
+		window.callbackInitMePage = function(url,name){
 			//根据经纬度获取当前城市信息
-			Trafficeye.pageManager.getCurrentCity(lon,lat,citys);
-			//生成页面结构
-			//Trafficeye.pageManager.buildVisibleCityHtml(citys);
-			// callbackInitTrafficPage("116.37313","39.835876","101010100");
-			// callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
-			
+			Trafficeye.pageManager.getPersonalInfo(url,name);
 		};
 	});
 }(window));
