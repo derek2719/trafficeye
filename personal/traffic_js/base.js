@@ -64,7 +64,7 @@
             scope = scope || me;
             me.on(evtName, function(evt) {
                 fn.apply(scope, [evt, me, data]);
-                return false;
+                //return false;
             });
         };
         $.fn.rebind=function(evtName,fn,scope,data) {
@@ -76,7 +76,7 @@
             me.unbind(evtName);
             me.on(evtName, function(evt) {
                 fn.apply(scope, [evt, me, data]);
-                return false;
+                //return false;
             });
         };
     })(Zepto);
@@ -415,6 +415,7 @@
      * @return {[type]}     [description]
      */
     function toPage(url) {
+        //return;
         if(!mobilePlatform.chrome){
             if (url) {
                 setTimeout(function() {

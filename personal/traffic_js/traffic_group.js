@@ -71,6 +71,8 @@
 		mapOldUrl:{},
 		//保存打车热图,位置图
 		taxiImgUrl:{},
+		//标识当前显示的简图类型
+		mapImgType:"cityMap",
 		init: function(){
 			//保存请求URL
 			//this.SERVERURL = Trafficeye.BASE_RIDE_URL + "/api/v4/";
@@ -97,29 +99,54 @@
 			this.bodyHeight = h;
 
 			//测试调用
-			//callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101_101280601");
+			//callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
 		},
-		
-		//手指move
 		pageMove:function(evt){
 			this.moved = true;
-			evt.preventDefault();
+			//evt.preventDefault();
 
 			//clearTimeout(this.tout);
 			//$("li.curr").removeClass("curr");
 		},
-		//返回按钮
 		pageBack: function(evt){
 			
 		},
-		//btn down 效果
+		/**
+		 * btn down 效果
+		*/
 		btnDown:function(evt){
-			evt.preventDefault();
+			//evt.preventDefault();
 			this.moved = false;
 			var ele = evt.currentTarget;
 			$(ele).addClass("curr");
 		},
-		//城市简图按钮事件
+		/**
+		 * 点击简图跳转本地页面
+		*/
+		cityMapImgBtnUp:function(evt){
+			var ele = evt.currentTarget;
+			$(ele).removeClass("curr");
+			if(!this.moved){
+				var type = this.mapImgType;
+				switch(type){
+					case "cityMap":
+					case "peripheryMap":
+						//console.log("sigra");
+						//通知平台跳转到简图
+						Trafficeye.toPage("objc:??gotoPage::?sigra");
+					break;
+					case "trafficMap":
+						//console.log("map");
+						//通知平台跳转到地图
+						Trafficeye.toPage("objc:??gotoPage::?map");
+					break;
+				}
+				
+			}
+		},
+		/**
+		 * 城市简图按钮事件
+		*/
 		trafficMapTypeBtnUp:function(evt){
 			var ele = evt.currentTarget;
 			$(ele).removeClass("curr");
@@ -131,6 +158,8 @@
 					$ele.addClass("selected");
 					var id = ele.id.split("_") || [];
 					var type = id[0];
+					//保存当前简图类型
+					this.mapImgType = type;
 					switch(type){
 						case "cityMap":
 							this.getCityMapImg();
@@ -139,10 +168,32 @@
 							this.getPeripheryMapImg();
 						break;
 						case "trafficMap":
-							this.getTrafficMapImgImg();
+							this.getTrafficMapImg();
 						break;
 					}
 				}
+			}
+		},
+		/**
+		 * 交通指数点击跳转
+		*/
+		trafficIndexBtnUp:function(evt){
+			var ele = evt.currentTarget;
+			$(ele).removeClass("curr");
+			if(!this.moved){
+				//通知平台跳转到交通指数
+				Trafficeye.toPage("objc:??gotoPage::?index");
+			}
+		},
+		/**
+		 * 交通资讯点击跳转
+		*/
+		trafficInfoBtnUp:function(evt){
+			var ele = evt.currentTarget;
+			$(ele).removeClass("curr");
+			if(!this.moved){
+				//通知平台跳转到交通资讯
+				Trafficeye.toPage("objc:??gotoPage::?news");
 			}
 		},
 		/**
@@ -169,6 +220,17 @@
 						break;
 					}
 				}
+			}
+		},
+		/**
+		 * 点击打车位置/热图跳转
+		*/
+		taxiImgBtnUp:function(evt){
+			var ele = evt.currentTarget;
+			$(ele).removeClass("curr");
+			if(!this.moved){
+				//通知平台跳转到交通指数
+				Trafficeye.toPage("objc:??gotoPage::?taxi");
 			}
 		},
 		/**
@@ -289,6 +351,8 @@
 						var citys = city.split("_");
 						this.buildVisibleCityHtml(citys);
 					}
+
+					Trafficeye.httpTip.closed();
 				}
 			});
 		},
@@ -421,7 +485,7 @@
 				}
 			}
 			html.push('</div>');
-			html.push('<div id="trafficMapImgDiv' + id + '" class="map_l">');
+			html.push('<div class="map_l">');
 			html.push('<img id="cityMapImg' + id + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
 			html.push('</div></div>');
 			return html.join("");
@@ -463,6 +527,9 @@
 						//注册按钮事件,交通简图事件
 						$("#trafficMapType" + code + " > a").rebind("touchstart",this.btnDown,this);
 						$("#trafficMapType" + code + " > a").rebind("touchend",this.trafficMapTypeBtnUp,this);
+						//注册简图跳转事件
+						$("#cityMapImg" + code).rebind("touchstart",this.btnDown,this);
+						$("#cityMapImg" + code).rebind("touchend",this.cityMapImgBtnUp,this);
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
@@ -515,7 +582,7 @@
 		/*
 		 * 获取周边路况简图
 		*/
-		getTrafficMapImgImg:function(){
+		getTrafficMapImg:function(){
 			var code = this.cityList[this.cityIndex];
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
@@ -661,6 +728,10 @@
 							var img = $("#trafficIndexImg" + code);
 							//加载图片
 							Trafficeye.imageLoaded(img,imgUrl);
+
+							//注册交通指数图片点击事件
+							$("#trafficIndexImg" + code).rebind("touchstart",this.btnDown,this);
+							$("#trafficIndexImg" + code).rebind("touchend",this.trafficIndexBtnUp,this);
 						}
 						else{
 							Trafficeye.trafficeyeAlert("没有返回交通指数图片地址");
@@ -725,7 +796,7 @@
 			var time = obj.publishedTime || "";
 			var html = [];
 			html.push('<h3 class="map_bt">交通资讯</h3>');
-			html.push('<div class="zixun">');
+			html.push('<div id="trafficInfoBtn' + code + '" class="zixun">');
 			html.push('<img id="trafficInfoImg' + code + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
 			html.push('<h3>' + title + '</h3>');
 			html.push('<p>' + content + '</p></div>');
@@ -733,6 +804,10 @@
 			
 			var dom = $("#trafficInfo" + code);
 			dom.html(html.join(''));
+
+			//注册交通指数图片点击事件
+			$("#trafficInfoBtn" + code).rebind("touchstart",this.btnDown,this);
+			$("#trafficInfoBtn" + code).rebind("touchend",this.trafficInfoBtnUp,this);
 
 			//异步加载交通资讯图片
 			var img = $("#trafficInfoImg" + code);
@@ -763,12 +838,12 @@
 				html.push('<img id="taxiIndexImg' + id + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
 				html.push('<div id="taxiIndexBtn' + id + '" class="imgbtn">');
 				if(m7 === 1){
-					html.push('<a href="#" id="taxiLocation_' + id + '" class="dc" >建议打车位置</a>');
+					html.push('<a id="taxiLocation_' + id + '" class="dc" >建议打车位置</a>');
 					
 					this.taxiImgUrl["taxiLocation" + id] = "traffic_img/default.jpg";
 				}
 				if(m8 === 1){
-					html.push('<a href="#" id="taxiHot_' + id + '" class="rq" >上下客热图</a>');
+					html.push('<a id="taxiHot_' + id + '" class="rq" >上下客热图</a>');
 
 					this.taxiImgUrl["taxiHot" + id] = "traffic_img/default.jpg";
 				}
@@ -858,6 +933,10 @@
 							var img = $("#taxiIndexImg" + code);
 							//加载图片
 							Trafficeye.imageLoaded(img,imgUrl);
+
+							//注册交通指数图片点击事件
+							$("#taxiIndexImg" + code).rebind("touchstart",this.btnDown,this);
+							$("#taxiIndexImg" + code).rebind("touchend",this.taxiImgBtnUp,this);
 						}
 						else{
 							Trafficeye.trafficeyeAlert("没有返回打车位置/热图图片地址");

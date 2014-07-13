@@ -33,4 +33,7 @@
 .melist li.mej span.txx { background: url(../traffic_img/dpi1.5/meicon01.png) no-repeat left -100px; background-size: 20px 120px; }
 .me-btn li.s a span { background: url(../traffic_img/dpi1.5/meicon02.png) no-repeat left 0; background-size: 40px 60px; }
 .me-btn li.d a span { background: url(../traffic_img/dpi1.5/meicon02.png) no-repeat left -30px; background-size: 40px 60px; }
+/*--------------loading full----------------*/
+.loadimg span { background: url(../traffic_img/dpi1.5/ld.png) no-repeat center top; background-size: 20px 60px; }
+.loadqx { background: url(../traffic_img/dpi1.5/ld.png) no-repeat 20px -30px; background-size: 20px 60px; }
 /*}*/
