@@ -6,7 +6,7 @@
  * 
  * file:个人资料页显示
  * author:陈宣宇
- * date:2014-07-06
+ * date:2014-07-13
  */
 
 (function(window){

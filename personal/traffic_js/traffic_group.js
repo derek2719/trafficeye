@@ -47,10 +47,6 @@
 		ratio:1,
 		//保存当前城市code,因为不是当前城市,简图没有周边
 		currentCityCode:"101010100",
-		//当前显示的城市下标,从0开始
-		cityIndex:0,
-		//当前选择的城市
-		cityList:[],
 		//[城市简图,交通简图,天气,交通指数,交通资讯,打车指数,打车建议地图,打车热图]
 		cityModule:{
 			"101010100":[1,1,1,1,1,1,1,1],"101230101":[1,1,1,0,0,0,0,0],"101210101":[1,1,1,1,0,0,0,0],
@@ -63,6 +59,10 @@
 			"101230201":[1,1,0,0,0,0,0,0],"101190401":[1,1,0,0,0,0,0,0],"101030100":[1,1,0,0,0,0,0,0],
 			"101210701":[1,1,0,0,0,0,0,0],"101190201":[1,1,0,0,0,0,0,0]
 		},
+		//当前显示的城市下标,从0开始
+		cityIndex:0,
+		//当前选择的城市
+		cityList:[],
 		//需要请求哪些服务,生成页面dom的时候,把调用函数保存起来[[第一页][第二页]]
 		cityServer:[],
 		//标识是否请求了服务,5分钟需要刷新一次
@@ -99,7 +99,17 @@
 			this.bodyHeight = h;
 
 			//测试调用
-			//callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
+			/*
+			callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
+
+			setTimeout(function(){
+				callbackInitTrafficPage("116.37313","39.835876","101210101");
+			},10000);
+
+			setTimeout(function(){
+				callbackInitTrafficPage("116.37313","39.835876","");
+			},20000);
+			*/
 		},
 		pageMove:function(evt){
 			this.moved = true;
@@ -305,11 +315,52 @@
 			},time);
 		},
 		/**
+		 * 初始化页面参数
+		*/
+		initPage:function(){
+			//当前显示的城市下标,从0开始
+			this.cityIndex = 0;
+			//当前选择的城市
+			this.cityList = [];
+			//需要请求哪些服务,生成页面dom的时候,把调用函数保存起来[[第一页][第二页]]
+			this.cityServer = [];
+			//标识是否请求了服务,5分钟需要刷新一次
+			this.sendServer = [];
+			//保存简图上一次显示的图片url
+			this.mapOldUrl = {};
+			//保存打车热图,位置图
+			this.taxiImgUrl = {};
+			//标识当前显示的简图类型
+			this.mapImgType = "cityMap";
+			//清除请求定时器
+			clearTimeout(this.tout);
+			//释放iscroll
+			if(this.iScrollX != null){
+				this.iScrollX.destroy();
+				this.iScrollX = null;
+			}
+			var len = this.iScrollY.length;
+			if(len > 0){
+				for(var i = 0; i < len; i++){
+					var iScrollY = this.iScrollY[i];
+					iScrollY.destroy();
+				}
+				this.iScrollY = [];
+			}
+		},
+		/**
 		 * 根据经纬度获取城市信息
 		 * lon当前GPS经度
 		 * lat当前GPS纬度
 		*/
 		getCurrentCity:function(lon,lat,city){
+			//显示loading
+			Trafficeye.httpTip.opened();
+
+			if(this.lon !== 0){
+				//已经有显示的结果了,清除历史数据,初始化各种参数
+				this.initPage();
+			}
 			this.lon = lon;
 			this.lat = lat;
 
@@ -320,8 +371,6 @@
 			var reqUrl = this.bulidSendUrl("adminZoneQuery",options);
 			
 			//console.log(reqUrl);
-			//显示loading
-			Trafficeye.httpTip.opened();
 
 			$.ajaxJSONP({
 				url:reqUrl,
