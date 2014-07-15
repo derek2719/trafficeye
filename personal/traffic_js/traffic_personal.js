@@ -102,7 +102,7 @@
 						//跳转到设置页面
 						Trafficeye.toPage("objc:??gotoPage::?setting");
 					break;
-					case "wechat":
+					case "weChat":
 						//跳转到微信页面
 						Trafficeye.toPage("objc:??gotoPage::?weixin");
 					break;
