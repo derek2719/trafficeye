@@ -68,8 +68,13 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-            var fromSource = Trafficeye.fromSource();
-            Trafficeye.toPage(fromSource.sourcepage);
+            if (Trafficeye.mobilePlatform.android) {
+                window.JSAndroidBridge.gotoPrePage;
+            } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                window.location.href=("objc:??gotoPrePage");
+            } else {
+                alert("调用修改用户信息接口,PC不支持.");
+            }
         },
         //跳转到我要搭车，请求要是送人的请求,type为2
         carpool : function(evt) {

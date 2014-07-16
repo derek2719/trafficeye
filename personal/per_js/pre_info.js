@@ -99,14 +99,27 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            var myInfo = Trafficeye.getMyInfo();
+            
             // var fromSource = Trafficeye.fromSource();
             // Trafficeye.toPage(fromSource.prepage);closeThisPage
-             if (Trafficeye.mobilePlatform.android) {
-                window.JSAndroidBridge.closeThisPage();
-            } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                Trafficeye.toPage("objc:??closeThisPage");
-            } else {
-                alert("调用修改用户信息接口,PC不支持.");
+            if(myInfo.isEdit == "2")
+            {
+                 if (Trafficeye.mobilePlatform.android) {
+                    window.JSAndroidBridge.closeThisPage();
+                } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                    Trafficeye.toPage("objc:??closeThisPage");
+                } else {
+                    alert("调用修改用户信息接口,PC不支持.");
+                }
+            }else{
+                if (Trafficeye.mobilePlatform.android) {
+                window.JSAndroidBridge.gotoPrePage;
+                } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                    window.location.href=("objc:??gotoPrePage");
+                } else {
+                    alert("调用修改用户信息接口,PC不支持.");
+                }
             }
         },
         //点击关注按钮，跳转到社区的关注页面
@@ -535,6 +548,7 @@
         //判断缓存中是否有userinfo信息
         if(myInfo.userinfo){
             if(myInfo.uid == myInfo.friend_uid){
+                pm.elems["backpagebtn"].css("display","");
                 pm.reqUserInfoSuccess(myInfo.userinfo,true); //渲染自己的页面信息
             }else{
                 if(myInfo.isEdit == "2")
