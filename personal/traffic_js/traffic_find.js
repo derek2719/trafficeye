@@ -43,11 +43,6 @@
 			this.bindEvent();
 		},
 		bindEvent:function(){
-			// 跳转页面 调用方法
-			// toPage("objc:??gotoPage::?sigra")
-			// 切换城市调用方法
-			// toPage("objc:??setCurrentCity::?10101010")
-			
 			//返回按钮事件
 			//$("#backBtn").onbind("touchstart",this.btnDown,this);
 			//$("#backBtn").onbind("touchend",this.pageBack,this);
@@ -92,23 +87,23 @@
 				switch(id){
 					case "community":
 						//跳转到社区页面
-						Trafficeye.toPage("objc:??gotoPage::?community");
+						Trafficeye.sendNativeEvent("gotoPage","community");
 					break;
 					case "survey":
 						//跳转到有奖调查页面
-						Trafficeye.toPage("objc:??gotoPage::?survey");
+						Trafficeye.sendNativeEvent("gotoPage","survey");
 					break;
 					case "bus":
 						//跳转到公交页面
-						Trafficeye.toPage("objc:??gotoPage::?bus");
+						Trafficeye.sendNativeEvent("gotoPage","bus");
 					break;
 					case "car":
 						//跳转到拼车页面
-						Trafficeye.toPage("objc:??gotoPage::?sharecar");
+						Trafficeye.sendNativeEvent("gotoPage","sharecar");
 					break;
 					case "weibo":
 						//跳转到微博页面
-						Trafficeye.toPage("objc:??gotoPage::?weibo");
+						Trafficeye.sendNativeEvent("gotoPage","weibo");
 					break;
 				}
 			}

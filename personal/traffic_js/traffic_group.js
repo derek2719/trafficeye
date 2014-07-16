@@ -47,17 +47,29 @@
 		ratio:1,
 		//保存当前城市code,因为不是当前城市,简图没有周边
 		currentCityCode:"101010100",
-		//[城市简图,交通简图,天气,交通指数,交通资讯,打车指数,打车建议地图,打车热图]
+		//[城市简图,周边简图,交通地图,天气,交通指数,交通资讯,打车指数,打车建议地图,打车热图]
 		cityModule:{
-			"101010100":[1,1,1,1,1,1,1,1],"101230101":[1,1,1,0,0,0,0,0],"101210101":[1,1,1,1,0,0,0,0],
-			"101190101":[1,1,1,0,0,0,0,0],"101210401":[1,1,1,0,0,0,0,0],"101120201":[1,1,1,0,0,0,0,0],
-			"101020100":[1,1,1,1,0,1,1,0],"101280601":[1,1,1,1,1,0,0,0],"101070101":[1,1,1,0,0,0,0,0],
-			"101090101":[1,1,1,0,0,0,0,0],"101200101":[1,1,1,0,0,0,0,0],"101060101":[1,1,1,0,0,0,0,0],
-			"101250101":[1,1,1,0,0,0,0,0],"101040100":[1,1,1,0,0,0,0,0],"101280701":[1,1,1,0,0,0,0,0],
-			"101280101":[1,1,1,0,0,0,0,0],"101270101":[1,1,1,0,0,0,0,0],"101281701":[1,1,1,0,0,0,0,0],
-			"101281601":[1,1,1,0,0,0,0,0],"101280800":[1,1,1,0,0,0,0,0],"101210901":[1,1,0,0,0,0,0,0],
-			"101230201":[1,1,0,0,0,0,0,0],"101190401":[1,1,0,0,0,0,0,0],"101030100":[1,1,0,0,0,0,0,0],
-			"101210701":[1,1,0,0,0,0,0,0],"101190201":[1,1,0,0,0,0,0,0]
+			"101010100":[1,1,1,1,1,1,1,1,1],"101230101":[1,1,1,1,0,0,0,0,0],"101210101":[1,1,1,1,1,0,0,0,0],
+			"101190101":[1,1,1,1,0,0,0,0,0],"101210401":[1,1,1,1,0,0,0,0,0],"101120201":[1,1,1,1,0,0,0,0,0],
+			"101020100":[1,1,1,1,1,0,1,1,0],"101280601":[1,1,1,1,1,1,0,0,0],"101070101":[1,1,1,1,0,0,0,0,0],
+			"101090101":[1,1,1,1,0,0,0,0,0],"101200101":[1,1,1,1,0,0,0,0,0],"101060101":[1,1,1,1,0,0,0,0,0],
+			"101250101":[1,1,1,1,0,0,0,0,0],"101040100":[1,1,1,1,0,0,0,0,0],"101280701":[1,1,1,1,0,0,0,0,0],
+			"101280101":[1,0,1,1,0,0,0,0,0],"101270101":[1,0,1,1,0,0,0,0,0],"101281701":[1,0,1,1,0,0,0,0,0],
+			"101281601":[1,0,1,1,0,0,0,0,0],"101280800":[1,0,1,1,0,0,0,0,0],"101210901":[1,1,0,1,0,0,0,0,0],
+			"101230201":[1,1,0,1,0,0,0,0,0],"101190401":[1,1,0,1,0,0,0,0,0],"101030100":[1,1,0,1,0,0,0,0,0],
+			"101210701":[1,1,0,1,0,0,0,0,0],"101190201":[1,1,0,1,0,0,0,0,0]
+		},
+		//城市中心点经纬度
+		cityCenterLonLat:{
+			"101010100":[116.397666,39.907799],"101230101":[119.292958,26.072463],"101210101":[120.171373,30.252268],
+			"101190101":[118.794249,32.055678],"101210401":[121.560266,29.874836],"101120201":[120.398299,36.296191],
+			"101020100":[121.467784,31.222081],"101280601":[114.063864,22.546012],"101070101":[123.432360,41.805632],
+			"101090101":[114.501898,38.036669],"101200101":[114.267414,30.59285],"101060101":[125.31234,43.859963],
+			"101250101":[112.976074,28.195122],"101040100":[106.552945,29.562022],"101280701":[113.553524,22.254523],
+			"101280101":[113.27051,23.129011],"101270101":[104.065772,30.659452],"101281701":[113.39483,22.520122],
+			"101281601":[113.756591,23.029291],"101280800":[113.130002,23.026448],"101210901":[0,0],
+			"101230201":[0,0],"101190401":[0,0],"101030100":[0,0],
+			"101210701":[0,0],"101190201":[0,0]
 		},
 		//当前显示的城市下标,从0开始
 		cityIndex:0,
@@ -83,10 +95,6 @@
 			this.bindEvent();
 		},
 		bindEvent:function(){
-			// 跳转页面 调用方法
-			// toPage("objc:??gotoPage::?sigra")
-			// 切换城市调用方法
-			// toPage("objc:??setCurrentCity::?10101010")
 			//返回按钮按下弹起
 			//this.$backbtn.onbind("touchstart",this.btnDown,this);
 			//this.$backbtn.onbind("touchend",this.pageBack,this);
@@ -99,9 +107,9 @@
 			this.bodyHeight = h;
 
 			//测试调用
+			
+			//callbackInitTrafficPage(113.756591,23.029291,"101010100_101230101_101210101");
 			/*
-			callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
-
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","101210101");
 			},10000);
@@ -143,12 +151,12 @@
 					case "peripheryMap":
 						//console.log("sigra");
 						//通知平台跳转到简图
-						Trafficeye.toPage("objc:??gotoPage::?sigra");
+						Trafficeye.sendNativeEvent("gotoPage","sigra");
 					break;
 					case "trafficMap":
 						//console.log("map");
 						//通知平台跳转到地图
-						Trafficeye.toPage("objc:??gotoPage::?map");
+						Trafficeye.sendNativeEvent("gotoPage","map");
 					break;
 				}
 				
@@ -192,7 +200,7 @@
 			$(ele).removeClass("curr");
 			if(!this.moved){
 				//通知平台跳转到交通指数
-				Trafficeye.toPage("objc:??gotoPage::?index");
+				Trafficeye.sendNativeEvent("gotoPage","index");
 			}
 		},
 		/**
@@ -203,7 +211,7 @@
 			$(ele).removeClass("curr");
 			if(!this.moved){
 				//通知平台跳转到交通资讯
-				Trafficeye.toPage("objc:??gotoPage::?news");
+				Trafficeye.sendNativeEvent("gotoPage","news");
 			}
 		},
 		/**
@@ -240,7 +248,7 @@
 			$(ele).removeClass("curr");
 			if(!this.moved){
 				//通知平台跳转到交通指数
-				Trafficeye.toPage("objc:??gotoPage::?taxi");
+				Trafficeye.sendNativeEvent("gotoPage","taxi");
 			}
 		},
 		/**
@@ -258,10 +266,10 @@
 				$(".scroller").css({"width":w + "px"});
 				
 				this.iScrollX = new IScroll('#wrapper',{
-					scrollX: true,
+					scrollX:true,
 					momentum:false,
 					snap:true,
-					snapSpeed:600,
+					snapSpeed:500,
 					scope:this
 				});
 
@@ -275,7 +283,7 @@
 
 						//初始化纵向滚动
 						var code = scope.cityList[pageX];
-						Trafficeye.toPage("objc:??setCurrentCity::?" + code);
+						Trafficeye.sendNativeEvent("setCurrentCity",code);
 
 						var iScrollY = scope.iScrollY[pageX];
 						if(iScrollY == null){
@@ -294,7 +302,7 @@
 				});
 				this.iScrollY[this.cityIndex] = iScrollY;
 				//通知平台显示城市
-				Trafficeye.toPage("objc:??setCurrentCity::?" + this.currentCityCode);
+				Trafficeye.sendNativeEvent("setCurrentCity",this.currentCityCode);
 			}
 		},
 		/**
@@ -427,25 +435,27 @@
 					html.push('<div id="city_' + city + '" class="wrapper_content">');
 					html.push('<div class="scroller">');
 
-					//城市简图
-					var m1 = module[0];
-					//交通简图(城市简图中的交通简图选项)
-					var m2 = module[1];
+					//全市简图
+					var m0 = module[0];
+					//周边简图
+					var m1 = module[1];
+					//交通地图(城市简图中的交通地图选项)
+					var m2 = module[2];
 					//天气
-					var m3 = module[2];
+					var m3 = module[3];
 					//交通指数
-					var m4 = module[3];
+					var m4 = module[4];
 					//交通资讯
-					var m5 = module[4];
+					var m5 = module[5];
 					//打车指数
-					var m6 = module[5];
+					var m6 = module[6];
 					//打车建议地图(打车指数)
-					var m7 = module[6];
+					var m7 = module[7];
 					//打车热图(打车指数)
-					var m8 = module[7];
-					if(m1 === 1){
+					var m8 = module[8];
+					if(m0 === 1){
 						//包含城市简图
-						var hl = this.getCityMapHtml(m2,city);
+						var hl = this.getCityMapHtml(m1,m2,city);
 						html.push(hl);
 						sendFun.push(this.getCityMapImg);
 					}
@@ -517,22 +527,24 @@
 		},
 		/**
 		 * 获取城市简图html
+		 * m1是否支持周边简图
 		 * m2是否支持交通简图
 		 * id等于城市编码,用来标识dom唯一ID
 		*/
-		getCityMapHtml:function(m2,id){
+		getCityMapHtml:function(m1,m2,id){
 			var w = parseInt(this.bodyWidth * 0.725) || 232;
 			var h = parseInt(w * 0.75) || 163;
 			var html = [];
 			html.push('<div class="map_1">');
 			html.push('<div id="trafficMapType' + id + '" class="map_r">');
 			html.push('<a id="cityMap_' + id + '" class="qs selected">全市简图</a>');
-			if(id == this.currentCityCode){
+			if(m1 && (id == this.currentCityCode)){
 				html.push('<a id="peripheryMap_' + id + '" class="zb">周边简图</a>');
-				if(m2 === 1){
-					html.push('<a id="trafficMap_' + id + '" class="jt">交通地图</a>');
-				}
 			}
+			if(m2 === 1){
+				html.push('<a id="trafficMap_' + id + '" class="jt">交通地图</a>');
+			}
+			
 			html.push('</div>');
 			html.push('<div class="map_l">');
 			html.push('<img id="cityMapImg' + id + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
@@ -637,6 +649,12 @@
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 3;
 			options.code = code;
+			//如果不是当前城市,经纬度传入城市中心点
+			if(code !== this.currentCityCode){
+				var lonlat = this.cityCenterLonLat[code];
+				options.lon = lonlat[0];
+				options.lat = lonlat[1];
+			}
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl);
 			//显示历史简图

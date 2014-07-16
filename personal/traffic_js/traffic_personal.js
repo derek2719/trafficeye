@@ -3,7 +3,7 @@
  * UserInfoManager登录信息管理
  * PageManager页面功能管理
  * </pre>
- * 
+ *
  * file:个人资料页显示
  * author:陈宣宇
  * date:2014-07-13
@@ -43,11 +43,6 @@
 			this.bindEvent();
 		},
 		bindEvent:function(){
-			// 跳转页面 调用方法
-			// toPage("objc:??gotoPage::?sigra")
-			// 切换城市调用方法
-			// toPage("objc:??setCurrentCity::?10101010")
-			
 			//返回按钮事件
 			//$("#backBtn").onbind("touchstart",this.btnDown,this);
 			//$("#backBtn").onbind("touchend",this.pageBack,this);
@@ -70,7 +65,7 @@
 			//$("li.curr").removeClass("curr");
 		},
 		pageBack: function(evt){
-			
+
 		},
 		/**
 		 * btn down 效果
@@ -92,19 +87,19 @@
 				switch(id){
 					case "perInfo":
 						//跳转到个人页面
-						Trafficeye.toPage("objc:??gotoPage::?personal");
+						Trafficeye.sendNativeEvent("gotoPage","personal");
 					break;
 					case "msg":
 						//跳转到消息页面
-						Trafficeye.toPage("objc:??gotoPage::?message");
+						Trafficeye.sendNativeEvent("gotoPage","message");
 					break;
 					case "setup":
 						//跳转到设置页面
-						Trafficeye.toPage("objc:??gotoPage::?setting");
+						Trafficeye.sendNativeEvent("gotoPage","setting");
 					break;
 					case "weChat":
 						//跳转到微信页面
-						Trafficeye.toPage("objc:??gotoPage::?weixin");
+						Trafficeye.sendNativeEvent("gotoPage","weixin");
 					break;
 				}
 			}

@@ -415,13 +415,39 @@
      * @return {[type]}     [description]
      */
     function toPage(url) {
-        //return;
-        if(!mobilePlatform.chrome){
-            if (url) {
-                setTimeout(function() {
-                    window.location.href = url;
-                }, 1);
+        if (url) {
+            setTimeout(function() {
+                console.log(url)
+                window.location.href = url;
+            }, 1);
+        }
+    };
+
+    /**
+     * web给平台发送事件
+     * @param name 事件名称
+     * @parma condi 参数
+    */
+    function sendNativeEvent(name,condi){
+        if(name){
+            if(mobilePlatform.android){
+                //android平台
+                window.JSAndroidBridge[name](condi);
             }
+            else if(mobilePlatform.ipad || mobilePlatform.iphone){
+                //ios平台
+                var objc = "objc:??" + name + "::?" + condi;
+                setTimeout(function() {
+                    window.location.href = objc;
+                },1);
+                //window.location.href=("objc:??updateUserInfo::?"+content+":?"+rewardContent);
+            }
+            else{
+                Trafficeye.trafficeyeAlert("不支持调用本地接口");
+            }
+        }
+        else{
+            Trafficeye.trafficeyeAlert("没有指定事件名称");
         }
     };
 
@@ -439,6 +465,7 @@
     Trafficeye.getMyInfo = getMyInfo;
     Trafficeye.fromSource = fromSource;
     Trafficeye.toPage = toPage;
+    Trafficeye.sendNativeEvent = sendNativeEvent;
     Trafficeye.trafficeyeAlert = trafficeyeAlert;
     Trafficeye.BASE_USER_URL = BASE_USER_URL;
     Trafficeye.BASE_RIDE_URL = BASE_RIDE_URL;
