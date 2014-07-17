@@ -111,9 +111,12 @@
 		*/
 		getPersonalInfo:function(url,name){
 			var img = $("#perImg");
+			name = name || "个人信息";
 			$("#perName").html(name);
-			//加载图片
-			Trafficeye.imageLoaded(img,url);
+			if(!url){
+				//加载图片
+				Trafficeye.imageLoaded(img,url);
+			}
 		},
 		/**
 		 * 生成请求地址

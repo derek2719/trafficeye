@@ -432,7 +432,13 @@
         if(name){
             if(mobilePlatform.android){
                 //android平台
-                window.JSAndroidBridge[name](condi);
+                try{
+                    window.JSAndroidBridge[name](condi);
+                }
+                catch(e){
+                    Trafficeye.trafficeyeAlert("没有检测到JSAndroidBridge方法");
+                    Trafficeye.trafficeyeAlert("JSAndroidBridge=" + typeof window.JSAndroidBridge);
+                }
             }
             else if(mobilePlatform.ipad || mobilePlatform.iphone){
                 //ios平台
