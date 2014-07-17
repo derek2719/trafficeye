@@ -433,6 +433,19 @@
             if(mobilePlatform.android){
                 //android平台
                 try{
+                    switch(name){
+                        case "gotoPage":
+                            window.JSAndroidBridge.gotoPage(condi);
+                        break;
+                        case "setCurrentCity":
+                            window.JSAndroidBridge.setCurrentCity(condi);
+                        break;
+                        default:
+                            Trafficeye.trafficeyeAlert(name + "接口不存在");
+                        break;
+                    }
+                    
+                    /*
                     var js = window.JSAndroidBridge;
                     if(js){
                         var fun = js[name];
@@ -447,6 +460,7 @@
                         Trafficeye.trafficeyeAlert("没有检测到JSAndroidBridge对象");
                     }
                     //window.JSAndroidBridge[name](condi);
+                    */
                 }
                 catch(e){
                     Trafficeye.trafficeyeAlert("JSAndroidBridge异常");
