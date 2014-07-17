@@ -433,11 +433,23 @@
             if(mobilePlatform.android){
                 //android平台
                 try{
-                    window.JSAndroidBridge[name](condi);
+                    var js = window.JSAndroidBridge;
+                    if(js){
+                        var fun = js[name];
+                        if(typeof fun == "function"){
+                            fun(condi);
+                        }
+                        else{
+                            Trafficeye.trafficeyeAlert("调用通知平台接口" + name + "出错");
+                        }
+                    }
+                    else{
+                        Trafficeye.trafficeyeAlert("没有检测到JSAndroidBridge对象");
+                    }
+                    //window.JSAndroidBridge[name](condi);
                 }
                 catch(e){
-                    Trafficeye.trafficeyeAlert("没有检测到JSAndroidBridge方法");
-                    Trafficeye.trafficeyeAlert("JSAndroidBridge=" + typeof window.JSAndroidBridge);
+                    Trafficeye.trafficeyeAlert("JSAndroidBridge异常");
                 }
             }
             else if(mobilePlatform.ipad || mobilePlatform.iphone){

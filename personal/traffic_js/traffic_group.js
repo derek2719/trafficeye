@@ -302,9 +302,7 @@
 				});
 				this.iScrollY[this.cityIndex] = iScrollY;
 				//通知平台显示城市
-				Trafficeye.trafficeyeAlert("通知平台显示城市..");
 				Trafficeye.sendNativeEvent("setCurrentCity",this.currentCityCode);
-				Trafficeye.trafficeyeAlert("通知平台显示城市完成..");
 			}
 		},
 		/**
@@ -381,12 +379,10 @@
 			var reqUrl = this.bulidSendUrl("adminZoneQuery",options);
 			
 			//console.log(reqUrl);
-			Trafficeye.trafficeyeAlert("当前城市开始请求.....");
 			$.ajaxJSONP({
 				url:reqUrl,
 				context:this,
 				success:function(data){
-					Trafficeye.trafficeyeAlert("当前城市请求成功..");
 					var state = data.state.code - 0;
 					if(state === 0){
 						var code = data.code;
