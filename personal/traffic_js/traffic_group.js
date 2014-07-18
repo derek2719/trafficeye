@@ -33,6 +33,7 @@
 	PageManager.prototype = {
 		constructor:PageManager,
 		moved:false,
+		iScroller:null,
 		iScrollX:null,
 		iScrollY:[],
 		//服务地址
@@ -86,6 +87,7 @@
 		//标识当前显示的简图类型
 		mapImgType:"cityMap",
 		init: function(){
+			this.iScroller = $("#scroller");
 			//保存请求URL
 			//this.SERVERURL = Trafficeye.BASE_RIDE_URL + "/api/v4/";
 			this.SERVERURL = "http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test" + "/api/v4/";
@@ -105,15 +107,17 @@
 			this.ratio = window.devicePixelRatio || 1;
 			this.bodyWidth = w;
 			this.bodyHeight = h;
+			$("#viewport").css({"width":w + "px","height":h + "px"});
+			this.iScroller.css({"width":w + "px","height":h + "px"});
 
 			//测试调用
-			
-			//callbackInitTrafficPage(113.756591,23.029291,"101010100_101230101_101210101");
 			/*
+			callbackInitTrafficPage("116.37313","39.835876","101010100");
+			
 			setTimeout(function(){
-				callbackInitTrafficPage("116.37313","39.835876","101210101");
-			},10000);
-
+				callbackInitTrafficPage("116.37313","39.835876","101230101_101210101");
+			},2000);
+			
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","");
 			},20000);
@@ -260,11 +264,18 @@
 				var w = this.bodyWidth;
 				var h = this.bodyHeight + "px";
 				var count = this.cityList.length;
-				$("#viewport").css({"width":w + "px","height":h});
-				$("#scroller").css({"width":w * count + "px","height":h});
+				var iw = w * count;
+				this.iScroller[0].style.width = iw + "px";
 				$(".slide").css({"width":w + "px","height":h});
 				$(".scroller").css({"width":w + "px"});
-				
+
+				var cw = this.iScroller.width();
+				if(cw != iw){
+					//因为第一次只有一个城市,第二次多个城市,这个宽度修改之后又还原到320
+					//所以只能再回调一次修改宽度,暂时没有更好的办法
+					this.initiScroll();
+				}
+
 				this.iScrollX = new IScroll('#wrapper',{
 					scrollX:true,
 					momentum:false,
@@ -492,7 +503,7 @@
 				}
 			}
 			//加载页面结构
-			$("#scroller").html(page.join(""));
+			this.iScroller.html(page.join(""));
 
 			//初始化iscroll
 			this.initiScroll();
