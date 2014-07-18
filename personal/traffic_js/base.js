@@ -437,12 +437,12 @@
                         case "gotoPage":
                             setTimeout(function(){
                                 window.JSAndroidBridge.gotoPage(condi);
-                            },1000);
+                            },100);
                         break;
                         case "setCurrentCity":
                             setTimeout(function(){
                                 window.JSAndroidBridge.setCurrentCity(condi);
-                            },1000);
+                            },100);
                         break;
                         default:
                             Trafficeye.trafficeyeAlert(name + "接口不存在");
