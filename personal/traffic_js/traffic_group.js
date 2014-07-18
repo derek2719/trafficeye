@@ -273,7 +273,11 @@
 				if(cw != iw){
 					//因为第一次只有一个城市,第二次多个城市,这个宽度修改之后又还原到320
 					//所以只能再回调一次修改宽度,暂时没有更好的办法
-					this.initiScroll();
+					var t = this;
+					setTimeout(function(){
+						t.initiScroll();
+					},50);
+					return;
 				}
 
 				this.iScrollX = new IScroll('#wrapper',{
