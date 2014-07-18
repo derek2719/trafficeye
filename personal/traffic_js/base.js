@@ -435,10 +435,14 @@
                 try{
                     switch(name){
                         case "gotoPage":
-                            window.JSAndroidBridge.gotoPage(condi);
+                            setTimeout(function(){
+                                window.JSAndroidBridge.gotoPage(condi);
+                            },1000);
                         break;
                         case "setCurrentCity":
-                            window.JSAndroidBridge.setCurrentCity(condi);
+                            setTimeout(function(){
+                                window.JSAndroidBridge.setCurrentCity(condi);
+                            },1000);
                         break;
                         default:
                             Trafficeye.trafficeyeAlert(name + "接口不存在");
