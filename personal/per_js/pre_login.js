@@ -19,6 +19,7 @@
     function PageManager() {
         //ID元素对象集合
         this.elems = {
+            "backpagebtn" : null,
             "loginsina" : null,
             "loginqqweibo" : null,
             "loginqq" : null,
@@ -45,8 +46,31 @@
          */
         initElems : function() {
             var me = this,
-                elems = me.elems;
+                elems = me.elems,
+                backpagebtnElem = me.elems["backpagebtn"];
                 me.elems = Trafficeye.queryElemsByIds(elems);
+            //返回按钮
+            backpagebtnElem.onbind("touchstart",me.btnDown,backpagebtnElem);
+            backpagebtnElem.onbind("touchend",me.backpagebtnUp,me);
+        },
+        /**
+         * 按钮按下事件处理器
+         * @param  {Event} evt
+         */
+        btnDown : function(evt) {
+            this.addClass("curr");
+        },
+        backpagebtnUp : function(evt) {
+            var me = this,
+                elem = evt.currentTarget;
+            $(elem).removeClass("curr");
+            if (Trafficeye.mobilePlatform.android) {
+                window.JSAndroidBridge.gotoPrePage;
+            } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                window.location.href=("objc:??gotoPrePage");
+            } else {
+                alert("调用修改用户信息接口,PC不支持.");
+            }
         },
         loginSina : function(evt) {
             var elem = $(evt).addClass("curr");
