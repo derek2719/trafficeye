@@ -107,8 +107,7 @@
 			this.ratio = window.devicePixelRatio || 1;
 			this.bodyWidth = w;
 			this.bodyHeight = h;
-			$("#viewport").css({"width":w + "px","height":h + "px"});
-			this.iScroller.css({"width":w + "px","height":h + "px"});
+			
 
 			//测试调用
 			/*
@@ -265,26 +264,19 @@
 				var h = this.bodyHeight + "px";
 				var count = this.cityList.length;
 				var iw = w * count;
-				this.iScroller[0].style.width = iw + "px";
+
+				this.iScroller[0].style.cssText = "";
+				$("#viewport").css({"width":w + "px","height":h});
+				this.iScroller.css({"width":iw + "px","height":h});
 				$(".slide").css({"width":w + "px","height":h});
 				$(".scroller").css({"width":w + "px"});
 
-				var cw = this.iScroller.width();
-				if(cw != iw){
-					//因为第一次只有一个城市,第二次多个城市,这个宽度修改之后又还原到320
-					//所以只能再回调一次修改宽度,暂时没有更好的办法
-					var t = this;
-					setTimeout(function(){
-						t.initiScroll();
-					},50);
-					return;
-				}
-
 				this.iScrollX = new IScroll('#wrapper',{
 					scrollX:true,
+					scrollY:true,
 					momentum:false,
 					snap:true,
-					snapSpeed:500,
+					snapSpeed:400,
 					scope:this
 				});
 
