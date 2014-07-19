@@ -309,7 +309,7 @@
 				});
 				this.iScrollY[this.cityIndex] = iScrollY;
 				//通知平台显示城市
-				Trafficeye.sendNativeEvent("setCurrentCity",this.currentCityCode);
+				Trafficeye.sendNativeEvent("setCurrentCity",code);
 			}
 		},
 		/**
