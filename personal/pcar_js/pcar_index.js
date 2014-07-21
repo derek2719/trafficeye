@@ -69,7 +69,7 @@
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
             if (Trafficeye.mobilePlatform.android) {
-                window.JSAndroidBridge.gotoPrePage;
+                window.JSAndroidBridge.gotoPrePage();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 window.location.href=("objc:??gotoPrePage");
             } else {
