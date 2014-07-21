@@ -39,16 +39,24 @@
             var me = this;
             me.userInfoManager = new UserInfoManager();
             me.initElems();
+            me.initEvents();
             me.inited = true;
         },
-        /**
+         /**
          * 初始化页面元素对象
          */
         initElems : function() {
             var me = this,
-                elems = me.elems,
-                backpagebtnElem = me.elems["backpagebtn"];
+                elems = me.elems;
                 me.elems = Trafficeye.queryElemsByIds(elems);
+        },
+        
+        /**
+         * 初始化页面元素事件
+         */
+        initEvents : function() {
+            var me = this,
+                backpagebtnElem = me.elems["backpagebtn"];
             //返回按钮
             backpagebtnElem.onbind("touchstart",me.btnDown,backpagebtnElem);
             backpagebtnElem.onbind("touchend",me.backpagebtnUp,me);
