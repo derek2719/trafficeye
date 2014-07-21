@@ -747,6 +747,11 @@
 			var afterMaxTemp = obj.t3MaxTemperature || "-";
 			var afterMinTemp = obj.t3MinTemperature || "-";
 
+			if(typeof todayImg != "string" || typeof todayTemp != "string" || typeof todayMaxTemp != "string" || typeof todayMinTemp != "string"){
+				var msg = Trafficeye.json2Str(data);
+				Trafficeye.trafficeyeAlert(msg);
+			}
+
 			var html = [];
 			html.push('<div class="tdiv">');
 			html.push('<h4>' + todayTemp + '°<img src="' + todayImg + '" width="60" height="60"/><span>' + todayDesc + '</span></h4>');
