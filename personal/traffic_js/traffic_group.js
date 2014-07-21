@@ -111,7 +111,7 @@
 
 			//测试调用
 			/*
-			callbackInitTrafficPage("116.37313","39.835876","101010100");
+			callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
 			
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","101230101_101210101");
@@ -461,7 +461,7 @@
 					var m8 = module[8];
 					if(m0 === 1){
 						//包含城市简图
-						var hl = this.getCityMapHtml(m1,m2,city);
+						var hl = this.getCityMapHtml(m1,m2,city,i);
 						html.push(hl);
 						sendFun.push(this.getCityMapImg);
 					}
@@ -536,12 +536,13 @@
 		 * m1是否支持周边简图
 		 * m2是否支持交通简图
 		 * id等于城市编码,用来标识dom唯一ID
+		 * i标识位置,跟城市index顺序对等
 		*/
-		getCityMapHtml:function(m1,m2,id){
+		getCityMapHtml:function(m1,m2,id,i){
 			var w = parseInt(this.bodyWidth * 0.725) || 232;
 			var h = parseInt(w * 0.75) || 163;
 			var html = [];
-			html.push('<div class="map_1">');
+			html.push('<div class="map_1"><p id="trafficMapTime' + i + '" class="time"></p>');
 			html.push('<div id="trafficMapType' + id + '" class="map_r">');
 			html.push('<a id="cityMap_' + id + '" class="qs selected">全市简图</a>');
 			if(m1 && (id == this.currentCityCode)){
@@ -563,10 +564,13 @@
 		*/
 		getCityMapImg:function(){
 			var code = this.cityList[this.cityIndex];
+			//是否当前定位城市 1是 / 0否
+			var isLoc = this.currentCityCode == code ? 1 : 0;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 1;
 			options.code = code;
+			options.isLoc = isLoc;
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl);
 			//显示历史简图
@@ -577,10 +581,14 @@
 				url:reqUrl,
 				context:this,
 				success:function(data){
+					//console.log(data)
 					var state = data.state.code - 0;
 					if(state === 0){
 						var imgUrl = data.url || "";
 						if(imgUrl != ""){
+							var time = data.publishedTime || "08:00";
+							//更新时间
+							$("#trafficMapTime" + this.cityIndex).html(time);
 							//保存url
 							this.mapOldUrl["cityMap" + code] = imgUrl;
 							//获取图片dom
@@ -628,6 +636,9 @@
 					if(state === 0){
 						var imgUrl = data.url || "";
 						if(imgUrl != ""){
+							var time = data.publishedTime || "09:00";
+							//更新时间
+							$("#trafficMapTime" + this.cityIndex).html(time);
 							//保存url
 							this.mapOldUrl["peripheryMap" + code] = imgUrl;
 							//获取图片dom
@@ -675,6 +686,10 @@
 					if(state === 0){
 						var imgUrl = data.url || "";
 						if(imgUrl != ""){
+							var time = data.publishedTime || "10:00";
+							//更新时间
+							$("#trafficMapTime" + this.cityIndex).html(time);
+
 							//保存url
 							this.mapOldUrl["trafficMap" + code] = imgUrl;
 							//获取图片dom
@@ -698,7 +713,7 @@
 		*/
 		getWeatherHtml:function(id){
 			var html = [];
-			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt">天气</h3>');
+			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt">天气<span id="weatherTime' + id + '" class="titletime"></span></h3>');
 			html.push('<div id="weather' +id + '" class="weather-warp"><div class="tdiv">');
 			html.push('<h4><img src="traffic_img/day/54.png" width="60" height="60"/><span></span></h4>');
 			html.push('<div class="tdivr"><span class="h">-°</span><span class="l">-°</span>');
@@ -769,6 +784,10 @@
 
 			var dom = $("#weather" + code);
 			dom.html(html.join(''));
+
+			var time = obj.publishedTime || "10:00";
+			//更新时间
+			$("#weatherTime" + code).html(time);
 		},
 		/**
 		 * 获取交通指数图片html
@@ -779,7 +798,7 @@
 			var html = [];
 			html.push('<div class="map_2_box">');
 			html.push('<div class="map_2">');
-			html.push('<h3 class="map_bt">交通指数</h3>');
+			html.push('<h3 class="map_bt">交通指数<span id="trafficIndexTime' + id + '" class="titletime"></span></h3>');
 			html.push('<div>');
 			html.push('<img id="trafficIndexImg' + id + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
 			html.push('</div></div></div>');
@@ -802,6 +821,9 @@
 					if(state === 0){
 						var imgUrl = data.url || "";
 						if(imgUrl != ""){
+							var time = data.publishedTime || "10:00";
+							//更新时间
+							$("#trafficIndexTime" + code).html(time);
 							//获取图片dom
 							var img = $("#trafficIndexImg" + code);
 							//加载图片
@@ -892,6 +914,10 @@
 			var url = obj.url || "";
 			Trafficeye.imageLoaded(img,url);
 
+			//var time = obj.publishedTime || "10:00";
+			//更新时间
+			//$("#trafficInfoTime" + code).html(time);
+
 			var iScrollY = this.iScrollY[this.cityIndex];
 			if(iScrollY != null){
 				iScrollY.refresh();
@@ -905,7 +931,7 @@
 			var h = parseInt(w * 0.75) || 163;
 			var html = [];
 			html.push('<div class="map_2_box">');
-			html.push('<div class="map_2"><h3 class="map_bt">打车指数</h3>');
+			html.push('<div class="map_2"><h3 class="map_bt">打车指数<span id="taxiIndexTime' + id + '" class="titletime"></span></h3>');
 			html.push('<div class="dche">');
 			html.push('当前位置打车指数：');
 			html.push('<div id="taxiIndex' + id + '" class="score"></div>');
@@ -959,6 +985,11 @@
 			var star = this.bulidStarHtml(obj);
 			var dom = $("#taxiIndex" + code);
 			dom.html(star);
+
+			//更新时间
+			var time = data.publishedTime || "10:00";
+			//更新时间
+			$("#taxiIndexTime" + code).html(time);
 
 			//请求打车位置图/热图
 			var taxiLocationImg = this.taxiImgUrl["taxiLocation" + code] || "";
@@ -1090,6 +1121,10 @@
 			// callbackInitTrafficPage("116.37313","39.835876","101010100");
 			// callbackInitTrafficPage("116.37313","39.835876","101010100_101020100_101210101");
 			
+		};
+		//刷新数据
+		window.callbackRefresh = function(){
+			Trafficeye.pageManager.sendCityServer(Trafficeye.pageManager.cityIndex);
 		};
 	});
 }(window));
