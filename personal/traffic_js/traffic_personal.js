@@ -113,7 +113,7 @@
 			var img = $("#perImg");
 			name = name || "个人信息";
 			$("#perName").html(name);
-			if(!url){
+			if(url){
 				//加载图片
 				Trafficeye.imageLoaded(img,url);
 			}
