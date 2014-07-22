@@ -528,6 +528,9 @@
 					}
 					//修改请求标识
 					this.sendServer[index] = 0;
+
+					//因为手动刷新添加了loading,所以请求完成之后添加一个关闭loading提示
+					Trafficeye.httpTip.closed();
 				}
 			}
 		},
@@ -576,6 +579,11 @@
 			//显示历史简图
 			var url = this.mapOldUrl["cityMap" + code] || "traffic_img/default.jpg";
 			$("#cityMapImg" + code).attr("src",url);
+
+			//重新请求数据,需求改变城市简图按钮高亮样式
+			var $ele = $("#cityMap_" + code);
+			$ele.siblings("a").removeClass("selected");
+			$ele.addClass("selected");
 
 			$.ajaxJSONP({
 				url:reqUrl,
@@ -632,6 +640,7 @@
 				url:reqUrl,
 				context:this,
 				success:function(data){
+					//console.log(data)
 					var state = data.state.code - 0;
 					if(state === 0){
 						var imgUrl = data.url || "";
@@ -998,6 +1007,7 @@
 				//请求打车位置图
 				this.getTaxiImg(code,5,"taxiLocation");
 				//按钮显示高亮
+				$("#taxiHot_" + code).removeClass("selected");
 				$("#taxiLocation_" + code).addClass("selected");
 			}
 			else{
@@ -1006,6 +1016,7 @@
 					//请求打车热图
 					this.getTaxiImg(code,4,"taxiHot");
 					//按钮显示高亮
+					$("#taxiLocation_" + code).removeClass("selected");
 					$("#taxiHot_" + code).addClass("selected");
 				}
 			}
@@ -1124,7 +1135,13 @@
 		};
 		//刷新数据
 		window.callbackRefresh = function(){
-			Trafficeye.pageManager.sendCityServer(Trafficeye.pageManager.cityIndex);
+			var page = Trafficeye.pageManager;
+			var index = page.cityIndex;
+			//主动刷新数据需要重置控制变量
+			page.sendServer[index] = 1;
+			//显示loading
+			Trafficeye.httpTip.opened();
+			Trafficeye.pageManager.sendCityServer(index);
 		};
 	});
 }(window));
