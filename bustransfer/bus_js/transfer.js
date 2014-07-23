@@ -133,6 +133,10 @@
 				me.resultHtml[key] = html;
 				resultContainerElemZ.html(html);
 			}
+			else{
+				//没有公交线路数据,提示用户 chenxy add
+				TrafficeyeAlert("没有公交线路可以选择,请重新选择地点.");
+			}
 			loadingElemZ.hide();
 			resultContainerElemZ.show();
 		},
@@ -206,5 +210,27 @@
 	window.lookTransferMap = function() {
 		isOpenli = false;
 		return false;
+	};
+
+	var mobilePlatform = {
+		android: /android/i.test(navigator.userAgent),
+		ipad: /ipad/i.test(navigator.userAgent),
+		iphone: /iphone/i.test(navigator.userAgent),
+		wphone: /Windows Phone/i.test(navigator.userAgent),
+		chrome: /Chrome/i.test(navigator.userAgent)
+	};
+	window.TrafficeyeAlert = function(data){
+		if(mobilePlatform.android){
+			alert(data);
+		}
+		else if(mobilePlatform.iphone || mobilePlatform.ipad){
+			var content = encodeURI(encodeURI(data));
+			setTimeout(function(){
+				window.location.href = "objc:??showAlert::?"+content;
+			},1);
+		}
+		else{
+			alert(data);
+		}
 	};
 }());
