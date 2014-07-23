@@ -89,8 +89,8 @@
 		init: function(){
 			this.iScroller = $("#scroller");
 			//保存请求URL
-			//this.SERVERURL = Trafficeye.BASE_RIDE_URL + "/api/v4/";
-			this.SERVERURL = "http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test" + "/api/v4/";
+			this.SERVERURL = Trafficeye.BASE_RIDE_URL + "/api/v4/";
+			//this.SERVERURL = "http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test" + "/api/v4/";
 
 			$(window).onbind("load",this.pageLoad,this);
 			$(window).onbind("touchmove",this.pageMove,this);
@@ -626,10 +626,13 @@
 		*/
 		getPeripheryMapImg:function(){
 			var code = this.cityList[this.cityIndex];
+			//是否当前定位城市 1是 / 0否
+			var isLoc = this.currentCityCode == code ? 1 : 0;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 2;
 			options.code = code;
+			options.isLoc = isLoc;
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl);
 			//显示历史简图
@@ -671,10 +674,13 @@
 		*/
 		getTrafficMapImg:function(){
 			var code = this.cityList[this.cityIndex];
+			//是否当前定位城市 1是 / 0否
+			var isLoc = this.currentCityCode == code ? 1 : 0;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 3;
 			options.code = code;
+			options.isLoc = isLoc;
 			//如果不是当前城市,经纬度传入城市中心点
 			if(code !== this.currentCityCode){
 				var lonlat = this.cityCenterLonLat[code];
@@ -771,10 +777,17 @@
 			var afterMaxTemp = obj.t3MaxTemperature || "-";
 			var afterMinTemp = obj.t3MinTemperature || "-";
 
-			if(typeof todayImg != "string" || typeof todayTemp != "string" || typeof todayMaxTemp != "string" || typeof todayMinTemp != "string"){
-				var msg = Trafficeye.json2Str(data);
-				Trafficeye.trafficeyeAlert(msg);
-			}
+			todayImg = typeof(todayImg) == "string" ? todayImg : "traffic_img/day/54.png";
+			todayTemp = typeof(todayTemp) == "string" ? todayTemp : "-";
+			todayMaxTemp = typeof(todayMaxTemp) == "string" ? todayMaxTemp : "-";
+			todayMinTemp = typeof(todayMinTemp) == "string" ? todayMinTemp : "-";
+			todayDesc = typeof(todayDesc) == "string" ? todayDesc : "";
+			mornImg = typeof(mornImg) == "string" ? mornImg : "traffic_img/day/54.png";
+			mornMaxTemp = typeof(mornMaxTemp) == "string" ? mornMaxTemp : "-";
+			mornMinTemp = typeof(mornMinTemp) == "string" ? mornMinTemp : "-";
+			afterImg = typeof(afterImg) == "string" ? afterImg : "traffic_img/day/54.png";
+			afterMaxTemp = typeof(afterMaxTemp) == "string" ? afterMaxTemp : "-";
+			afterMinTemp = typeof(afterMinTemp) == "string" ? afterMinTemp : "-";
 
 			var html = [];
 			html.push('<div class="tdiv">');
@@ -816,10 +829,13 @@
 		},
 		getTrafficIndex:function(){
 			var code = this.cityList[this.cityIndex];
+			//是否当前定位城市 1是 / 0否
+			var isLoc = this.currentCityCode == code ? 1 : 0;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio - 20) || 300;
 			options.type = 6;
 			options.code = code;
+			options.isLoc = isLoc;
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl);
 			$.ajaxJSONP({
@@ -1031,9 +1047,12 @@
 		getTaxiImg:function(code,type,imgId){
 			//4：打车热图,5：打车建议位置图
 			var options = {};
+			//是否当前定位城市 1是 / 0否
+			var isLoc = this.currentCityCode == code ? 1 : 0;
 			options.width = parseInt(this.bodyWidth * this.ratio) || 320;
 			options.type = type;
 			options.code = code;
+			options.isLoc = isLoc;
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl)
 			//显示历史打车位置/热图
