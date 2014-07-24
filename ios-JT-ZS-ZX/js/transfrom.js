@@ -418,7 +418,7 @@ function getTime() {
 		dataType : 'jsonp',
 		jsonp : 'callback',
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("网络不给力,数据请求超时！");
+			alert("暂时没有数据！");
 		},
 		success : function(result) {
 			var timeps = result.time;
