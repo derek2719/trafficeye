@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>交通资讯</title>
+<link rel="stylesheet" href="css/info.css" type="text/css">
+</head>
+<body>
+<div style="position:relative;z-index:99;height:44px;line-height:44px;text-align:center;-webkit-box-shadow:0 2px 3px rgba(0, 0, 0, .2);background:#fff;" id="topNav">
+			<img src="images/icon_back.png"  style="float:left;width:22px;height:22px;padding:10px;" id="back" />
+			<img src="images/icon_refresh.png" style="float:right;width:20px;height:20px;padding:10px;" id="refresh" onClick="pullrefleshAction();"/>
+			<img src="images/icon_setting.png"  style="position:absolute;right:40px;top:0;width:22px;height:22px;padding:10px;" id="setting" />
+			<div  style="font-size:15px ;color: #464646;text-align:center;height:45px;line-height:45px;padding-left: 45px" id="test">
+				交通资讯
+			</div>
+</div>	
+<div id="wrapper">
+	<div id="scroller">
+		<div id="pullDown" align="center" >
+			<div class="pullBox">
+				<span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+			</div>
+		</div>
+
+		<div id="thelist" >
+			
+		</div>
+		
+		<div id="pullUp" align="center">
+			<div class="pullBox">
+				<span class="pullUpIcon"></span><span class="pullUpLabel">向上拖动加载更多...</span>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="thelistmore"  style="display:none;">
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery1.9.1.js"></script>
+<script type="text/javascript" src="js/iscroll1.js"></script>
+<script type="text/javascript" src="js/information.js"></script>
+</script>
