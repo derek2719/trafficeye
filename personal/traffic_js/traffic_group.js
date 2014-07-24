@@ -567,8 +567,8 @@
 		*/
 		getCityMapImg:function(){
 			var code = this.cityList[this.cityIndex];
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 1;
@@ -626,8 +626,8 @@
 		*/
 		getPeripheryMapImg:function(){
 			var code = this.cityList[this.cityIndex];
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 2;
@@ -674,8 +674,8 @@
 		*/
 		getTrafficMapImg:function(){
 			var code = this.cityList[this.cityIndex];
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 3;
@@ -829,8 +829,8 @@
 		},
 		getTrafficIndex:function(){
 			var code = this.cityList[this.cityIndex];
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio - 20) || 300;
 			options.type = 6;
@@ -1047,8 +1047,8 @@
 		getTaxiImg:function(code,type,imgId){
 			//4：打车热图,5：打车建议位置图
 			var options = {};
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			options.width = parseInt(this.bodyWidth * this.ratio) || 320;
 			options.type = type;
 			options.code = code;
