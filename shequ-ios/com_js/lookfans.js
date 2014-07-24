@@ -267,8 +267,7 @@
             elem.addClass("curr");
             elem1.removeClass("curr");
             me.pageNumManager.reset();
-			me.elems["userlist"].html("");
-
+            me.elems["userlist"].html("");
            //如果没有拿到uid，就不做请求处理，by dongyl
             var uid = me.myInfo.uid;
             if (uid) {
@@ -289,7 +288,7 @@
             elem1.addClass("curr");
             elem.removeClass("curr");
             me.pageNumManager.reset();
-			me.elems["userlist"].html("");
+            me.elems["userlist"].html("");
             //如果没有拿到uid，就不做请求处理，by dongyl
             var uid = me.myInfo.uid;
             if (uid) {
