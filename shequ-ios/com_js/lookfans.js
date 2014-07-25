@@ -268,6 +268,8 @@
             elem1.removeClass("curr");
             me.pageNumManager.reset();
             me.elems["userlist"].html("");
+            me.elems["listtotal"].html("");
+            
            //如果没有拿到uid，就不做请求处理，by dongyl
             var uid = me.myInfo.uid;
             if (uid) {
@@ -288,6 +290,7 @@
             elem1.addClass("curr");
             elem.removeClass("curr");
             me.pageNumManager.reset();
+            me.elems["listtotal"].html("");
             me.elems["userlist"].html("");
             //如果没有拿到uid，就不做请求处理，by dongyl
             var uid = me.myInfo.uid;
@@ -789,7 +792,7 @@
             Trafficeye.httpTip.closed();
             var html = [];
             html.push("<div class='qplnone'>"+data.state.desc+"</div>");
-            me.elems["userlist"].append(html.join(""));
+            me.elems["userlist"].html(html.join(""));
         },
         /**
          * 请求粉丝信息失败后的处理函数
@@ -799,7 +802,7 @@
             Trafficeye.httpTip.closed();
             var html = [];
             html.push("<div class='qplnone'>"+data.state.desc+"</div>");
-            me.elems["userlist"].append(html.join(""));
+            me.elems["userlist"].html(html.join(""));
         },
 
         setHeaderName : function() {

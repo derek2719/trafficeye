@@ -539,9 +539,9 @@
     };
 
     //基础URL
-     // var BASE_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/";
+    var BASE_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/";
     //测试服务器URL
-    var BASE_URL = "http://211.151.84.15:8080/TrafficeyeCommunityService/sns/v1/";
+    //var BASE_URL = "http://211.151.84.15:8080/TrafficeyeCommunityService/sns/v1/";
     $(function(){
         //flag 为true 的时候是消息, 为false的时候是私信
         window.initPageManager = function(uid,friend_id,start,count,flag,pid,source){
