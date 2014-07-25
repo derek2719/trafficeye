@@ -271,6 +271,7 @@
             elem1.removeClass("curr");
             me.pageNumManager.reset();
             me.elems["userlist"].html("");
+            me.elems["listtotal"].html("");
             
            //如果没有拿到uid，就不做请求处理，by dongyl
             var uid = me.myInfo.uid;
@@ -293,6 +294,7 @@
             elem.removeClass("curr");
             me.pageNumManager.reset();
             me.elems["userlist"].html("");
+            me.elems["listtotal"].html("");
             // me.elems["lookbtn"].html("");
             //如果没有拿到uid，就不做请求处理，by dongyl
             var uid = me.myInfo.uid;
@@ -634,10 +636,11 @@
                             }else if(data.state.code == -99){//没有加载更多
                                 me.reqLoadNo();
                             }else{
+                                // Trafficeye.httpTip.closed();
                                 me.reqfollowersInfoFail(data);
                             }
                         } else {
-                            me.reqfollowersInfoFail();
+                            // me.reqfollowersInfoFail();
                         }
                     }
                 })
@@ -785,7 +788,7 @@
             Trafficeye.httpTip.closed();
             var html = [];
             html.push("<div class='qplnone'>"+data.state.desc+"</div>");
-            me.elems["userlist"].append(html.join(""));
+            me.elems["userlist"].html(html.join(""));
         },
         /**
          * 请求粉丝信息失败后的处理函数
@@ -795,7 +798,7 @@
             Trafficeye.httpTip.closed();
             var html = [];
             html.push("<div class='qplnone'>"+data.state.desc+"</div>");
-            me.elems["userlist"].append(html.join(""));
+            me.elems["userlist"].html(html.join(""));
         },
 
         setHeaderName : function() {
@@ -982,5 +985,6 @@
             }
         };
         window.initPageManager();
+        // window.personalGotoCommunityPage('{\"prepage\":\"trafficeye_personal\",\"pid\":\"FC8A8324-A489-488B-B23E-BE2DEB315B33\",\"uid\":\"38662\",\"uidFriend\":\"38662\",\"traffic_lookfans\":\"fans\"}');
     }); 
  }(window));
