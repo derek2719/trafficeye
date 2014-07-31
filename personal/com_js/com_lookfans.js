@@ -404,7 +404,7 @@
             //Trafficeye.offlineStore.set("traffic_lookfans", "fans");
             //Trafficeye.toPage("pre_info.html");
             if (Trafficeye.mobilePlatform.android) {
-                window.init2.goPersonal();
+                window.init.goPersonal();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                 Trafficeye.toPage("objc://goUserCenter");
             } else {
