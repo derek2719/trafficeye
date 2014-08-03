@@ -117,6 +117,8 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            history.go(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             var myInfo = Trafficeye.getMyInfo();
             if(myInfo.isEdit == 1)
@@ -131,6 +133,7 @@
             }else{
                 Trafficeye.toPage("pre_info.html");
             }
+            */
         },
         /**
          * 选择用户基础信息列表处理器
@@ -649,12 +652,15 @@
     };
     
     $(function(){
-       
+        
+        /*
         //把来源信息存储到本地
          var presource = Trafficeye.fromSource();
          var fromSource = {"sourcepage":"pre_baseinfo.html","currpage" : "pre_baseinfo.html","prepage" : presource.currpage}
          var fromSourceStr = Trafficeye.json2Str(fromSource);
          Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+         */
+
          //获取我的用户信息
         var myInfo = Trafficeye.getMyInfo();
         if (!myInfo) {

@@ -91,7 +91,7 @@
                 } else {
                     alert("调用本地getSNSUserInfo方法,PC不支持.");
                 }
-            }),Trafficeye.MaskTimeOut);       
+            }),Trafficeye.MaskTimeOut);
         },
         
         loginQQWeibo : function(evt) {
@@ -189,10 +189,16 @@
                 {
                     Trafficeye.offlineStore.set("traffic_infosurveycar",baseinfoflag);
                     Trafficeye.toPage("pre_baseinfo.html");
-                }else if(isEdit == 0){
-                    Trafficeye.toPage("pre_info.html");
-                }else if(isEdit == 2)
-                {
+                }
+                else if(isEdit == 0){
+                    //标识进入个人资料页面是否第一个启动页面
+                    Trafficeye.offlineStore.set("traffic_myinfo_source","first");
+
+                    window.location.replace("pre_info.html");
+
+                    //Trafficeye.toPage("pre_info.html");
+                }
+                else if(isEdit == 2){
                     var paramFriend = Trafficeye.str2Json(param);
                      userinfodata = {
                         "pid" : pid,
@@ -224,6 +230,7 @@
         
         // 自动登录成功通知js
         window.callbackAutoLoginDone = function(data){
+            alert("callbackAutoLoginDone")
             Trafficeye.httpTip.closed();
             var myInfo = Trafficeye.getMyInfo();
             //把用户信息写入到本地

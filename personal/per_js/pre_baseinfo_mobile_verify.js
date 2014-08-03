@@ -60,7 +60,7 @@
             backpagebtnElem.onbind("touchend",me.backpagebtnUp,me);
             //返回按钮
             backpagebtnElemt.onbind("touchstart",me.btnDown,backpagebtnElem);
-            backpagebtnElemt.onbind("touchend",me.backpagebtnUp,me);
+            backpagebtnElemt.onbind("touchend",me.changeTelBtnUp,me);
         },
         /**
          * 按钮按下事件处理器
@@ -73,13 +73,23 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            history.go(-1);
             // var fromSource = Trafficeye.fromSource();
-            Trafficeye.toPage("pre_baseinfo_mobile.html");
+            // Trafficeye.toPage("pre_baseinfo_mobile.html");
+        },
+        //变更号码
+        changeTelBtnUp : function(evt) {
+            var me = this,
+                elem = evt.currentTarget;
+            $(elem).removeClass("curr");
+            history.go(-1);
+            // var fromSource = Trafficeye.fromSource();
+            // Trafficeye.toPage("pre_baseinfo_mobile.html");
         }
     };
     
     $(function(){
-
+        
          var mobile = Trafficeye.offlineStore.get("traffic_mobile_verify");
          var phonenumber = Trafficeye.str2Json(mobile);
          //获取我的用户信息

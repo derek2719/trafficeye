@@ -18,7 +18,7 @@
         }
     };
 
-    function UserFriends() {  
+    function UserFriends() {
         //加载成功的用户的所有数据
         this.allUserFriendsData = [];
         //用户最近一次加载的数据
@@ -60,7 +60,7 @@
                 }
             }
             if (!data.avatar) {
-                avaterSrc = "images/default.png";
+                avaterSrc = "com_img/default.png";
             } else {
                 avaterSrc = data.avatar;
             }
@@ -116,7 +116,7 @@
                 htmls.push("<li>");
             }
             if (!data.avatar) {
-                avaterSrc = "images/default.png";
+                avaterSrc = "com_img/default.png";
             } else {
                 avaterSrc = data.avatar;
             }
@@ -401,6 +401,14 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            var myInfo = Trafficeye.getMyInfo();
+            myInfo.friend_uid = myInfo.uid;
+            var dataStr = Trafficeye.json2Str(myInfo);
+            Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+            
+            Trafficeye.toPage("pre_info.html");
+
+            /*
             //Trafficeye.offlineStore.set("traffic_lookfans", "fans");
             //Trafficeye.toPage("pre_info.html");
             if (Trafficeye.mobilePlatform.android) {
@@ -410,6 +418,7 @@
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
+            */
         },
 
         /**
@@ -736,7 +745,20 @@
             $(evt).addClass("curr");
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
-                $(elem).removeClass("curr");  
+                $(elem).removeClass("curr");
+                /*
+                var data = {
+                    "uid" : myInfo.uid,
+                    "friend_uid" : timeline_user
+                };
+                */
+                var myInfo = Trafficeye.getMyInfo();
+                myInfo.friend_uid = myInfo.uid;
+                var dataStr = Trafficeye.json2Str(myInfo);
+                Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+                Trafficeye.toPage("pre_info.html");
+
+                /*
                 if (Trafficeye.mobilePlatform.android) {
                     window.init.goPersonal();
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -744,6 +766,7 @@
                 } else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
+                */
             }),Trafficeye.MaskTimeOut);
         },
         
@@ -860,7 +883,8 @@
                 data.uid = userData.uid;
                 data.pid = userData.pid;
                 var dataStr = Trafficeye.json2Str(data);
-                Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+                
+                //Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
                 
                 if(avatar){
                     var headerImgElem = me.elems["headerimg"];
@@ -885,10 +909,10 @@
     var BASE_SEARCH_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/user/";
     //用户信息URL ，正式URL 21290 测试URL 8008
     //var BASE_USERINFO_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/user/";
-    $(function(){        
+    $(function(){
         
         // 获取从个人项目跳转过来的数据，回调函数
-        window.personalGotoCommunityPage  = function(dataClient){
+        window.personalGotoCommunityPage = function(dataClient){
             // console.log(data);
             Trafficeye.httpTip.closed();
             var dataStr = Trafficeye.str2Json(dataClient);
@@ -933,7 +957,8 @@
             if(myInfo.username){
                 pm.setHeaderName();
             }
-                        //请求用户信息协议
+
+            //请求用户信息协议
             var reqUrl = BASE_URL + "friends";
             var reqData = {"uid" : myInfo.uid ,"friend_id" : myInfo.uid};
             if (lookfansPageFlag == "fans") {

@@ -68,8 +68,11 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            history.go(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.currpage);
+            */
         },
         //保存用户昵称
         saveFunction : function(evt) {

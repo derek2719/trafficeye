@@ -71,8 +71,11 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            history.go(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.currpage);
+            */
         },
         //保存用户昵称
         saveFunction : function(evt) {
@@ -133,6 +136,7 @@
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
 //                                console.log(dataReward);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
+                                /*
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -142,9 +146,11 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
+                                */
                                 Trafficeye.offlineStore.set("traffic_infosurveycar","car");
-                                var fromSource = Trafficeye.fromSource();
-                                Trafficeye.toPage(fromSource.currpage);
+                                history.go(-1);
+                                //var fromSource = Trafficeye.fromSource();
+                                //Trafficeye.toPage(fromSource.currpage);
                             } else{
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                             }

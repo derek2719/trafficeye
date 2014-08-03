@@ -99,10 +99,13 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-            var myInfo = Trafficeye.getMyInfo();
+            //var myInfo = Trafficeye.getMyInfo();
+            history.go(-1);
             
             // var fromSource = Trafficeye.fromSource();
             // Trafficeye.toPage(fromSource.prepage);closeThisPage
+
+            /*
             if(myInfo.isEdit == "2")
             {
                  if (Trafficeye.mobilePlatform.android) {
@@ -121,6 +124,7 @@
                     alert("调用修改用户信息接口,PC不支持.");
                 }
             }
+            */
         },
         //点击关注按钮，跳转到社区的关注页面
         looklistbtnUp : function(evt) {
@@ -133,6 +137,13 @@
                 "traffic_lookfans" : "look"
             };
             var dataStr = Trafficeye.json2Str(data);
+
+            //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+            Trafficeye.offlineStore.set("traffic_lookfans", "look");
+            Trafficeye.toPage("com_lookfans.html");
+
+            //老的代码
+            /*
             if (Trafficeye.mobilePlatform.android) {
                 window.JSAndroidBridge.gotoCommunity("lookfans",dataStr);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -141,6 +152,7 @@
             } else {
                 alert("调用修改用户信息接口,PC不支持.");
             }
+            */
         },
         //点击粉丝按钮，跳转到社区的粉丝页面
         fanslistbtnUp : function(evt) {
@@ -154,6 +166,13 @@
             };
             // console.log(data);
             var dataStr = Trafficeye.json2Str(data);
+            
+            //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+            Trafficeye.offlineStore.set("traffic_lookfans", "fans");
+            Trafficeye.toPage("com_lookfans.html");
+
+            //老的代码
+            /*
             if (Trafficeye.mobilePlatform.android) {
                 window.JSAndroidBridge.gotoCommunity("lookfans",dataStr);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -162,6 +181,7 @@
             } else {
                 alert("调用修改用户信息接口,PC不支持.");
             }
+            */
         },
         /**
          * 用户信息请求函数
@@ -368,7 +388,7 @@
                 var fromSourceStr = Trafficeye.json2Str(fromSource);
                 Trafficeye.offlineStore.set("traffic_chat", fromSourceStr);
                 Trafficeye.toPage("pre_message.html");
-            }),Trafficeye.MaskTimeOut);     
+            }),Trafficeye.MaskTimeOut);
         },
         //添加关注的onclick事件响应函数
         addlookbtn : function(evt) {
@@ -526,20 +546,22 @@
     var BASE_FRIENDSSHIP_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/friendships/";
     
     $(function(){
-       
         //把来源信息存储到本地
-         var presource = Trafficeye.fromSource();
-         var fromSource = {"sourcepage" : "pre_info.html","currpage" : "pre_info.html","prepage" : presource.currpage}
-         var fromSourceStr = Trafficeye.json2Str(fromSource);
-         Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-         //获取我的用户信息, by dongyl
+        //原来的代码
+        /*
+        var presource = Trafficeye.fromSource();
+        var fromSource = {"sourcepage" : "pre_info.html","currpage" : "pre_info.html","prepage" : presource.currpage}
+        var fromSourceStr = Trafficeye.json2Str(fromSource);
+        Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+        */
+        //获取我的用户信息, by dongyl
         var myInfo = Trafficeye.getMyInfo();
         if (!myInfo) {
             return;
         }
         
         var pm = new PageManager();
-
+        //debugger
         Trafficeye.pageManager = pm;
         //初始化用户界面
         pm.init();
@@ -547,7 +569,10 @@
         //判断缓存中是否有userinfo信息
         if(myInfo.userinfo){
             if(myInfo.uid == myInfo.friend_uid){
-                pm.elems["backpagebtn"].css("display","");
+                //标识进入个人资料页面是否第一个启动页面
+                var isFirst = Trafficeye.offlineStore.get("traffic_myinfo_source");
+                var dp = isFirst == "first" ? "none" : "";
+                pm.elems["backpagebtn"].css("display",dp);
                 pm.reqUserInfoSuccess(myInfo.userinfo,true); //渲染自己的页面信息
             }else{
                 if(myInfo.isEdit == "2")
@@ -656,6 +681,5 @@
                 pm.eventHtml(evt);
             }
         };
-}); 
-    
- }(window));
+    });
+}(window));

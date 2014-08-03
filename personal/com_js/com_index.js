@@ -94,7 +94,7 @@
 			var me = this;
 			var avaterSrc = "";
 			if (!data.avatar) {
-				avaterSrc = "images/default.png";
+				avaterSrc = "com_img/default.png";
 			} else {
 				avaterSrc = data.avatar;
 			}
@@ -115,7 +115,7 @@
 				//判断是否有头像数据，如果没有，显示默认头像
 				var avaterSrc = "";
 				if (!data.avatar) {
-					avaterSrc = "images/default.png";
+					avaterSrc = "com_img/default.png";
 				} else {
 					avaterSrc = data.avatar;
 				}
@@ -290,7 +290,11 @@
 			var me = this,
 			elem = evt.currentTarget;
 			$(elem).removeClass("curr");
-			alert(1)
+			//跳转到个人资料页面
+			Trafficeye.toPage("pre_info.html");
+
+
+			/*
 			if (Trafficeye.mobilePlatform.android) {
 				window.init.goPersonal();
 			} else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -298,6 +302,7 @@
 			} else {
 				alert("调用本地goPersonal方法,PC不支持.");
 			}
+			*/
 		},
 
 
@@ -306,6 +311,10 @@
 			var elem = $(evt).addClass("curr");
 			setTimeout((function(){
 				$(elem).removeClass("curr");
+				//跳转到个人资料页面
+				Trafficeye.toPage("pre_info.html");
+				
+				/*
 				if (Trafficeye.mobilePlatform.android) {
 					window.init.goPersonal();
 				} else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -313,6 +322,7 @@
 				} else {
 					alert("调用本地goPersonal方法,PC不支持.");
 				}
+				*/
 			}),Trafficeye.MaskTimeOut);
 		},
 
@@ -503,8 +513,11 @@
 				//存储本人的信息
 				data.uid = userData.uid;
 				data.pid = userData.pid;
+
 				var dataStr = Trafficeye.json2Str(data);
-				Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+				//不重新保存数据,试试 不知道 why
+				//Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+				
 				Trafficeye.imageLoaded(headImgElem, avatar);
 				if (!offlineTimelineData) {
 					offlineStoreData.userUid = userData.uid;
@@ -852,11 +865,11 @@
 			Trafficeye.toPage("com_invite.html");
 		};
 
-		/*
+		
 		setTimeout(function(){
 			initPageManager("43943","864737010861021");
 		},200);
-		*/
+		/**/
 	});
 
 }(window));

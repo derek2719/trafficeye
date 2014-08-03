@@ -73,9 +73,10 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            history.go(-1);
             // var fromSource = Trafficeye.fromSource();
             // Trafficeye.toPage(fromSource.sourcepage);
-            Trafficeye.toPage("pre_survey_mobile.html");
+            //Trafficeye.toPage("pre_survey_mobile.html");
         }
     };
     

@@ -205,7 +205,7 @@
             if (data) {   
                 me.setUserName(data.user.name);
                 var chathtml = me.MessageInfoManager.getLettersHtml(data.letters); 
-                chatlistidElem.html(chathtml);                
+                chatlistidElem.html(chathtml);
             }
         },
 
@@ -219,15 +219,15 @@
         },
 
         backPage : function() {
-            
-            Trafficeye.toPage("pre_info.html");
+            history.go(-1);
+            //Trafficeye.toPage("pre_info.html");
         },
 
         setUserName : function(username){
             var me = this;
             var usernameElem = me.elems["username"];
             usernameElem.html(username);
-        },      
+        },
        
         /**
          * 请求聊天消息信息失败后的处理函数

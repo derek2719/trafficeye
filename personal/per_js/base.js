@@ -399,6 +399,10 @@
      * @return {[type]}     [description]
      */
     function toPage(url) {
+        if(url == "pre_info.html"){
+            Trafficeye.offlineStore.set("traffic_myinfo_source","");
+        }
+        
         if (url) {
             setTimeout(function() {
                 window.location.href = url;

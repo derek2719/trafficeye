@@ -134,8 +134,12 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
+             history.go(-1);
+
+             /*
              var fromSource = Trafficeye.fromSource();
              Trafficeye.toPage(fromSource.sourcepage);
+            */
          },
          //点击关注按钮，跳转到社区的关注页面
          looklistbtnUp: function(evt) {
@@ -148,6 +152,12 @@
                  "traffic_lookfans": "look"
              };
              var dataStr = Trafficeye.json2Str(data);
+
+             //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+            Trafficeye.offlineStore.set("traffic_lookfans", "look");
+            Trafficeye.toPage("com_lookfans.html");
+
+             /*
              if (Trafficeye.mobilePlatform.android) {
                  window.JSAndroidBridge.gotoCommunity("lookfans", dataStr);
              } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -156,6 +166,7 @@
              } else {
                  alert("调用修改用户信息接口,PC不支持.");
              }
+             */
          },
          //点击粉丝按钮，跳转到社区的粉丝页面
          fanslistbtnUp: function(evt) {
@@ -168,6 +179,12 @@
                  "traffic_lookfans": "fans"
              };
              var dataStr = Trafficeye.json2Str(data);
+
+             //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+            Trafficeye.offlineStore.set("traffic_lookfans", "fans");
+            Trafficeye.toPage("com_lookfans.html");
+
+             /*
              if (Trafficeye.mobilePlatform.android) {
                  window.JSAndroidBridge.gotoCommunity("lookfans", dataStr);
              } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -176,6 +193,7 @@
              } else {
                  alert("调用修改用户信息接口,PC不支持.");
              }
+             */
          },
          /**
           * 用户信息请求函数
@@ -439,6 +457,7 @@
              var elem = $(evt).addClass("curr");
              setTimeout((function() {
                  $(elem).removeClass("curr");
+                 Trafficeye.offlineStore.set("traffic_infosurveycar","info");
                  Trafficeye.toPage("pre_baseinfo.html");
              }), Trafficeye.MaskTimeOut);
          },

@@ -48,8 +48,10 @@
             var me = this;
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
-                $(elem).removeClass("curr");  
-                Trafficeye.toPage("pre_baseinfo.html");
+                $(elem).removeClass("curr");
+                var backNum = Trafficeye.offlineStore.get("traffic_surver_mobile_back") - 0 + 1;
+                history.go(-backNum);
+                //Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         },
         //清除用户昵称
@@ -57,8 +59,10 @@
             var me = this;
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
-                $(elem).removeClass("curr");  
-                Trafficeye.toPage("pre_survey_mobile.html");
+                $(elem).removeClass("curr");
+                var backNum = Trafficeye.offlineStore.get("traffic_surver_mobile_back") - 0;
+                history.go(-backNum);
+                //Trafficeye.toPage("pre_survey_mobile.html");
             }),Trafficeye.MaskTimeOut);     
         },
         //清除用户昵称

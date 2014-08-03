@@ -68,8 +68,11 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            history.go(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.sourcepage);
+            */
         },
         //保存用户昵称
         saveFunction : function(evt) {
@@ -128,8 +131,9 @@
                                 //写入用户信息和徽章，里程信息到浏览器缓存
                                 var dataReward = Trafficeye.json2Str(data.reward);
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
-                               console.log(dataUserInfo);
+                                //console.log(dataUserInfo);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
+                                /*
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -139,8 +143,10 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
+                                */
                                 Trafficeye.offlineStore.set("traffic_infosurveycar","survey");
-                                Trafficeye.toPage("pre_baseinfo.html");
+                                history.go(-1);
+                                //Trafficeye.toPage("pre_baseinfo.html");
                             } else{
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                             }

@@ -282,31 +282,49 @@
         },
         detailbtnUp : function(evt) {
             //仅能显示本人头像
-                var myInfo = Trafficeye.getMyInfo();
-                var timeline_user = Trafficeye.offlineStore.get("traffic_timeline_user");
-                //如果是自己才显示详细资料按钮
-                if(myInfo.uid == timeline_user){
-                    if (Trafficeye.mobilePlatform.android) {
-                        window.init.goPersonal();
-                    } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                        Trafficeye.toPage("objc://goUserCenter");
-                    } else {
-                        alert("调用本地goPersonal方法,PC不支持.");
-                    }
-                }else{
-                    var data = {
-                        "uid" : myInfo.uid,
-                        "friend_uid" : timeline_user
-                    };
-                    var dataStr = Trafficeye.json2Str(data);
-                    if (Trafficeye.mobilePlatform.android) {
-                        window.init.gotoPersonalDetail(dataStr);
-                    } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                        Trafficeye.toPage("objc://gotoPersonalDetail:/"+dataStr);
-                    } else {
-                        alert("调用本地goPersonal方法,PC不支持.");
-                    }
+            var myInfo = Trafficeye.getMyInfo();
+            var timeline_user = Trafficeye.offlineStore.get("traffic_timeline_user");
+            
+            //如果是自己才显示详细资料按钮
+            if(myInfo.uid == timeline_user){
+                //跳转到个人资料页面
+                Trafficeye.toPage("pre_info.html");
+
+                /*
+                if (Trafficeye.mobilePlatform.android) {
+                    window.init.goPersonal();
+                } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                    Trafficeye.toPage("objc://goUserCenter");
+                } else {
+                    alert("调用本地goPersonal方法,PC不支持.");
                 }
+                */
+            }else{
+                /*
+                var data = {
+                    "uid" : myInfo.uid,
+                    "friend_uid" : timeline_user
+                };
+                */
+                myInfo.friend_uid = timeline_user;
+                //标识不是自己的个人资料
+                myInfo.isEdit = 2;
+                var dataStr = Trafficeye.json2Str(myInfo);
+                Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+                //跳转到个人资料页面
+                Trafficeye.toPage("pre_info.html");
+
+
+                /*
+                if (Trafficeye.mobilePlatform.android) {
+                    window.init.gotoPersonalDetail(dataStr);
+                } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                    Trafficeye.toPage("objc://gotoPersonalDetail:/"+dataStr);
+                } else {
+                    alert("调用本地goPersonal方法,PC不支持.");
+                }
+                */
+            }
         },
         //头像位置
         headimgbtnUp : function(evt) {

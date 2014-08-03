@@ -48,9 +48,11 @@
             var me = this;
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
-                $(elem).removeClass("curr");  
+                $(elem).removeClass("curr");
                 Trafficeye.offlineStore.set("traffic_infosurveycar","survey");
-                Trafficeye.toPage("pre_baseinfo.html");
+                var backNum = Trafficeye.offlineStore.get("traffic_mobile_fail_back") - 0 + 1;
+                history.go(-backNum);
+                //Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         }
     };

@@ -49,8 +49,12 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
+                var backNum = Trafficeye.offlineStore.get("traffic_pcar_mobile_back") - 0 + 1;
+                history.go(-backNum);
+                /*
                 var fromSource = Trafficeye.fromSource();
                 Trafficeye.toPage(fromSource.currpage);
+                */
             }),Trafficeye.MaskTimeOut);     
         },
         //
@@ -59,7 +63,9 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                Trafficeye.toPage("pcar_mobile.html");
+                var backNum = Trafficeye.offlineStore.get("traffic_pcar_mobile_back") - 0;
+                history.go(-backNum);
+                //Trafficeye.toPage("pcar_mobile.html");
             }),Trafficeye.MaskTimeOut);     
         },
         //

@@ -50,8 +50,10 @@
             setTimeout((function(){
                 $(elem).removeClass("curr");  
                 Trafficeye.offlineStore.set("traffic_infosurveycar","car");
-                var fromSource = Trafficeye.fromSource();
-                Trafficeye.toPage(fromSource.currpage);
+                var backNum = Trafficeye.offlineStore.get("traffic_pcar_mobile_back") - 0 + 1;
+                history.go(-backNum);
+                //var fromSource = Trafficeye.fromSource();
+                //Trafficeye.toPage(fromSource.currpage);
             }),Trafficeye.MaskTimeOut);     
         }
     };

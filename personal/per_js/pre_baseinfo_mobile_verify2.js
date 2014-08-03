@@ -78,7 +78,8 @@
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
             // var fromSource = Trafficeye.fromSource();
-            Trafficeye.toPage("pre_baseinfo_mobile_verify.html");
+            history.go(-1);
+            //Trafficeye.toPage("pre_baseinfo_mobile_verify.html");
         },
         //清除用户昵称
         trunce : function(evt) {
@@ -86,7 +87,9 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                Trafficeye.toPage("pre_baseinfo_mobile.html");
+                history.go(-4);
+
+                //Trafficeye.toPage("pre_baseinfo_mobile.html");
             }),Trafficeye.MaskTimeOut);     
         },
         //保存用户昵称
@@ -154,6 +157,7 @@
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
 //                                console.log(dataReward);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
+                                /*
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -163,18 +167,22 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
-                                
+                                */
+                                Trafficeye.offlineStore.set("traffic_mobile_fail_back",5);
                                 Trafficeye.toPage("pre_baseinfo_mobile_success.html");
                             } else{
+                                Trafficeye.offlineStore.set("traffic_mobile_fail_back",5);
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                                 Trafficeye.toPage("pre_baseinfo_mobile_fail.html");
                             }
                         } else {
+                            Trafficeye.offlineStore.set("traffic_mobile_fail_back",5);
                              Trafficeye.toPage("pre_baseinfo_mobile_fail.html");
                         }
                     }
                 })
             } else {
+                Trafficeye.offlineStore.set("traffic_mobile_fail_back",5);
                 Trafficeye.toPage("pre_baseinfo_mobile_fail.html");
             }
         },
