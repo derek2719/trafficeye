@@ -284,7 +284,6 @@
             //仅能显示本人头像
             var myInfo = Trafficeye.getMyInfo();
             var timeline_user = Trafficeye.offlineStore.get("traffic_timeline_user");
-            
             //如果是自己才显示详细资料按钮
             if(myInfo.uid == timeline_user){
                 //跳转到个人资料页面
@@ -927,6 +926,17 @@
         };
         
         window.initPageManager = function(){
+            //获取本人UID
+            var myInfo = Trafficeye.getMyInfo();
+            //判断是否从拼车跳转到个人时间线
+            var prepage = myInfo.prepage || "";
+            if(prepage === "trafficeye_personal"){
+                //保存数据
+                //Trafficeye.offlineStore.set("traffic_myinfo", Trafficeye.json2Str(myInfo.myInfo));
+                Trafficeye.offlineStore.set("traffic_timeline",myInfo.traffic_timeline);
+                Trafficeye.offlineStore.set("traffic_fromsource",myInfo.prepage);
+            }
+
             //请求用户信息协议
             var userInfo_url = BASE_URL + "userinfo";
             var friendsshipInfo_url = BASE_FRIENDSSHIP_URL + "find";
@@ -939,7 +949,6 @@
                 //存储当前显示时间线页面的用户信息
                 Trafficeye.offlineStore.set("traffic_timeline_user", userTimeline_uid);
 
-                //获取本人UID
                 var myInfo = Trafficeye.getMyInfo();
                 //存储跳转到消息关注页面需要的数据
                 var chatData = {

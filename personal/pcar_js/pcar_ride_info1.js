@@ -79,7 +79,8 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_ride_info.html");
+             history.go(-1);
+             //Trafficeye.toPage("pcar_ride_info.html");
          },
         /**
           * 搭车信息列表请求函数

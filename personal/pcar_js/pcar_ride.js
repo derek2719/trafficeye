@@ -1,4 +1,4 @@
- (function(window) {
+(function(window) {
      function UserInfoManager() {
          this.userinfo = null;
          this.ua = null;
@@ -170,11 +170,16 @@
              this.addClass("curr");
          },
          backpagebtnUp: function(evt) {
-             var me = this,
-                 elem = evt.currentTarget;
-             $(elem).removeClass("curr");
-             var fromSource = Trafficeye.fromSource();
-             Trafficeye.toPage(fromSource.sourcepage);
+            var me = this,
+                elem = evt.currentTarget;
+            $(elem).removeClass("curr");
+
+            history.go(-1);
+            
+            /*
+            var fromSource = Trafficeye.fromSource();
+            Trafficeye.toPage(fromSource.sourcepage);
+            */
          },
          /**
           * 搭车信息列表请求函数

@@ -1,4 +1,4 @@
- (function(window) {
+(function(window) {
      function UserInfoManager() {
          this.userinfo = null;
          this.ua = null;
@@ -76,7 +76,10 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_ride.html");
+
+             history.go(-1);
+
+             // Trafficeye.toPage("pcar_ride.html");
          },
          /**
           * 搭车信息列表请求函数
@@ -241,27 +244,37 @@
              var me = this;
              var elem = $(evt).addClass("curr");
              setTimeout((function() {
-                 $(elem).removeClass("curr");
-                 var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
+                $(elem).removeClass("curr");
+                var pcar_publishuid = Trafficeye.offlineStore.get("pcar_publish_uid");
                 var pcar_publish_uid = Trafficeye.str2Json(pcar_publishuid);
-                 //********跳转到社区个人时间线***********
-                 var myInfo = Trafficeye.getMyInfo();
-                 var data = {
-                     "prepage": "trafficeye_personal",
-                     "pid": myInfo.pid,
-                     "uid": myInfo.uid,
-                     "traffic_timeline": pcar_publish_uid.pcar_publishuid,
-                     "myInfo": myInfo.userinfo
-                 };
-                 var dataStr = Trafficeye.json2Str(data);
-                 if (Trafficeye.mobilePlatform.android) {
-                     window.JSAndroidBridge.gotoCommunity("timeline", dataStr);
-                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                     var rewardContent = encodeURI(encodeURI(dataStr));
-                     Trafficeye.toPage("objc:??gotoCommunity::?timeline:?" + rewardContent);
-                 } else {
-                     alert("调用修改用户信息接口,PC不支持.");
-                 }
+                //********跳转到社区个人时间线***********
+                var myInfo = Trafficeye.getMyInfo();
+                myInfo.prepage = "trafficeye_personal";
+                myInfo.traffic_timeline = pcar_publish_uid.pcar_publishuid;
+                myInfo.myInfo = myInfo.userinfo;
+                /*
+                var data = {
+                    "prepage": "trafficeye_personal",
+                    "pid": myInfo.pid,
+                    "uid": myInfo.uid,
+                    "traffic_timeline": pcar_publish_uid.pcar_publishuid,
+                    "myInfo": myInfo.userinfo
+                };
+                */
+                var dataStr = Trafficeye.json2Str(myInfo);
+                Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+                Trafficeye.toPage("com_timeline.html");
+
+                /*
+                if (Trafficeye.mobilePlatform.android) {
+                    window.JSAndroidBridge.gotoCommunity("timeline", dataStr);
+                } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                    var rewardContent = encodeURI(encodeURI(dataStr));
+                   Trafficeye.toPage("objc:??gotoCommunity::?timeline:?" + rewardContent);
+                } else {
+                    alert("调用修改用户信息接口,PC不支持.");
+                }
+                */
              //********跳转到社区个人时间线***********
              }), Trafficeye.MaskTimeOut);
          },
