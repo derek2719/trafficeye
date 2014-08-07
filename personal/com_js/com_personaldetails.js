@@ -196,6 +196,7 @@
             $(elem).removeClass("curr");
             var myInfo = Trafficeye.getMyInfo();
             if(myInfo.uid == 0){
+                //什么时候会等于0呢,先不改
                 if (Trafficeye.mobilePlatform.android) {
                     window.init.finish();
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -204,8 +205,8 @@
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
             }else{
-               me.backPage(); 
-           }           
+               me.backPage();
+           }
         },
         /**
          * 点击回复评论处理函数

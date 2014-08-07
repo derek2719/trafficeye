@@ -935,6 +935,11 @@
                 //Trafficeye.offlineStore.set("traffic_myinfo", Trafficeye.json2Str(myInfo.myInfo));
                 Trafficeye.offlineStore.set("traffic_timeline",myInfo.traffic_timeline);
                 Trafficeye.offlineStore.set("traffic_fromsource",myInfo.prepage);
+
+                //置空标识
+                myInfo.prepage = null;
+                var dataStr1 = Trafficeye.json2Str(myInfo);
+                Trafficeye.offlineStore.set("traffic_myinfo",dataStr1);
             }
 
             //请求用户信息协议

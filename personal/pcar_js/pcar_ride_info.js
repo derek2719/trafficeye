@@ -302,6 +302,7 @@
      $(function() {
         
         window.initPageManager = function() {
+            /*
              //把来源信息存储到本地
              var presource = Trafficeye.fromSource();
              var fromSource = {
@@ -311,7 +312,8 @@
              }
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-             
+             */
+
              var publish_id = Trafficeye.offlineStore.get("traffic_pcar_publish_id");
              var pcar_publishid = Trafficeye.str2Json(publish_id);
              

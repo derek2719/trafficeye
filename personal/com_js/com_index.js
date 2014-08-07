@@ -278,10 +278,12 @@
 			var me = this,
 			elem = evt.currentTarget;
 			$(elem).removeClass("curr");
+
+			//如果是首次启动页面,需要调用本地返回
 			if (Trafficeye.mobilePlatform.android) {
-				window.init.finish();
+				window.JSAndroidBridge.gotoPrePage();
 			} else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-				Trafficeye.toPage("objc://closeSelf");
+				window.location.href=("objc:??gotoPrePage");
 			} else {
 				alert("调用本地goPersonal方法,PC不支持.");
 			}
@@ -339,6 +341,11 @@
 			var me = this,
 			elem = evt.currentTarget;
 			$(elem).removeClass("curr");
+			//标识跳转到info标签
+			Trafficeye.offlineStore.set("traffic_infosurveycar","info");
+			Trafficeye.toPage("pre_baseinfo.html");
+
+			/*
 			if (Trafficeye.mobilePlatform.android) {
 				window.init.goUserInfoMgr();
 			} else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -346,6 +353,7 @@
 			} else {
 				alert("调用本地goUserInfoMgr方法,PC不支持.");
 			}
+			*/
 		},
 		refreshbtnUp : function(evt) {
 			var me = this,
@@ -835,6 +843,14 @@
 			var fromSourceStr = Trafficeye.json2Str(fromSource);
 			Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
 			*/
+			var myInfo = Trafficeye.getMyInfo();
+			if (!myInfo) {
+				return;
+			}
+
+			var uid = myInfo.uid;
+			var pid = myInfo.pid;
+			
 			//请求用户信息协议
 			var userInfo_url = BASE_URL + "userinfo";
 			var userInfo_data = {
@@ -864,12 +880,7 @@
 		window.invite = function() {
 			Trafficeye.toPage("com_invite.html");
 		};
-
-		
-		setTimeout(function(){
-			initPageManager("43943","864737010861021");
-		},200);
-		/**/
+		window.initPageManager();
 	});
 
 }(window));

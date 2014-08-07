@@ -190,7 +190,12 @@
      */
     function str2Json(data) {
         if (data) {
-            return $.parseJSON(data);
+            try{
+                return $.parseJSON(data);
+            }
+            catch(e){
+                return {};
+            }
         }
     };
     
