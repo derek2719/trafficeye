@@ -505,7 +505,7 @@
                                     alert("调用注销用户信息接口,PC不支持.");
                                 }
                                 //返回到登录界面
-                                Trafficeye.toPage("pre_login.html");
+                                window.location.replace("pre_login.html")
                             } else{
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                             }
@@ -550,7 +550,7 @@
             }
         }else{
             //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            window.location.replace("pre_login.html")
         }
         // 设置头像成功的回调函数,输入是字符串，要转为json对象
         window.callbackSetUserAvatar = function(data){

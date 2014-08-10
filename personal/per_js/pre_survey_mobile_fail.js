@@ -94,7 +94,7 @@
 
         }else{
             //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            window.location.replace("pre_login.html")
         }
         
         window.topage = function(evt) {

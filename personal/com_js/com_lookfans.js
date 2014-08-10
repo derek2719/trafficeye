@@ -405,7 +405,6 @@
             myInfo.friend_uid = myInfo.uid;
             var dataStr = Trafficeye.json2Str(myInfo);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
-            
             Trafficeye.toPage("pre_info.html");
 
             /*
@@ -936,7 +935,7 @@
 
             //look表示点击关注按钮跳转过来的，fans表示点击粉丝按钮跳转过来的
             var lookfansPageFlag = Trafficeye.offlineStore.get("traffic_lookfans");
-
+            
             var pm = new PageManager();
             //初始化用户界面
             pm.init();

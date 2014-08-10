@@ -504,7 +504,7 @@
                                      alert("调用注销用户信息接口,PC不支持.");
                                  }
                                  //返回到登录界面
-                                 Trafficeye.toPage("pre_login.html");
+                                 window.location.replace("pre_login.html")
                              } else {
                                  Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
                              }
@@ -522,6 +522,7 @@
      $(function() {
 
          //把来源信息存储到本地
+         /*
          var presource = Trafficeye.fromSource();
          var fromSource = {
              "sourcepage": presource.sourcepage,
@@ -530,6 +531,7 @@
          }
          var fromSourceStr = Trafficeye.json2Str(fromSource);
          Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+         */
          //获取我的用户信息
          var myInfo = Trafficeye.getMyInfo();
          if (!myInfo) {
@@ -551,7 +553,7 @@
              }
          } else {
              //让用户重新登录
-             Trafficeye.toPage("pre_login.html");
+             window.location.replace("pre_login.html")
          }
          // 设置头像成功的回调函数,输入是字符串，要转为json对象
          window.callbackSetUserAvatar = function(data) {

@@ -304,7 +304,11 @@
             if (isEnableStore) {
                 //删除本地以前存储的JS模块信息，先removeItem后setItem防止在iphone浏览器上报错
                 for (var name = key, len = localStore.length, id; len--;) {
-                    id = localStore.key(len); - 1 < id.indexOf(name) && localStore.removeItem(id);
+                    id = localStore.key(len);
+                    //因为跳转POI详情返回需要记录不能删除
+                    if(id != "traffic_myinfo_count" && id != "traffic_baseinfo_count"){
+                        - 1 < id.indexOf(name) && localStore.removeItem(id);
+                    }
                 }
                 try {
                     if (value) {
@@ -408,7 +412,22 @@
      */
     function toPage(url) {
         if(url == "pre_info.html"){
-            Trafficeye.offlineStore.set("traffic_myinfo_source","");
+            var count = Trafficeye.offlineStore.get("traffic_myinfo_count");
+            if(count != ""){
+                //没有启动过页面不管
+                count = count - 0;
+                count ++;
+                Trafficeye.offlineStore.set("traffic_myinfo_count",count);
+            }
+        }
+        if(url == "pre_baseinfo.html"){
+            var count = Trafficeye.offlineStore.get("traffic_baseinfo_count");
+            if(count != ""){
+                //没有启动过页面不管
+                count = count - 0;
+                count ++;
+                Trafficeye.offlineStore.set("traffic_baseinfo_count",count);
+            }
         }
         if (url) {
             setTimeout(function() {

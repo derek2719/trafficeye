@@ -70,8 +70,13 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+
+            history.go(-1);
+
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.sourcepage);
+            */
         },
         /**
          * 登录处理函数
@@ -80,9 +85,11 @@
             var me = this;
             
             var myInfo = Trafficeye.getMyInfo();
-            // if (!myInfo) {
-            //     return;
-            // }
+            if (!myInfo) {
+                myInfo = {};
+                myInfo.ua = "A_4.0.4,a_3.0.0";
+                myInfo.pid = "864737010861021";
+            }
           
             var pid = myInfo.pid;
             var ua = myInfo.ua;
@@ -150,6 +157,8 @@
                                 var dataReward = Trafficeye.json2Str(data.reward);
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
+                                
+                                /*
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.loginNotify(loginBtnUp_data.email,loginBtnUp_data.passwd,dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -159,7 +168,13 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
-                                Trafficeye.toPage("pre_info.html");
+                                */
+
+                                //控制返回,注册成功当做第一次启动,返回调用本地函数
+                                Trafficeye.offlineStore.set("traffic_myinfo_count","1");
+                                window.location.replace("pre_info.html");
+
+                                //Trafficeye.toPage("pre_info.html");
                             } else{
                                 //注册失败
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
@@ -197,11 +212,13 @@
     $(function(){
        
         //把来源信息存储到本地
+        /*
          var presource = Trafficeye.fromSource();
          var fromSource = {"sourcepage" : presource.sourcepage,"currpage" : "pre_trafficeyelogin.html","prepage" : presource.currpage}
          var fromSourceStr = Trafficeye.json2Str(fromSource);
          Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-         
+        */
+        
          //获取我的用户信息, by dongyl
         var myInfo = Trafficeye.getMyInfo();
         // if (!myInfo) {

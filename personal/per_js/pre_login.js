@@ -230,7 +230,6 @@
         
         // 自动登录成功通知js
         window.callbackAutoLoginDone = function(data){
-            alert("callbackAutoLoginDone")
             Trafficeye.httpTip.closed();
             var myInfo = Trafficeye.getMyInfo();
             //把用户信息写入到本地
@@ -245,7 +244,10 @@
             };
             var dataStr = Trafficeye.json2Str(userinfodata);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
-            Trafficeye.toPage("pre_info.html");
+            
+            Trafficeye.offlineStore.set("traffic_myinfo_count","1");
+            window.location.replace("pre_info.html");
+            //Trafficeye.toPage("pre_info.html");
         };
         
         // 获取SNS平台用户信息，回调函数
@@ -267,13 +269,19 @@
         
         window.initPageManager = function() {
             //把来源信息存储到本地
+            /*
              var fromSource = {"sourcepage" : "pre_login.html","currpage" : "pre_login.html","prepage" : "pre_login.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+            */
+            if(Trafficeye.pageManager == null){
+                var pm = new PageManager();
 
-            var pm = new PageManager();
-
-            Trafficeye.pageManager = pm;
+                Trafficeye.pageManager = pm;
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
             //初始化用户界面
             pm.init();
             //启动等待动画，等待客户端回调函数            

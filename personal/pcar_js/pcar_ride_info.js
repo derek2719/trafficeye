@@ -342,7 +342,7 @@
                 pm.reqRideInfo(pcar_publishid.ride_id);
              } else {
                  //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                 window.location.replace("pre_login.html")
              }
          }
          

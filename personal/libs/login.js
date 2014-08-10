@@ -9,7 +9,6 @@
 (function(window){
 	//初始化页面函数
 	window.callbackInit = function(isLogin,dataClient,ua,pid,nowWidth,nowHeight,jsonParam){
-		//debugger
 		var isEdit = 0;
 		//Trafficeye.httpTip.closed();
 		if(isLogin == 0){
@@ -34,7 +33,7 @@
 
 			var dataClient = "";
 			if(jsonParam != ""){
-				dataClient = Trafficeye.str2Json(param);
+				dataClient = Trafficeye.str2Json(jsonParam);
 			}
 			//pid,ua,userinfo存入到浏览器本地缓存
 			var userinfodata = {
@@ -113,7 +112,7 @@
 
 	//测试登假数据
 	//window.callbackInit(1,'{"avatarUrl":"http://mobile.trafficeye.com.cn/media/avatars/43943/2014/06/1404097681236imageL.jpg","badgeNum":2,"birthdate":"2014-06-30","carNum":"","city":"","description":"闹闹，别闹，你到底要闹哪样！","email":"","eventNum":0,"fans":0,"frineds":5,"gender":"M","idNum":"","level":2,"levelPercent":75,"levelPoint":65,"mobile":"","mobileValidate":0,"nextLevel":3,"nextLevelPoint":106,"ownedBadges":[{"desc":"连续七日登录","id":3,"imgName":"badge_big_login_7days.png","name":"忠实用户","obtainTime":"2014-07-12 13:52:40","smallImgName":"badge_login_7days.png"},{"desc":"注册账号","id":1,"imgName":"badge_big_register.png","name":"新人徽章","obtainTime":"2014-06-30 11:06:14","smallImgName":"badge_register.png"}],"qq":"","realName":"闹闹","totalBadges":30,"totalCoins":0,"totalMilage":0.0,"totalPoints":96,"totalTrackMilage":0.0,"uid":"43943","userGroup":0,"userType":"sinaweibo","username":"没啥意思a","wxNum":""}',0,'A_4.0.4,a_3.0.0','864737010861021','{"lon":"116.609495","lat":"39.921096"}','info');
-	//window.callbackInit(1,'{"avatarUrl":"http://mobile.trafficeye.com.cn/media/avatars/43943/2014/06/1404097681236imageL.jpg","badgeNum":2,"birthdate":"2013-05-06","carNum":"4444","city":"甘肃 永昌县","description":"闹闹，别闹，你到底要闹哪样！gg","email":"","eventNum":0,"fans":0,"frineds":5,"gender":"F","idNum":"","level":3,"levelPercent":51,"levelPoint":106,"mobile":"15810880522","mobileValidate":1,"nextLevel":4,"nextLevelPoint":153,"ownedBadges":[{"desc":"连续七日登录","id":3,"imgName":"badge_big_login_7days.png","name":"忠实用户","obtainTime":"2014-07-12 13:52:40","smallImgName":"badge_login_7days.png"},{"desc":"注册账号","id":1,"imgName":"badge_big_register.png","name":"新人徽章","obtainTime":"2014-06-30 11:06:14","smallImgName":"badge_register.png"}],"qq":"18588888","realName":"闹闹123111","totalBadges":30,"totalCoins":0,"totalMilage":0.0,"totalPoints":130,"totalTrackMilage":0.0,"uid":"43943","userGroup":0,"userType":"sinaweibo","username":"没啥意思agg","wxNum":"5555"}','A_4.0.4,a_3.0.0','864737010861021',720,1200,'');
+	//window.callbackInit(1,'{"avatarUrl":"http://mobile.trafficeye.com.cn/media/avatars/43943/2014/06/1404097681236imageL.jpg","badgeNum":2,"birthdate":"2013-05-06","carNum":"4444","city":"甘肃 永昌县","description":"闹闹，别闹，你到底要闹哪样！gg","email":"","eventNum":0,"fans":0,"frineds":5,"gender":"F","idNum":"","level":3,"levelPercent":51,"levelPoint":106,"mobile":"15810880522","mobileValidate":1,"nextLevel":4,"nextLevelPoint":153,"ownedBadges":[{"desc":"连续七日登录","id":3,"imgName":"badge_big_login_7days.png","name":"忠实用户","obtainTime":"2014-07-12 13:52:40","smallImgName":"badge_login_7days.png"},{"desc":"注册账号","id":1,"imgName":"badge_big_register.png","name":"新人徽章","obtainTime":"2014-06-30 11:06:14","smallImgName":"badge_register.png"}],"qq":"18588888","realName":"闹闹123111","totalBadges":30,"totalCoins":0,"totalMilage":0.0,"totalPoints":130,"totalTrackMilage":0.0,"uid":"43943","userGroup":0,"userType":"sinaweibo","username":"没啥意思agg","wxNum":"5555"}','A_4.0.4,a_3.0.0','864737010861021',720,1200,'{"lon":"116.609676","lat":"39.920967"}');
 }(window));
 
 /**/

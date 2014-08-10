@@ -68,6 +68,7 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            
             if (Trafficeye.mobilePlatform.android) {
                 window.JSAndroidBridge.gotoPrePage();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -198,13 +199,20 @@
         window.initPageManager = function() {
             Trafficeye.httpTip.closed();
             //把来源信息存储到本地
+            /*
              var fromSource = {"sourcepage" : "pcar_index.html","currpage" : "pcar_index.html","prepage" : "pcar_index.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+            */
 
-            var pm = new PageManager();
-
-            Trafficeye.pageManager = pm;
+            var pm = "";
+            if(Trafficeye.pageManager == null){
+                pm = new PageManager();
+                Trafficeye.pageManager = pm;
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
             //初始化用户界面
             pm.init();
             //启动等待动画，等待客户端回调函数            

@@ -71,9 +71,10 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-            var fromSource = Trafficeye.fromSource();
+            history.go(-1);
+            //var fromSource = Trafficeye.fromSource();
             // console.log(fromSource);
-            Trafficeye.toPage(fromSource.sourcepage);
+            //Trafficeye.toPage(fromSource.sourcepage);
         },
         /**
          * 注册请求函数
@@ -159,6 +160,8 @@
                                 var dataReward = Trafficeye.json2Str(data.reward);
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
+                                
+                                /*
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -168,7 +171,12 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
-                                Trafficeye.toPage("pre_info.html");
+                                */
+
+                                //控制返回,注册成功当做第一次启动,返回调用本地函数
+                                Trafficeye.offlineStore.set("traffic_myinfo_count","1");
+                                window.location.replace("pre_info.html");
+                            
                             } else{
                                 //注册失败
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
@@ -197,11 +205,13 @@
     $(function(){
        
         //把来源信息存储到本地
+        /*
          var presource = Trafficeye.fromSource();
          var fromSource = {"sourcepage" : presource.sourcepage,"currpage" : "pre_register.html","prepage" : presource.currpage}
          var fromSourceStr = Trafficeye.json2Str(fromSource);
          Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-         
+        */
+
          //获取我的用户信息, by dongyl
         var myInfo = Trafficeye.getMyInfo();
         

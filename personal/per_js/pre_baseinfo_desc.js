@@ -183,7 +183,7 @@
             Trafficeye.offlineStore.set("traffic_infosurveycar","info");
         }else{
             //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            window.location.replace("pre_login.html")
         }
         
         window.saveFunction = function(evt) {

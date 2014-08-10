@@ -117,7 +117,31 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-            history.go(-1);
+
+            var count = Trafficeye.offlineStore.get("traffic_baseinfo_count");
+            if(count != ""){
+                //没有启动过页面不管
+                count = count - 0;
+                if(count == 1){
+                    Trafficeye.offlineStore.set("traffic_baseinfo_count","");
+                    //如果是首次启动页面,需要调用本地返回
+                    if (Trafficeye.mobilePlatform.android) {
+                        window.JSAndroidBridge.gotoPrePage();
+                    } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                        window.location.href=("objc:??gotoPrePage");
+                    } else {
+                        alert("调用本地goPersonal方法,PC不支持.");
+                    }
+                }
+                else{
+                    count --;
+                    Trafficeye.offlineStore.set("traffic_baseinfo_count",count);
+                    history.go(-1);
+                }
+            }
+            else{
+                history.go(-1);
+            }
             /*
             var fromSource = Trafficeye.fromSource();
             var myInfo = Trafficeye.getMyInfo();
@@ -665,7 +689,7 @@
         var myInfo = Trafficeye.getMyInfo();
         if (!myInfo) {
             //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            window.location.replace("pre_login.html")
         }
         
         var pm = new PageManager();
@@ -972,6 +996,12 @@
                  pm.pcarqqnum(evt);
              }
          };
+
+         //初始化
+         window.initPageManager = function(){
+            //控制返回,如果第一次启动,返回调用本地函数
+            Trafficeye.offlineStore.set("traffic_baseinfo_count","1");
+         }
     }); 
     
  }(window));

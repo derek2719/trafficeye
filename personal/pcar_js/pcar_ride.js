@@ -369,7 +369,7 @@
                 pm.reqRideInfo("0",pcar_flag.flag,pcar_flag.type);
              } else {
                  //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                 window.location.replace("pre_login.html")
              }
          }
      

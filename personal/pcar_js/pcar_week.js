@@ -306,7 +306,7 @@
              //判断缓存中是否有userinfo信息
              if (!myInfo.userinfo) {
                  //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                 window.location.replace("pre_login.html")
              }
          }
          
