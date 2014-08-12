@@ -158,7 +158,7 @@
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
                                 
-                                /*
+                                
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.loginNotify(loginBtnUp_data.email,loginBtnUp_data.passwd,dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -168,7 +168,7 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
-                                */
+                                /**/
 
                                 //控制返回,注册成功当做第一次启动,返回调用本地函数
                                 Trafficeye.offlineStore.set("traffic_myinfo_count","1");

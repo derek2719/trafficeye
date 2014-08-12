@@ -268,6 +268,8 @@
         };
         
         window.initPageManager = function() {
+            Trafficeye.httpTip.closed();
+            
             //把来源信息存储到本地
             /*
              var fromSource = {"sourcepage" : "pre_login.html","currpage" : "pre_login.html","prepage" : "pre_login.html"}
