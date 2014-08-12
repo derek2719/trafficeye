@@ -180,13 +180,14 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-                if (Trafficeye.mobilePlatform.android) {
-                    window.init.finish();
-                } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                    Trafficeye.toPage("objc://closeSelf");
-                } else {
-                    alert("调用本地goPersonal方法,PC不支持.");
-                }       
+
+            if (Trafficeye.mobilePlatform.android) {
+               window.JSAndroidBridge.gotoPrePage();
+            } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                window.location.href=("objc:??gotoPrePage");
+            } else {
+                alert("调用本地goPersonal方法,PC不支持.");
+            }
         },
         /**
          * 点击回复评论处理函数
@@ -353,7 +354,7 @@
          * 返回上一页面
          */
         backPage : function() {
-            Trafficeye.toPage("index.html");
+            Trafficeye.toPage("com_index.html");
         },
         /**
          * 请求用户信息成功后的处理函数
@@ -417,7 +418,7 @@
                 var elem = $(evt).addClass("curr");
                 setTimeout((function(){
                     $(elem).removeClass("curr");  
-                    Trafficeye.toPage("timeline.html");
+                    Trafficeye.toPage("com_timeline.html");
                 }),Trafficeye.MaskTimeOut);
             }
         },
@@ -489,7 +490,6 @@
     $(function(){
         //客户端本地调用接口 
         window.initPageManagerClient = function(publishId,width,height,uid,pid,source,publishType){
-
             //把来源信息存储到本地
              var fromSource = {"source" : source,"prepage" : "map_personaldetails.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);

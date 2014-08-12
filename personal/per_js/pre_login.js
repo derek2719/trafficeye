@@ -268,8 +268,6 @@
         };
         
         window.initPageManager = function() {
-            Trafficeye.httpTip.closed();
-            
             //把来源信息存储到本地
             /*
              var fromSource = {"sourcepage" : "pre_login.html","currpage" : "pre_login.html","prepage" : "pre_login.html"}
@@ -287,7 +285,7 @@
             //初始化用户界面
             pm.init();
             //启动等待动画，等待客户端回调函数            
-            Trafficeye.httpTip.opened();
+            //Trafficeye.httpTip.opened();
         };
         
         window.loginSina = function(evt) {

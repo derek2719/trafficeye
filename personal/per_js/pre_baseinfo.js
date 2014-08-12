@@ -684,7 +684,6 @@
          var fromSourceStr = Trafficeye.json2Str(fromSource);
          Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
          */
-
          //获取我的用户信息
         var myInfo = Trafficeye.getMyInfo();
         if (!myInfo) {

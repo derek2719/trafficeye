@@ -256,8 +256,10 @@
                 setTimeout(function() {
                     me.tipElem = $("#httptipid");
                     me.closedElem = $("#closedtipbtn");
-                    var evtName = getPlatformEventName("touchstart");
+                    //var evtName = getPlatformEventName("touchstart");
+                    var evtName = getPlatformEventName("touchend");
                     me.closedElem.on(evtName, function(evt) {
+                        evt.stopPropagation();
                         me.closed();
                         me.closedFun.call(me.closedScope, evt);
                         return false;

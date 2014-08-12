@@ -209,10 +209,11 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            //如果是首次启动页面,需要调用本地返回
             if (Trafficeye.mobilePlatform.android) {
-                window.init.finish();
+                window.JSAndroidBridge.gotoPrePage();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                Trafficeye.toPage("objc://closeSelf");
+                window.location.href=("objc:??gotoPrePage");
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
@@ -557,11 +558,12 @@
     $(function(){
         //flag 为true 的时候是消息, 为false的时候是私信
         window.initPageManager = function(uid,friend_id,start,count,flag,pid,source){
+            /*
             //把来源信息存储到本地
              var fromSource = {"source" : source,"prepage" : "message.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-
+            */
             
             var pm = new PageManager();
 
