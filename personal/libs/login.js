@@ -31,9 +31,12 @@
 			//登录成功,蒙版效果暂不取消，跳转到pre_info.html页面再取消
 			var data = Trafficeye.str2Json(dataClient);
 
-			var dataClient = "";
+			var dataclient = "";
 			if(jsonParam != ""){
-				dataClient = Trafficeye.str2Json(jsonParam);
+				try{
+					dataclient = Trafficeye.str2Json(jsonParam);
+				}
+				catch(e){}
 			}
 			//pid,ua,userinfo存入到浏览器本地缓存
 			var userinfodata = {
@@ -43,9 +46,8 @@
 				"friend_uid" : data.uid,
 				"isEdit" : isEdit,
 				"userinfo" : data,
-				"dataclient": dataClient
+				"dataclient": dataclient
 			};
-
 			var dataStr = Trafficeye.json2Str(userinfodata);
 			Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
 

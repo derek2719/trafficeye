@@ -72,11 +72,13 @@
          * 初始化页面对象
          */
         init : function() {
-            var me = this;
-            me.userInfoManager = new UserInfoManager();
-            me.initElems();
-            me.initEvents();
-            me.inited = true;
+            if(!this.inited){
+                var me = this;
+                me.userInfoManager = new UserInfoManager();
+                me.initElems();
+                me.initEvents();
+                me.inited = true;
+            }
         },
         /**
          * 初始化页面元素对象
@@ -677,27 +679,39 @@
     
     $(function(){
         
-        /*
-        //把来源信息存储到本地
-         var presource = Trafficeye.fromSource();
-         var fromSource = {"sourcepage":"pre_baseinfo.html","currpage" : "pre_baseinfo.html","prepage" : presource.currpage}
-         var fromSourceStr = Trafficeye.json2Str(fromSource);
-         Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-         */
-         //获取我的用户信息
-        var myInfo = Trafficeye.getMyInfo();
-        if (!myInfo) {
-            //让用户重新登录
-            window.location.replace("pre_login.html")
-        }
-        
-        var pm = new PageManager();
+        window.initPageManagerCurrent=function(){
+            /*
+            //把来源信息存储到本地
+             var presource = Trafficeye.fromSource();
+             var fromSource = {"sourcepage":"pre_baseinfo.html","currpage" : "pre_baseinfo.html","prepage" : presource.currpage}
+             var fromSourceStr = Trafficeye.json2Str(fromSource);
+             Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+             */
+             //获取我的用户信息
+            var myInfo = Trafficeye.getMyInfo();
+            if (!myInfo) {
+                //让用户重新登录
+                //window.location.replace("pre_login.html");
+                return;
+            }
+            var dataClient = myInfo.dataclient || {};
+            var tab = dataClient.tab || "";
+            if(tab != ""){
+                Trafficeye.offlineStore.set("traffic_infosurveycar",tab);
+            }
 
-        Trafficeye.pageManager = pm;
-        //初始化用户界面
-        pm.init();
-        pm.myInfo = myInfo;
-        var   baseinfobtnElem = pm.elems["baseinfo"],
+            var pm = null;
+            if(Trafficeye.pageManager == null){
+                pm = new PageManager();
+                Trafficeye.pageManager = pm;
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
+            //初始化用户界面
+            pm.init();
+            pm.myInfo = myInfo;
+            var baseinfobtnElem = pm.elems["baseinfo"],
                 surveybtnElem = pm.elems["survey"],
                 carbtnElem = pm.elems["car"],
                 baseinfolistElem = pm.elems["baseinfolist"],
@@ -775,6 +789,7 @@
                     pm.baseinfobtnUp();
                     break;
             }
+        }
         // 设置头像成功的回调函数
         window.callbackSetUserAvatar = function(data){
             Trafficeye.httpTip.closed();
@@ -1000,7 +1015,10 @@
          window.initPageManager = function(){
             //控制返回,如果第一次启动,返回调用本地函数
             Trafficeye.offlineStore.set("traffic_baseinfo_count","1");
+            window.initPageManagerCurrent();
          }
+
+         window.initPageManagerCurrent();
     }); 
     
  }(window));

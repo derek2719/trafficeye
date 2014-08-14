@@ -155,6 +155,16 @@
                                 
                                 /*
                                 if (Trafficeye.mobilePlatform.android) {
+                                    window.JSAndroidBridge.loginNotify(loginBtnUp_data.email,loginBtnUp_data.passwd,dataUserInfo,dataReward);
+                                } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                                    var content = encodeURI(encodeURI(dataUserInfo));
+                                    var contentreward = encodeURI(encodeURI(dataReward));
+                                    window.location.href = ("objc:??loginNotify::?"+loginBtnUp_data.email+":?"+loginBtnUp_data.passwd+":?"+content+":?"+contentreward);
+                                } else {
+                                    alert("调用修改用户信息接口,PC不支持.");
+                                }
+                                */
+                                if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                                     var content = encodeURI(encodeURI(dataUserInfo));
@@ -163,7 +173,8 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
-                                */
+                                
+
                                 //控制返回,注册成功当做第一次启动,返回调用本地函数
                                 Trafficeye.offlineStore.set("traffic_myinfo_count","1");
                                 window.location.replace("pre_info.html");

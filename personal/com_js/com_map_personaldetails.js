@@ -489,11 +489,24 @@
     var BASE_PRAISE_URL = "http://mobile.trafficeye.com.cn:"+Trafficeye.UrlPort+"/TrafficeyeCommunityService/sns/v1/";
     $(function(){
         //客户端本地调用接口 
-        window.initPageManagerClient = function(publishId,width,height,uid,pid,source,publishType){
+        window.initPageManager = function(publishId,width,height,uid,pid,source,publishType){
             //把来源信息存储到本地
+            /*
              var fromSource = {"source" : source,"prepage" : "map_personaldetails.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+            */
+            
+            var myInfo = Trafficeye.getMyInfo();
+            if (!myInfo) {
+                return;
+            }
+            var dataClient = myInfo.dataclient || {};
+            var uid = myInfo.uid;
+            var pid = myInfo.pid;
+            var publishId = dataClient.publishId || dataClient.lat;
+            var publishType = dataClient.publishType || "event";
+
             //请求用户信息协议
             var userInfo_url = BASE_URL + "info";
             var userInfo_data = {"publishId" : publishId,"publishType" : publishType};

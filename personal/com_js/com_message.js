@@ -565,6 +565,18 @@
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
             */
             
+            var myInfo = Trafficeye.getMyInfo();
+            if (!myInfo) {
+                return;
+            }
+            var dataClient = myInfo.dataclient || {};
+            var uid = myInfo.uid;
+            var pid = myInfo.pid;
+            var friend_id = dataClient.friend_id || "";
+            var start = dataClient.start || 0;
+            var count = dataClient.count || 5;
+            var flag = dataClient.flag || true;
+
             var pm = new PageManager();
 
             Trafficeye.pageManager = pm;
