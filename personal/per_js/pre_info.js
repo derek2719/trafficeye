@@ -89,6 +89,9 @@
             looklistbtnElem.onbind("touchend",me.looklistbtnUp,me);
             //查看粉丝列表按钮
             fanslistbtnElem.onbind("touchend",me.fanslistbtnUp,me);
+
+            //编辑按钮
+            $("#btn_edit").onbind("touchend",me.editbtn,me);
         },
         /**
          * 按钮按下事件处理器
@@ -475,7 +478,7 @@
         //编辑个人信息的onclick事件响应函数
         editbtn : function(evt) {
             var me = this;
-            var elem = $(evt).addClass("curr");
+            var elem = $("#btn_edit").addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
                 Trafficeye.offlineStore.set("traffic_infosurveycar","info");

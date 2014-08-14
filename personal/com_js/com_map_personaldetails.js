@@ -341,6 +341,7 @@
                 $.ajaxJSONP({
                     url : reqUrl,
                     success: function(data){
+                        Trafficeye.httpTip.closed();
                         if (data && !me.isStopReq) {
                             me.reqUserInfoSuccess(data);
                         } else {
@@ -504,7 +505,7 @@
             var dataClient = myInfo.dataclient || {};
             var uid = myInfo.uid;
             var pid = myInfo.pid;
-            var publishId = dataClient.publishId || dataClient.lat;
+            var publishId = dataClient.publishId || "";
             var publishType = dataClient.publishType || "event";
 
             //请求用户信息协议
@@ -527,8 +528,15 @@
             var dataEvtdetailStr = Trafficeye.json2Str(dataEvtdetail);
             Trafficeye.offlineStore.set("traffic_evtdetail", dataEvtdetailStr);
 
-            var pm = new PageManager();
-            Trafficeye.pageManager = pm;
+            var pm = null;
+            //if(Trafficeye.pageManager == null){
+                pm = new PageManager();
+                Trafficeye.pageManager = pm;
+           // }
+           // else{
+           //     pm = Trafficeye.pageManager;
+           // }
+           
             //初始化用户界面
             pm.init();
             pm.userInfoManager.setUid(uid);
@@ -540,6 +548,7 @@
             var sumbitbtnElem = pm.elems["inputbtn"];
 
             sumbitbtnElem.html("<div id = \"inputbtn\" onclick=\"sumbitbtnUp(this);\">提交</div>");
+         
         };
 
         window.sumbitbtnUp = function(evt) {
@@ -561,7 +570,7 @@
         };
         
        // window.initPageManagerClient('4891',480,800,'38233','004402143568271','mappersonaldetails','track');
-
+       //window.initPageManager();
     }); 
     
  }(window));

@@ -316,9 +316,12 @@
                     }
                 }
                 try {
+                    localStore.setItem(key, value);
+                    /*
                     if (value) {
                         localStore.setItem(key, value);
                     }
+                    */
                 } catch (error) {
                     localStore.clear();
                 }
@@ -445,6 +448,9 @@
         }
     };
 
+    offlineStore.set("traffic_myinfo_count","");
+    offlineStore.set("traffic_baseinfo_count","");
+    
     /**
      * web给平台发送事件
      * @param name 事件名称

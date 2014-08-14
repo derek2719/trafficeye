@@ -569,13 +569,12 @@
             if (!myInfo) {
                 return;
             }
-            var dataClient = myInfo.dataclient || {};
             var uid = myInfo.uid;
             var pid = myInfo.pid;
-            var friend_id = dataClient.friend_id || "";
-            var start = dataClient.start || 0;
-            var count = dataClient.count || 5;
-            var flag = dataClient.flag || true;
+            var friend_id = uid;
+            var start = 0;
+            var count = 10;
+            var flag = true;
 
             var pm = new PageManager();
 

@@ -311,9 +311,12 @@
                     }
                 }
                 try {
+                    localStore.setItem(key, value);
+                    /*
                     if (value) {
                         localStore.setItem(key, value);
                     }
+                    */
                 } catch (error) {
                     localStore.clear();
                 }
@@ -435,6 +438,9 @@
             }, 1);
         }
     };
+
+    offlineStore.set("traffic_myinfo_count","");
+    offlineStore.set("traffic_baseinfo_count","");
 
     Trafficeye.pageManager = null;
     Trafficeye.PageNumManager = PageNumManager;
