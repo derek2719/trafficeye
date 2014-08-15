@@ -31,9 +31,10 @@ a:active { color:#6d7579; }
 .top_rtbn.curr { background:#157dfb url(../traffic_img/dpi1/fs_h.png) no-repeat center; }
 .header_text { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; width:100%; font-size:20px; color:#464646; line-height:100%; padding-top:4px }
 .header_text p { font-size:12px; }
-.map_l { margin-right:94px; }
-.map_r { position:absolute; right:0; bottom:10px; width:84px; }
-.map_r a { display:block; color:#292929; font-size:12px; padding-left:28px; line-height:36px; height:36px;}
+.map_l {/* margin-right:94px;*/ }
+.map_l img{width:100%;}
+.map_r {/* position:absolute; right:0; bottom:10px; width:84px;*/ text-align:center;}
+.map_r a { /*display:block;*/ color:#292929; font-size:12px; padding-left:28px; line-height:36px; height:36px;}
 .map_r a.qs { background:url(../traffic_img/dpi1/qs.png) no-repeat 8px center; }
 .map_r a.zb { background:url(../traffic_img/dpi1/zb.png) no-repeat 8px center; }
 .map_r a.jt { background:url(../traffic_img/dpi1/jt.png) no-repeat 8px center; }
@@ -65,7 +66,7 @@ a:active { color:#6d7579; }
 .imgbtn a.dc.curr,.imgbtn a.dc.selected { background:#fff url(../traffic_img/dpi1/dc_h.png) no-repeat 12px center; color:#818181 }
 .imgbtn a.rq.curr,.imgbtn a.rq.selected { background:#fff url(../traffic_img/dpi1/sx_h.png) no-repeat 16px center; color:#818181 }
 .zixun { min-height:70px }
-.weather-warp { font-size:14px; color:#343434; padding:4px 0 10px 0; }
+.weather-warp { font-size:14px; color:#343434; padding:4px 0 10px 0;display:none;}
 .tdiv { position:relative }
 .tdiv h4 { font-size:40px; font-weight:normal; display:inline-block; }
 .tdiv h4 img { display:inline-block; vertical-align:-13px; margin:0 5px 0 10px }

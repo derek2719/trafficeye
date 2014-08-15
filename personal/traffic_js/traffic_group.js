@@ -110,8 +110,8 @@
 			
 
 			//测试调用
-			/*
-			callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
+			
+			/*callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
 			
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","101230101_101210101");
@@ -119,8 +119,8 @@
 			
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","");
-			},20000);
-			*/
+			},20000);*/
+			
 		},
 		pageMove:function(evt){
 			this.moved = true;
@@ -414,7 +414,6 @@
 						var citys = city.split("_");
 						this.buildVisibleCityHtml(citys);
 					}
-
 					Trafficeye.httpTip.closed();
 				}
 			});
@@ -546,6 +545,9 @@
 			var h = parseInt(w * 0.75) || 163;
 			var html = [];
 			html.push('<div class="map_1"><p id="trafficMapTime' + i + '" class="time"></p>');
+			html.push('<div class="map_l">');
+			html.push('<img id="cityMapImg' + id + '" src="traffic_img/default.jpg"  />');
+			html.push('</div>');
 			html.push('<div id="trafficMapType' + id + '" class="map_r">');
 			html.push('<a id="cityMap_' + id + '" class="qs selected">全市简图</a>');
 			if(m1 && (id == this.currentCityCode)){
@@ -555,15 +557,12 @@
 				html.push('<a id="trafficMap_' + id + '" class="jt">交通地图</a>');
 			}
 			
-			html.push('</div>');
-			html.push('<div class="map_l">');
-			html.push('<img id="cityMapImg' + id + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
 			html.push('</div></div>');
 			return html.join("");
 		},
 		/**
 		 * 获取城市简图服务请求
-		 * 请求图片类型,1：全市简图,2：周边简图,3：周边路况图,4：打车热图,5：打车建议位置图,6:交通指数
+		 * 请求图片类型,1:全市简图,2:周边简图,3:周边路况图,4:打车热图,5:打车建议位置图,6:交通指数
 		*/
 		getCityMapImg:function(){
 			var code = this.cityList[this.cityIndex];
@@ -728,7 +727,7 @@
 		*/
 		getWeatherHtml:function(id){
 			var html = [];
-			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt">天气<span id="weatherTime' + id + '" class="titletime"></span></h3>');
+			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" onclick="toggle_weather.call(this)">天气<span id="weatherTime' + id + '" class="titletime"></span></h3>');
 			html.push('<div id="weather' +id + '" class="weather-warp"><div class="tdiv">');
 			html.push('<h4><img src="traffic_img/day/54.png" width="60" height="60"/><span></span></h4>');
 			html.push('<div class="tdivr"><span class="h">-°</span><span class="l">-°</span>');
@@ -958,7 +957,7 @@
 			html.push('<div class="map_2_box">');
 			html.push('<div class="map_2"><h3 class="map_bt">打车指数<span id="taxiIndexTime' + id + '" class="titletime"></span></h3>');
 			html.push('<div class="dche">');
-			html.push('当前位置打车指数：');
+			html.push('当前位置打车指数:');
 			html.push('<div id="taxiIndex' + id + '" class="score"></div>');
 			html.push('</div></div>');
 
@@ -1051,7 +1050,7 @@
 			}
 		},
 		getTaxiImg:function(code,type,imgId){
-			//4：打车热图,5：打车建议位置图
+			//4:打车热图,5:打车建议位置图
 			var options = {};
 			//是否当前定位城市 0是 / 1否
 			var isLoc = this.currentCityCode == code ? 0 : 1;
@@ -1177,3 +1176,11 @@
 		};
 	});
 }(window));
+function toggle_weather(){
+	var iSign=this.parentNode.children[1].style.display;
+	if(iSign!='block'){
+		this.parentNode.children[1].style.display='block';
+	}else{
+		this.parentNode.children[1].style.display='none';
+	}
+}

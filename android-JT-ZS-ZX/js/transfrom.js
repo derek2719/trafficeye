@@ -1,10 +1,10 @@
 /**
  * 思路
  * 1、通过宽高初始化界面结构。
- * 2、创建轮播图IMG对象，此时用空白图片把IMG撑起来，并保存IMG对象。显示正在加载进度条。
- * 3、对本地存储进行逻辑处理，并跳转到上次显示的简图位置，记录当前图像位置。
+ * 2、创建轮播图IMG对象,此时用空白图片把IMG撑起来,并保存IMG对象。显示正在加载进度条。
+ * 3、对本地存储进行逻辑处理,并跳转到上次显示的简图位置,记录当前图像位置。
  * 4、开始定时刷新定时器。
- * 5、每次跳转轮播图时，记录当前图像位置。
+ * 5、每次跳转轮播图时,记录当前图像位置。
  */
 
 //var paramDemo = '{"area":[{"city":"","city_code":"000000000","route_id":"1","route_name":"北京西站"},{"city":"北京","city_code":"101010100","route_id":"S100071","route_name":"全市路况","timep":"03:50"}],"width":400,"height":460,"url":"http://mobile.trafficeye.com.cn:8000/api2/v2/pics/","density":"2.0"}';
@@ -29,7 +29,7 @@ var mySwipeElem = document.getElementById("mySwipe");
 var indexConElem = $("#indexCon"); 
 //轮播图焦点列表容器元素对象
 var tabNavElem = $("#tabNav"); 
-//根据不同的areaKey，保存相关城市区域的信息
+//根据不同的areaKey,保存相关城市区域的信息
 var areas = {};
 var temp_areaKey = "";
 var save_areaKey = "";
@@ -43,14 +43,14 @@ function area() {
 	this.cityCode = "";
 	this.routeId = "";
 	this.routeName = "";
-	//与area对象一一对应的唯一ID，并以键值对的形式存放在areas对象中。
+	//与area对象一一对应的唯一ID,并以键值对的形式存放在areas对象中。
 	this.key = "";
-	//与轮播焦点一一对应的下标，起始点是0。
+	//与轮播焦点一一对应的下标,起始点是0。
 	this.tabIndex = 0;
 	//简图相关元素对象ID集合
 	this.elemIds = [];
 	this.elems = {};
-	//isLoaded为true时：表示加载完最新简图，并同步在页面上更新完时间戳。反之没有。
+	//isLoaded为true时:表示加载完最新简图,并同步在页面上更新完时间戳。反之没有。
 	this.isLoaded = false; 
 	this.timep = "";
 	this.imageUrlPrefix = "";
@@ -63,7 +63,7 @@ area.prototype = {
 		this.elems[this.elemIds[6]].setAttribute("class", "");	
 	},
 	/**
-	 * 根据时间戳判断，是否处置标志位。
+	 * 根据时间戳判断,是否处置标志位。
 	 * @param  {String} timep
 	 */
 	resetIsLoadedByTimep : function(timep) {
@@ -120,7 +120,7 @@ function getDateTime() {
 };
 
 /**
- * 通过在本地存储中保存城市区域key值，记录当前显示简图对应的城市信息
+ * 通过在本地存储中保存城市区域key值,记录当前显示简图对应的城市信息
  * @param  {String} key
  */
 function saveAreaKey(key) {
@@ -142,7 +142,7 @@ function getAreaKey() {
 };
 
 /**
- * 通过简图唯一ID，获取简图唯一Key
+ * 通过简图唯一ID,获取简图唯一Key
  * @param  {String} routeId 
  * @return {String}
  */
@@ -236,7 +236,7 @@ function generalHtml(key, area, city, imageW, imageH) {
 	htmls.push("<div style='height:30px;width:100%;'>");
 	htmls.push("<span class='area'><strong id='" + areaElemId + "'>"+area+"</strong></span>");
 	htmls.push("<span class='city'><strong id='" + cityElemId + "'>"+city+"</strong></span></div>");
-	htmls.push("<div class='aa'><div style='height:30px;line-height:30px;padding-left:50x;'>发布时间：<span id ='" + timeElemId + "'>---</span></div>");
+	htmls.push("<div class='aa'><div style='height:30px;line-height:30px;padding-left:50x;'>发布时间:<span id ='" + timeElemId + "'>---</span></div>");
 	htmls.push("<img id='" + shareElemId + "' src='images/icon_share.png' class='img1'/></div>");
 	htmls.push("<div class='wimg' style='width:" + imageW + "px;height:" + imageH + "px;text-align:center;'>");
 	htmls.push("<img id='" + imgElemId + "' src='images/blank.gif' style='width:" + imageW + "px;overflow:hidden;'/>");
@@ -372,12 +372,12 @@ function initSwipe() {
             }
             var area = areas[key];
             if (area.timep) {
-        		//如果已记录过时间戳，表示已经加载过图幅，需要做延迟请求
+        		//如果已记录过时间戳,表示已经加载过图幅,需要做延迟请求
             	timer = setTimeout(function() {
             		getTime();
             	}, 30000);
             } else {
-            	//如果没有记录过时间戳，表示当前简图从来没有加载过，应该及时请求
+            	//如果没有记录过时间戳,表示当前简图从来没有加载过,应该及时请求
             	getTime();
             }
         }
@@ -406,7 +406,7 @@ function getTime() {
 		jsonp : 'callback',
 		//timeout:3000,
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("暂时没有数据！");
+			alert("暂时没有数据!");
 		},
 		success : function(result) {
 			var timeps = result.time;

@@ -122,16 +122,16 @@ var containerSize = setContainer(paramJson.width, paramJson.height);
 for (var i = 0; i < res.length; i++) {
 	$.trim(res[i].area)
 
-	var str = "北京市交通委员会（www.bjjtw.gov.cn）发布的公开数据";
+	var str = "北京市交通委员会(www.bjjtw.gov.cn)发布的公开数据";
 	var heplpage = "beijing";
 	if ($.trim(res[i].city) == "深圳") {
-		str = "深圳市交通委员会（szmap.sutpc.com）发布的公开数据";
+		str = "深圳市交通委员会(szmap.sutpc.com)发布的公开数据";
 		heplpage = "shenzhen";
 	}else if($.trim(res[i].city) == "杭州"){
-				str = "杭州市综合交通研究中心（www.hzjtydzs.com）发布的公开数据"
+				str = "杭州市综合交通研究中心(www.hzjtydzs.com)发布的公开数据"
 				heplpage = "hangzhou";
 			}else if($.trim(res[i].city) == "上海"){
-				str = "上海市城乡建设和交通发展研究院（www.jtcx.sh.cn）"
+				str = "上海市城乡建设和交通发展研究院(www.jtcx.sh.cn)"
 				heplpage = "shanghai";
 			};;
 	htmlObj = generalLunboHtmlIndex(res[i].city, res[i].area, i, str, heplpage,paramJson.width, paramJson.height);
@@ -164,7 +164,7 @@ if (typeof(localStorage.cid)=="undefined") {
 };
 run(localStorage.cid);
 getData();
-//请求网络，获取指数数据
+//请求网络,获取指数数据
 //reflesh();
 
 
@@ -210,7 +210,7 @@ function setContainer(width, height) {
 };
 
 /**
- * 生成tab页DOM结构（）
+ * 生成tab页DOM结构()
  */
 function generalTabHtml(index) {
 	var id = "lunboli" + index;
@@ -244,7 +244,7 @@ function generalLunboHtmlIndex(city, area, index, str, heplpage,width,height) {
 	htmls.push("<div class='add' id='city_" + index + "'>" + city + " </div>");
 	htmls.push("<div class='d'><div id='area_" + index + "'>" + area + " </div>");
 	htmls.push("<div id ='degree_" + index + "'> -- </div></div>");
-	htmls.push("<div class='p'>平均速度：" + "<span id ='speed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='month_" + index + "'> -- </span>" + "月" + "<span id ='day_" + index + "'> -- </span>" + "日" + " " + "<span id ='time_" + index + "'> -- </span>" + "</div>");
+	htmls.push("<div class='p'>平均速度:" + "<span id ='speed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='month_" + index + "'> -- </span>" + "月" + "<span id ='day_" + index + "'> -- </span>" + "日" + " " + "<span id ='time_" + index + "'> -- </span>" + "</div>");
 	htmls.push("<div class='s'>" + "<span id ='trafficindex_" + index + "'> -- </span>" + "</div>");
     htmls.push("<div class='b'>");
 	htmls.push("<img id='share_" + index + "'  class='img3' src='images/icon_share.png' >");
@@ -258,7 +258,7 @@ function generalLunboHtmlIndex(city, area, index, str, heplpage,width,height) {
 	htmls.push("'>");
 	htmls.push("<b d ='jiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
 	htmls.push("</div>");
-	htmls.push("<div class='ly'>数据来源：" + str + "</div>");
+	htmls.push("<div class='ly'>数据来源:" + str + "</div>");
 	htmls.push("<script type='text/javascript'>	"+
 	"$(function() {document.getElementById('share_" + index + "').addEventListener('touchstart', function() {"+
 	"$('#share_" + index + "').attr('src','images/icon_share_pressed.png');});"+
@@ -315,7 +315,7 @@ function run(index) {
  */
 function getData() {
 	if(htmlObj==null){
-		alert("数据未加载完成，请稍候刷新！");
+		alert("数据未加载完成,请稍候刷新!");
 		return;
 	}
 	if (!paramJson.settingArea) {
@@ -324,7 +324,7 @@ function getData() {
 	var date = new Date();
 	var items = [];
 	//alert(paramJson.settingArea);
-	//请求网络，获取指数数据
+	//请求网络,获取指数数据
 	$.ajax({
 		
 		url : baseUrl +"/api2/v3/trafficIndexJsonp",
@@ -334,18 +334,18 @@ function getData() {
 			cityname : $.trim(paramJson.settingArea),
 			areaname : true
 		},beforeSend: function(XMLHttpRequest){
-			//alert("请求发出啦！------"+date.getTime() );
+			//alert("请求发出啦!------"+date.getTime() );
 		},
 		dataType : 'jsonp',
 		jsonp : 'callback',
 		//timeout:3000,
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("暂时没有数据！");
-			//alert("请求失败啦！------"+date.getTime() );
+			alert("暂时没有数据!");
+			//alert("请求失败啦!------"+date.getTime() );
 		},
 
 		success : function(result) {
-		//alert("请求成功啦！------"+date.getTime() );
+		//alert("请求成功啦!------"+date.getTime() );
 			$.each(result.trafficIndexList, function(i, item) {
 				items.push(item);
 			});
@@ -368,14 +368,14 @@ function getData() {
 					}
 				}
 			}
-			//alert("数据更新成功！");
+			//alert("数据更新成功!");
 		}
 	});
 	 
 }
 function reflesh() {
 	if(htmlObj==null){
-		alert("数据未加载完成，请稍候刷新！");
+		alert("数据未加载完成,请稍候刷新!");
 		return;
 	}
 	if (!paramJson.settingArea) {
@@ -383,7 +383,7 @@ function reflesh() {
 	}
 	var date = new Date();
 	var items = [];
-	//请求网络，获取指数数据
+	//请求网络,获取指数数据
 	$.ajax({
 		url : baseUrl +"/api2/v3/trafficIndexJsonp",
 		type : 'GET',
@@ -397,12 +397,12 @@ function reflesh() {
 		jsonp : 'callback',
 		//timeout:3000,
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("暂时没有数据！");
-			//alert("请求失败啦！------"+date.getTime() );
+			alert("暂时没有数据!");
+			//alert("请求失败啦!------"+date.getTime() );
 		},
 
 		success : function(result) {
-		//alert("请求成功啦！------"+date.getTime() );
+		//alert("请求成功啦!------"+date.getTime() );
 			$.each(result.trafficIndexList, function(i, item) {
 				items.push(item);
 			});
@@ -432,7 +432,7 @@ function reflesh() {
 			}
 			imageObjRes[localStorage.cid].isImageLoaded=false;
 			imageObjRes[localStorage.cid].loadImage();
-			alert("数据更新成功！");
+			alert("数据更新成功!");
 		}
 	});
 }
@@ -522,13 +522,13 @@ function generalLunboHtmlList() {
 
 		success : function(result) {
 		var htmls1 = [];
-			var str = "北京市交通委员会（www.bjjtw.gov.cn）发布的公开数据";
+			var str = "北京市交通委员会(www.bjjtw.gov.cn)发布的公开数据";
 			if (city == "深圳") {
-				str = "深圳市交通委员会（szmap.sutpc.com）发布的公开数据";
+				str = "深圳市交通委员会(szmap.sutpc.com)发布的公开数据";
 			}else if(city == "杭州"){
-				str = "杭州市综合交通研究中心（www.hzjtydzs.com）发布的公开数据"
+				str = "杭州市综合交通研究中心(www.hzjtydzs.com)发布的公开数据"
 			}else if(city == "上海"){
-				str = "上海市城乡建设和交通发展研究院（www.jtcx.sh.cn）"
+				str = "上海市城乡建设和交通发展研究院(www.jtcx.sh.cn)"
 			};
 			$.each(result.trafficIndexList, function(i, item) {
 				if (!time) {
@@ -567,7 +567,7 @@ function generalLunboHtmlList() {
 
 			});
 			
-			// htmls1.push("<div class='ly2' >数据来源：" + str + "</div>");
+			// htmls1.push("<div class='ly2' >数据来源:" + str + "</div>");
 			htmls1.push("<script type='text/javascript'>	" + "$(function() {document.getElementById('share').addEventListener('touchstart', function() {$('#share').attr('src','images/icon_share_pressed.png');});" + "document.getElementById('share').addEventListener('touchend', function() {" + "window.share.shareMethod($('#city').text());$('#share').attr('src','images/icon_share.png');});});");
 
 
@@ -577,7 +577,7 @@ function generalLunboHtmlList() {
 			// $("#shadow").append(html);
 			$("#listRes").html(html);
 			$("#time").html(time);
-			$("#datasource").html("数据来源：" + str );
+			$("#datasource").html("数据来源:" + str );
 			$("#waiting").hide();
 			
 			if (!myScroll) {
