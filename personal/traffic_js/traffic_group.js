@@ -985,6 +985,12 @@
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio) || 320;
 			options.code = code;
+			//如果不是当前城市,经纬度传入城市中心点
+			if(code !== this.currentCityCode){
+				var lonlat = this.cityCenterLonLat[code];
+				options.lon = lonlat[0];
+				options.lat = lonlat[1];
+			}
 			var reqUrl = this.bulidSendUrl("taxiIndex",options);
 			// console.log(reqUrl);
 			$.ajaxJSONP({
@@ -1053,6 +1059,13 @@
 			options.type = type;
 			options.code = code;
 			options.isLoc = isLoc;
+			//如果不是当前城市,经纬度传入城市中心点
+			if(code !== this.currentCityCode){
+				var lonlat = this.cityCenterLonLat[code];
+				options.lon = lonlat[0];
+				options.lat = lonlat[1];
+			}
+
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl)
 			//显示历史打车位置/热图
