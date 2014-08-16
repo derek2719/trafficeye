@@ -300,18 +300,21 @@
          * @param {String} value 存储的值
          * @private
          */
-        set: function(key, value) {
+        set: function(key, value,isSession) {
             if (isEnableStore) {
                 //删除本地以前存储的JS模块信息，先removeItem后setItem防止在iphone浏览器上报错
                 for (var name = key, len = localStore.length, id; len--;) {
                     id = localStore.key(len);
-                    //因为跳转POI详情返回需要记录不能删除
-                    if(id != "traffic_myinfo_count" && id != "traffic_baseinfo_count"){
-                        - 1 < id.indexOf(name) && localStore.removeItem(id);
-                    }
+                    - 1 < id.indexOf(name) && localStore.removeItem(id);
                 }
                 try {
-                    localStore.setItem(key, value);
+                    if(isSession){
+                        sessionStorage.setItem(key,value);
+                    }
+                    else{
+                        localStore.setItem(key, value);
+                    }
+                    
                     /*
                     if (value) {
                         localStore.setItem(key, value);
@@ -323,8 +326,13 @@
             }
         },
         //清楚本地缓存
-        remove: function(key){
-            localStore.removeItem(key);
+        remove: function(key,isSession){
+            if(isSession){
+                sessionStorage.removeItem(key);
+            }
+            else{
+                localStore.removeItem(key);
+            }
         },
         /**
          * 根据关键字获取某值
@@ -332,8 +340,13 @@
          * @return {*}
          * @private
          */
-        get: function(key) {
-            return isEnableStore && this.isExist(key) ? localStore.getItem(key) : false;
+        get: function(key,isSession) {
+            if(isSession){
+                return sessionStorage.getItem(key) || "";
+            }
+            else{
+                return isEnableStore && this.isExist(key) ? localStore.getItem(key) : false;
+            }
         },
         /**
          * 根据关键字判断是否有本地存储
@@ -415,21 +428,21 @@
      */
     function toPage(url) {
         if(url == "pre_info.html"){
-            var count = Trafficeye.offlineStore.get("traffic_myinfo_count");
+            var count = Trafficeye.offlineStore.get("traffic_myinfo_count",true);
             if(count != ""){
                 //没有启动过页面不管
                 count = count - 0;
                 count ++;
-                Trafficeye.offlineStore.set("traffic_myinfo_count",count);
+                Trafficeye.offlineStore.set("traffic_myinfo_count",count,true);
             }
         }
         if(url == "pre_baseinfo.html"){
-            var count = Trafficeye.offlineStore.get("traffic_baseinfo_count");
+            var count = Trafficeye.offlineStore.get("traffic_baseinfo_count",true);
             if(count != ""){
                 //没有启动过页面不管
                 count = count - 0;
                 count ++;
-                Trafficeye.offlineStore.set("traffic_baseinfo_count",count);
+                Trafficeye.offlineStore.set("traffic_baseinfo_count",count,true);
             }
         }
         if (url) {
@@ -438,9 +451,6 @@
             }, 1);
         }
     };
-
-    offlineStore.set("traffic_myinfo_count","");
-    offlineStore.set("traffic_baseinfo_count","");
 
     Trafficeye.pageManager = null;
     Trafficeye.PageNumManager = PageNumManager;

@@ -138,6 +138,10 @@
                                 var myInfo = Trafficeye.getMyInfo();
                                 //把用户信息写入到本地
                                 //pid,ua,userinfo存入到浏览器本地缓存
+                                myInfo.uid = data.state.uid;
+                                myInfo.friend_uid = data.userInfo.uid;
+                                myInfo.userinfo = data.userInfo;
+                                /*
                                 var userinfodata = {
                                     "pid" : myInfo.pid,
                                     "ua" : myInfo.ua,
@@ -146,7 +150,8 @@
                                     "isEdit" : myInfo.isEdit,
                                     "userinfo" : data.userInfo
                                 };
-                                var dataStr = Trafficeye.json2Str(userinfodata);
+                                */
+                                var dataStr = Trafficeye.json2Str(myInfo);
                                 Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
                                 //写入徽章，里程信息到浏览器缓存
                                 var dataReward = Trafficeye.json2Str(data.reward);
@@ -176,7 +181,7 @@
                                 
 
                                 //控制返回,注册成功当做第一次启动,返回调用本地函数
-                                Trafficeye.offlineStore.set("traffic_myinfo_count","1");
+                                Trafficeye.offlineStore.set("traffic_myinfo_count","1",true);
                                 window.location.replace("pre_info.html");
                                 //Trafficeye.toPage("pre_info.html");
                             } else{

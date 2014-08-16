@@ -234,6 +234,8 @@
             var myInfo = Trafficeye.getMyInfo();
             //把用户信息写入到本地
             //pid,ua,userinfo存入到浏览器本地缓存
+            myInfo.userinfo = Trafficeye.str2Json(data);
+            /*
             var userinfodata = {
                 "pid" : myInfo.pid,
                 "ua" : myInfo.ua,
@@ -242,10 +244,11 @@
                 "isEdit" : myInfo.isEdit,
                 "userinfo" : Trafficeye.str2Json(data)
             };
-            var dataStr = Trafficeye.json2Str(userinfodata);
+            */
+            var dataStr = Trafficeye.json2Str(myInfo);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
             
-            Trafficeye.offlineStore.set("traffic_myinfo_count","1");
+            Trafficeye.offlineStore.set("traffic_myinfo_count","1",true);
             window.location.replace("pre_info.html");
             //Trafficeye.toPage("pre_info.html");
         };

@@ -120,12 +120,12 @@
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
 
-            var count = Trafficeye.offlineStore.get("traffic_baseinfo_count");
+            var count = Trafficeye.offlineStore.get("traffic_baseinfo_count",true);
             if(count != ""){
                 //没有启动过页面不管
                 count = count - 0;
                 if(count == 1){
-                    Trafficeye.offlineStore.set("traffic_baseinfo_count","");
+                    Trafficeye.offlineStore.set("traffic_baseinfo_count","",true);
                     //如果是首次启动页面,需要调用本地返回
                     if (Trafficeye.mobilePlatform.android) {
                         window.JSAndroidBridge.gotoPrePage();
@@ -137,7 +137,7 @@
                 }
                 else{
                     count --;
-                    Trafficeye.offlineStore.set("traffic_baseinfo_count",count);
+                    Trafficeye.offlineStore.set("traffic_baseinfo_count",count,true);
                     history.go(-1);
                 }
             }
@@ -793,9 +793,12 @@
         // 设置头像成功的回调函数
         window.callbackSetUserAvatar = function(data){
             Trafficeye.httpTip.closed();
-            var myInfo = Trafficeye.getMyInfo();
+            var myInfo = Trafficeye.getMyInfo() || {};
             //把用户信息写入到本地
             //pid,ua,userinfo存入到浏览器本地缓存
+            myInfo.friend_uid = data.uid;
+            myInfo.userinfo = Trafficeye.str2Json(data);
+            /*
             var userinfodata = {
                 "pid" : myInfo.pid,
                 "ua" : myInfo.ua,
@@ -804,7 +807,8 @@
                 "isEdit" : myInfo.isEdit,
                 "userinfo" : Trafficeye.str2Json(data)
             };
-            var dataStr = Trafficeye.json2Str(userinfodata);
+            */
+            var dataStr = Trafficeye.json2Str(myInfo);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
         }
         
@@ -1014,7 +1018,7 @@
          //初始化
          window.initPageManager = function(){
             //控制返回,如果第一次启动,返回调用本地函数
-            Trafficeye.offlineStore.set("traffic_baseinfo_count","1");
+            Trafficeye.offlineStore.set("traffic_baseinfo_count","1",true);
             window.initPageManagerCurrent();
          }
 

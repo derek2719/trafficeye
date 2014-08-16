@@ -576,9 +576,16 @@
             var count = 10;
             var flag = true;
 
-            var pm = new PageManager();
+            var pm = null;
+            if(Trafficeye.pageManager == null){
+                pm = new PageManager();
+                Trafficeye.pageManager = pm;
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
 
-            Trafficeye.pageManager = pm;
+
             //初始化用户界面
             pm.init();
 
@@ -586,10 +593,11 @@
             pm.userInfoManager.setFriendid(friend_id);
 
             //把个人信息增加到本地缓存
-             var userData = {"uid" : uid,"pid" : pid}
-             var dataStr = Trafficeye.json2Str(userData);
+            //var userData = {"uid" : uid,"pid" : pid}
+            //var dataStr = Trafficeye.json2Str(userData);
                 //console.log(dataStr);
-             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+            //Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+            
             //**********获取消息和私信数量的请求*****************
              var messageNum_url = BASE_URL + "findNewCountJs";
              var messageNum_data = {"uid" : uid};               
@@ -657,6 +665,7 @@
             }
         };
         
+        window.initPageManager();
        // window.initPageManager(30508,30508,0,10,true,'353617052835307','client');
      // window.initPageManager(22456,22456,0,10,true,'357513052005130');
 

@@ -105,12 +105,12 @@
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
             //var myInfo = Trafficeye.getMyInfo();
-            var count = Trafficeye.offlineStore.get("traffic_myinfo_count");
+            var count = Trafficeye.offlineStore.get("traffic_myinfo_count",true);
             if(count != ""){
                 //没有启动过页面不管
                 count = count - 0;
                 if(count == 1){
-                    Trafficeye.offlineStore.set("traffic_myinfo_count","");
+                    Trafficeye.offlineStore.set("traffic_myinfo_count","",true);
                     //如果是首次启动页面,需要调用本地返回
                     if (Trafficeye.mobilePlatform.android) {
                         window.JSAndroidBridge.gotoPrePage();
@@ -122,7 +122,7 @@
                 }
                 else{
                     count --;
-                    Trafficeye.offlineStore.set("traffic_myinfo_count",count);
+                    Trafficeye.offlineStore.set("traffic_myinfo_count",count,true);
                     history.go(-1);
                 }
             }
@@ -625,6 +625,9 @@
             var dataStrJson = Trafficeye.str2Json(data)
             //把用户信息写入到本地
             //pid,ua,userinfo存入到浏览器本地缓存
+            myInfo.friend_uid = dataStrJson.uid;
+            myInfo.userinfo = dataStrJson;
+            /*
             var userinfodata = {
                 "pid" : myInfo.pid,
                 "ua" : myInfo.ua,
@@ -633,7 +636,8 @@
                 "isEdit" : myInfo.isEdit,
                 "userinfo" : dataStrJson
             };
-            var dataStr = Trafficeye.json2Str(userinfodata);
+            */
+            var dataStr = Trafficeye.json2Str(myInfo);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
             var headimgidElem = pm.elems["headimgid"];
             // //头像设置
@@ -727,7 +731,7 @@
                 pm = Trafficeye.pageManager;
             }
             //控制返回,如果第一次启动,返回调用本地函数
-            Trafficeye.offlineStore.set("traffic_myinfo_count","1");
+            Trafficeye.offlineStore.set("traffic_myinfo_count","1",true);
             //初始化用户界面
             pm.init();
             pm.myInfo = myInfo;

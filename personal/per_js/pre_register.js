@@ -145,6 +145,10 @@
                                 var myInfo = Trafficeye.getMyInfo();
                                 //把用户信息写入到本地
                                 //pid,ua,userinfo存入到浏览器本地缓存
+                                myInfo.uid = data.state.uid;
+                                myInfo.friend_uid = data.userInfo.uid;
+                                myInfo.userinfo = data.userInfo;
+                                /*
                                 var userinfodata = {
                                     "pid" : myInfo.pid,
                                     "ua" : myInfo.ua,
@@ -153,7 +157,8 @@
                                     "isEdit" : myInfo.isEdit,
                                     "userinfo" : data.userInfo
                                 };
-                                var dataStr = Trafficeye.json2Str(userinfodata);
+                                */
+                                var dataStr = Trafficeye.json2Str(myInfo);
                                 Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
                                 //写入用户信息和徽章，里程信息到浏览器缓存
                                 
@@ -161,7 +166,7 @@
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
                                 
-                                /*
+                                
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -171,10 +176,10 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
-                                */
+                                /**/
 
                                 //控制返回,注册成功当做第一次启动,返回调用本地函数
-                                Trafficeye.offlineStore.set("traffic_myinfo_count","1");
+                                Trafficeye.offlineStore.set("traffic_myinfo_count","1",true);
                                 window.location.replace("pre_info.html");
                             
                             } else{

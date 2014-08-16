@@ -511,14 +511,17 @@
             //请求用户信息协议
             var userInfo_url = BASE_URL + "info";
             var userInfo_data = {"publishId" : publishId,"publishType" : publishType};
-            
+            /*
             var myInfo = {
                 "uid" : uid || 0,
                 "pid" : pid || 0
             };
-
+            */
+            myInfo.uid =  uid || 0;
+            myInfo.pid =  pid || 0;
             var dataStr = Trafficeye.json2Str(myInfo);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+            
             var dataEvtdetail ={
                 "uid" : uid,
                 "publishid" : publishId,
@@ -534,7 +537,7 @@
                 Trafficeye.pageManager = pm;
            // }
            // else{
-           //     pm = Trafficeye.pageManager;
+            //    pm = Trafficeye.pageManager;
            // }
            
             //初始化用户界面
@@ -570,7 +573,7 @@
         };
         
        // window.initPageManagerClient('4891',480,800,'38233','004402143568271','mappersonaldetails','track');
-       //window.initPageManager();
+       window.initPageManager();
     }); 
     
  }(window));
