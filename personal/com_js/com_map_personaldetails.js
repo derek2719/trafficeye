@@ -498,16 +498,19 @@
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
             */
             
-            var myInfo = Trafficeye.getMyInfo();
-            if (!myInfo) {
-                return;
-            }
+            var myInfo = Trafficeye.getMyInfo() || {};
             var dataClient = myInfo.dataclient || {};
             var uid = myInfo.uid;
             var pid = myInfo.pid;
             var publishId = dataClient.publishId || "";
-            var publishType = dataClient.publishType || "event";
+            var publishType = dataClient.publishType || "";
 
+            if(publishId == ""){
+                var traffic_evtdetail = Trafficeye.offlineStore.get("traffic_evtdetail");
+                uid = traffic_evtdetail.uid;
+                publishId = traffic_evtdetail.publishId;
+                publishType = traffic_evtdetail.publishType;
+            }
             //请求用户信息协议
             var userInfo_url = BASE_URL + "info";
             var userInfo_data = {"publishId" : publishId,"publishType" : publishType};
@@ -532,13 +535,13 @@
             Trafficeye.offlineStore.set("traffic_evtdetail", dataEvtdetailStr);
 
             var pm = null;
-            //if(Trafficeye.pageManager == null){
+            if(Trafficeye.pageManager == null){
                 pm = new PageManager();
                 Trafficeye.pageManager = pm;
-           // }
-           // else{
-            //    pm = Trafficeye.pageManager;
-           // }
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
            
             //初始化用户界面
             pm.init();

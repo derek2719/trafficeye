@@ -166,9 +166,16 @@
             };
             var dataStr = Trafficeye.json2Str(data);
 
-            //跳转到关注/粉丝页面,控制tab栏目显示look/fans
-            Trafficeye.offlineStore.set("traffic_lookfans", "look");
-            Trafficeye.toPage("com_lookfans.html");
+            if(myInfo.userinfo){
+                if(myInfo.uid == myInfo.friend_uid){
+                    //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+                    Trafficeye.offlineStore.set("traffic_lookfans", "look");
+                    Trafficeye.toPage("com_lookfans.html");
+                    return;
+                }
+            }
+            Trafficeye.toPage("com_looklist.html");
+            
 
             //老的代码
             /*
@@ -195,9 +202,16 @@
             // console.log(data);
             var dataStr = Trafficeye.json2Str(data);
             
-            //跳转到关注/粉丝页面,控制tab栏目显示look/fans
-            Trafficeye.offlineStore.set("traffic_lookfans", "fans");
-            Trafficeye.toPage("com_lookfans.html");
+            if(myInfo.userinfo){
+                if(myInfo.uid == myInfo.friend_uid){
+                    //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+                    Trafficeye.offlineStore.set("traffic_lookfans", "fans");
+                    Trafficeye.toPage("com_lookfans.html");
+                    return;
+                }
+            }
+            Trafficeye.toPage("com_fanslist.html");
+            
 
             //老的代码
             /*
@@ -625,9 +639,6 @@
             var dataStrJson = Trafficeye.str2Json(data)
             //把用户信息写入到本地
             //pid,ua,userinfo存入到浏览器本地缓存
-            myInfo.friend_uid = dataStrJson.uid;
-            myInfo.userinfo = dataStrJson;
-            /*
             var userinfodata = {
                 "pid" : myInfo.pid,
                 "ua" : myInfo.ua,
@@ -636,8 +647,7 @@
                 "isEdit" : myInfo.isEdit,
                 "userinfo" : dataStrJson
             };
-            */
-            var dataStr = Trafficeye.json2Str(myInfo);
+            var dataStr = Trafficeye.json2Str(userinfodata);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
             var headimgidElem = pm.elems["headimgid"];
             // //头像设置

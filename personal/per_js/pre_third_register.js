@@ -138,10 +138,6 @@
                                 var myInfo = Trafficeye.getMyInfo();
                                 //把用户信息写入到本地
                                 //pid,ua,userinfo存入到浏览器本地缓存
-                                myInfo.uid = data.state.uid;
-                                myInfo.friend_uid = data.userInfo.uid;
-                                myInfo.userinfo = data.userInfo;
-                                /*
                                 var userinfodata = {
                                     "pid" : myInfo.pid,
                                     "ua" : myInfo.ua,
@@ -150,8 +146,7 @@
                                     "isEdit" : myInfo.isEdit,
                                     "userinfo" : data.userInfo
                                 };
-                                */
-                                var dataStr = Trafficeye.json2Str(myInfo);
+                                var dataStr = Trafficeye.json2Str(userinfodata);
                                 Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
                                 //写入徽章，里程信息到浏览器缓存
                                 var dataReward = Trafficeye.json2Str(data.reward);

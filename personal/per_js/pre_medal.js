@@ -450,9 +450,6 @@
             var dataStrJson = Trafficeye.str2Json(data)
             //把用户信息写入到本地
             //pid,ua,userinfo存入到浏览器本地缓存
-            myInfo.friend_uid = dataStrJson.uid;
-            myInfo.userinfo = dataStrJson;
-            /*
             var userinfodata = {
                 "pid" : myInfo.pid,
                 "ua" : myInfo.ua,
@@ -461,8 +458,7 @@
                 "isEdit" : myInfo.isEdit,
                 "userinfo" : dataStrJson
             };
-            */
-            var dataStr = Trafficeye.json2Str(myInfo);
+            var dataStr = Trafficeye.json2Str(userinfodata);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
             var headimgidElem = pm.elems["headimgid"];
             // //头像设置

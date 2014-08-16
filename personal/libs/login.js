@@ -14,6 +14,13 @@
 		if(isLogin == 0){
 			//未登录
 			//var data = Trafficeye.str2Json(dataClient);
+			var dataclient = "";
+			if(jsonParam != ""){
+				try{
+					dataclient = Trafficeye.str2Json(jsonParam);
+				}
+				catch(e){}
+			}
 			//pid,ua,userinfo存入到浏览器本地缓存
 			var userinfodata = {
 				"pid" : pid,
@@ -21,7 +28,8 @@
 				"uid" : "",
 				"friend_uid" : "",
 				"isEdit" : isEdit,
-				"userinfo" : ""
+				"userinfo" :"",
+				"dataclient":dataclient
 			};
 			var dataStr = Trafficeye.json2Str(userinfodata);
 			Trafficeye.offlineStore.set("traffic_myinfo",dataStr);

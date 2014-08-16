@@ -714,7 +714,7 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                Trafficeye.toPage("timeline.html");
+                Trafficeye.toPage("com_timeline.html");
             }),Trafficeye.MaskTimeOut);
         },
         loadmorebtnDown : function(evt) {
@@ -914,18 +914,12 @@
         window.personalGotoCommunityPage = function(dataClient){
             // console.log(data);
             Trafficeye.httpTip.closed();
-
-            var myInfo = Trafficeye.getMyInfo();
             var dataStr = Trafficeye.str2Json(dataClient);
-            myInfo.uid = dataStr.uid;
-            myInfo.pid = dataStr.uid;
-            /*
             var data ={
                 "uid" : dataStr.uid,
                 "pid" : dataStr.pid
             }
-            */
-            var dataSource = Trafficeye.json2Str(myInfo);
+            var dataSource = Trafficeye.json2Str(data);
             Trafficeye.offlineStore.set("traffic_myinfo", dataSource);
             Trafficeye.offlineStore.set("traffic_lookfans",dataStr.traffic_lookfans);
             Trafficeye.offlineStore.set("traffic_fromsource",dataStr.prepage);

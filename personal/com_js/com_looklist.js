@@ -264,7 +264,7 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                Trafficeye.toPage("timeline.html");
+                Trafficeye.toPage("com_timeline.html");
             }),Trafficeye.MaskTimeOut);
         },
         /**
