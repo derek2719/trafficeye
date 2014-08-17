@@ -616,7 +616,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -664,7 +664,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -718,7 +718,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -758,7 +758,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -864,7 +864,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -904,7 +904,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -1003,7 +1003,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -1096,7 +1096,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
