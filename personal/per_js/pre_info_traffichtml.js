@@ -134,7 +134,7 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-            history.go(-1);
+            Trafficeye.pageBack(-1);
 
             /*
             var fromSource = Trafficeye.fromSource();
@@ -153,10 +153,15 @@
             };
             var dataStr = Trafficeye.json2Str(data);
 
-            //跳转到关注/粉丝页面,控制tab栏目显示look/fans
-            Trafficeye.offlineStore.set("traffic_lookfans", "look");
-            Trafficeye.toPage("com_lookfans.html");
-
+            if(myInfo.userinfo){
+                if(myInfo.uid == myInfo.friend_uid){
+                    //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+                    Trafficeye.offlineStore.set("traffic_lookfans", "look");
+                    Trafficeye.toPage("com_lookfans.html");
+                    return;
+                }
+            }
+            Trafficeye.toPage("com_looklist.html");
             /*
             if (Trafficeye.mobilePlatform.android) {
                 window.JSAndroidBridge.gotoCommunity("lookfans",dataStr);
@@ -180,9 +185,16 @@
             };
             var dataStr = Trafficeye.json2Str(data);
 
-            //跳转到关注/粉丝页面,控制tab栏目显示look/fans
-            Trafficeye.offlineStore.set("traffic_lookfans", "fans");
-            Trafficeye.toPage("com_lookfans.html");
+            if(myInfo.userinfo){
+                if(myInfo.uid == myInfo.friend_uid){
+                    //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+                    Trafficeye.offlineStore.set("traffic_lookfans", "fans");
+                    Trafficeye.toPage("com_lookfans.html");
+                    return;
+                }
+            }
+            Trafficeye.toPage("com_fanslist.html");
+            
 
             /*
             if (Trafficeye.mobilePlatform.android) {

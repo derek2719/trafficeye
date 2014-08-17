@@ -138,11 +138,11 @@
                 else{
                     count --;
                     Trafficeye.offlineStore.set("traffic_baseinfo_count",count,true);
-                    history.go(-1);
+                    Trafficeye.pageBack(-1);
                 }
             }
             else{
-                history.go(-1);
+                Trafficeye.pageBack(-1);
             }
             /*
             var fromSource = Trafficeye.fromSource();

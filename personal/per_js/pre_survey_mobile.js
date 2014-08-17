@@ -69,7 +69,7 @@
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
 
-            history.go(-1);
+            Trafficeye.pageBack(-1);
             /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.sourcepage);
@@ -81,7 +81,7 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");
-                history.go(-1);
+                Trafficeye.pageBack(-1);
                 //Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         },

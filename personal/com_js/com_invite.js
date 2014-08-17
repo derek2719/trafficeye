@@ -562,7 +562,7 @@
          */
         backPage : function() {
             //显示前一页
-            history.go(-1);
+            Trafficeye.pageBack(-1);
             
             //Trafficeye.toPage("lookfans.html");
         },

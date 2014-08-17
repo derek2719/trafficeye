@@ -69,7 +69,7 @@
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
             
-            history.go(-1);
+            Trafficeye.pageBack(-1);
 
             /*
             var fromSource = Trafficeye.fromSource();
@@ -146,7 +146,7 @@
                                 }
                                 */
                                 Trafficeye.offlineStore.set("traffic_infosurveycar","survey");
-                                history.go(-1);
+                                Trafficeye.pageBack(-1);
                                 //Trafficeye.toPage("pre_baseinfo.html");
                             } else{
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");

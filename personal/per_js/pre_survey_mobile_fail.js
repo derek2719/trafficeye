@@ -50,7 +50,7 @@
             setTimeout((function(){
                 $(elem).removeClass("curr");
                 var backNum = Trafficeye.offlineStore.get("traffic_surver_mobile_back") - 0 + 1;
-                history.go(-backNum);
+                Trafficeye.pageBack(-backNum);
                 //Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         },
@@ -61,7 +61,7 @@
             setTimeout((function(){
                 $(elem).removeClass("curr");
                 var backNum = Trafficeye.offlineStore.get("traffic_surver_mobile_back") - 0;
-                history.go(-backNum);
+                Trafficeye.pageBack(-backNum);
                 //Trafficeye.toPage("pre_survey_mobile.html");
             }),Trafficeye.MaskTimeOut);     
         },

@@ -68,7 +68,7 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-            history.go(-1);
+            Trafficeye.pageBack(-1);
             /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.sourcepage);

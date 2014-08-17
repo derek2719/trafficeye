@@ -78,7 +78,7 @@
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
             // var fromSource = Trafficeye.fromSource();
-            history.go(-1);
+            Trafficeye.pageBack(-1);
             //Trafficeye.toPage("pre_baseinfo_mobile_verify.html");
         },
         //清除用户昵称
@@ -87,7 +87,7 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                history.go(-4);
+                Trafficeye.pageBack(-4);
 
                 //Trafficeye.toPage("pre_baseinfo_mobile.html");
             }),Trafficeye.MaskTimeOut);     
@@ -168,21 +168,21 @@
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
                                 */
-                                Trafficeye.offlineStore.set("traffic_mobile_fail_back",5);
+                                Trafficeye.offlineStore.set("traffic_mobile_fail_back",3);
                                 Trafficeye.toPage("pre_baseinfo_mobile_success.html");
                             } else{
-                                Trafficeye.offlineStore.set("traffic_mobile_fail_back",5);
+                                Trafficeye.offlineStore.set("traffic_mobile_fail_back",3);
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                                 Trafficeye.toPage("pre_baseinfo_mobile_fail.html");
                             }
                         } else {
-                            Trafficeye.offlineStore.set("traffic_mobile_fail_back",5);
+                            Trafficeye.offlineStore.set("traffic_mobile_fail_back",3);
                              Trafficeye.toPage("pre_baseinfo_mobile_fail.html");
                         }
                     }
                 })
             } else {
-                Trafficeye.offlineStore.set("traffic_mobile_fail_back",5);
+                Trafficeye.offlineStore.set("traffic_mobile_fail_back",3);
                 Trafficeye.toPage("pre_baseinfo_mobile_fail.html");
             }
         },

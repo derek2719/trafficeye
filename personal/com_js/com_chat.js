@@ -237,8 +237,7 @@
         //返回按钮处理函数
         backPage : function() {
             var data = Trafficeye.offlineStore.get("traffic_chat");
-            history.go(-1);
-            
+            Trafficeye.pageBack(-1);
             //原来的代码
             /*
             var data = Trafficeye.offlineStore.get("traffic_chat");

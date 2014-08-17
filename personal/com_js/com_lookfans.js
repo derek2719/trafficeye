@@ -234,7 +234,7 @@
          */
         backPage : function() {
             //假如这样,不知道有没有问题
-            history.go(-1);
+            Trafficeye.pageBack(-1);
             /*
             // Trafficeye.toPage("index.html");
             // Trafficeye.offlineStore.set("traffic_source",dataStr.prepage);

@@ -99,7 +99,16 @@
 			Trafficeye.httpTip.opened();
 			Trafficeye.trafficeyeAlert("正在登录中,请稍后");
 		}
-		//debugger
+
+		/**/
+		var pageUrl = location.href;
+		var pageName = pageUrl.substring(pageUrl.indexOf("personal") + 9);
+		var arr = [];
+		arr.push(pageName);
+		var jsonStr = Trafficeye.json2Str(arr);
+		Trafficeye.offlineStore.set("traffic_pageurl",jsonStr,true);
+		
+		
 		//调用页面初始化方法
 		initPage();
 	};

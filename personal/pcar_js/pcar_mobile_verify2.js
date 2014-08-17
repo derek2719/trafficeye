@@ -77,7 +77,7 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-            history.go(-1);
+            Trafficeye.pageBack(-1);
             // var fromSource = Trafficeye.fromSource();
             //Trafficeye.toPage("pcar_mobile_verify.html");
         },
@@ -87,7 +87,7 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                history.go(-4);
+                Trafficeye.pageBack(-4);
                 //Trafficeye.toPage("pcar_mobile.html");
             }),Trafficeye.MaskTimeOut);     
         },
@@ -167,21 +167,21 @@
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
                                 */
-                                Trafficeye.offlineStore.set("traffic_pcar_mobile_back",5);
+                                Trafficeye.offlineStore.set("traffic_pcar_mobile_back",3);
                                 Trafficeye.toPage("pcar_mobile_success.html");
                             } else{
-                                Trafficeye.offlineStore.set("traffic_pcar_mobile_back",5);
+                                Trafficeye.offlineStore.set("traffic_pcar_mobile_back",3);
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                                 Trafficeye.toPage("pcar_mobile_fail.html");
                             }
                         } else {
-                            Trafficeye.offlineStore.set("traffic_pcar_mobile_back",5);
+                            Trafficeye.offlineStore.set("traffic_pcar_mobile_back",3);
                              Trafficeye.toPage("pcar_mobile_fail.html");
                         }
                     }
                 })
             } else {
-                Trafficeye.offlineStore.set("traffic_pcar_mobile_back",5);
+                Trafficeye.offlineStore.set("traffic_pcar_mobile_back",3);
                 Trafficeye.toPage("pcar_mobile_fail.html");
             }
         },

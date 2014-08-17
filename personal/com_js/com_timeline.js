@@ -741,7 +741,7 @@
          * 返回上一页面
          */
         backPage : function() {
-            history.go(-1);
+            Trafficeye.pageBack(-1);
 
             /*
             var fromSource = Trafficeye.offlineStore.get("traffic_fromsource");
@@ -932,7 +932,7 @@
             var prepage = myInfo.prepage || "";
             if(prepage === "trafficeye_personal"){
                 //保存数据
-                //Trafficeye.offlineStore.set("traffic_myinfo", Trafficeye.json2Str(myInfo.myInfo));
+                Trafficeye.offlineStore.set("traffic_myinfo", Trafficeye.json2Str(myInfo.myInfo));
                 Trafficeye.offlineStore.set("traffic_timeline",myInfo.traffic_timeline);
                 Trafficeye.offlineStore.set("traffic_fromsource",myInfo.prepage);
 

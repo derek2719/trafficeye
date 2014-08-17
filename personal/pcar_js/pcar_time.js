@@ -69,7 +69,7 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             history.go(-1);
+             Trafficeye.pageBack(-1);
              // Trafficeye.toPage("pcar_publishinfo.html");
          },
          //发布拼车信息
@@ -97,7 +97,7 @@
 
              setTimeout((function() {
                  $(elem).removeClass("curr");
-                 history.go(-1);
+                 Trafficeye.pageBack(-1);
                  //Trafficeye.toPage("pcar_publishinfo.html");
              }), Trafficeye.MaskTimeOut);
          }

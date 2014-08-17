@@ -219,7 +219,7 @@
         },
 
         backPage : function() {
-            history.go(-1);
+            Trafficeye.pageBack(-1);
             //Trafficeye.toPage("pre_info.html");
         },
 

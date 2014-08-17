@@ -212,17 +212,19 @@
 		* 初始化页面对象
 		*/
 		init : function() {
-			var me = this;
-			me.pageNumManager = new Trafficeye.PageNumManager();
-			me.userInfoManager = new UserInfoManager();
-			me.userTimelineManager = new UserTimelineManager();
-			me.userTimelineManager.setUserInfoManager(me.userInfoManager);
-			me.PraiseAvatorManager = new PraiseAvatorManager();
-			me.PraiseAvatorManager.setUserInfoManager(me.userInfoManager);
-			me.pageNumManager.reset();
-			me.initElems();
-			me.initEvents();
-			me.inited = true;
+			if(!this.inited){
+				var me = this;
+				me.pageNumManager = new Trafficeye.PageNumManager();
+				me.userInfoManager = new UserInfoManager();
+				me.userTimelineManager = new UserTimelineManager();
+				me.userTimelineManager.setUserInfoManager(me.userInfoManager);
+				me.PraiseAvatorManager = new PraiseAvatorManager();
+				me.PraiseAvatorManager.setUserInfoManager(me.userInfoManager);
+				me.pageNumManager.reset();
+				me.initElems();
+				me.initEvents();
+				me.inited = true;
+			}
 		},
 		/**
 		* 初始化页面元素对象
@@ -858,9 +860,16 @@
 				"pid" : pid || 0
 			};
 
-			var pm = new PageManager();
 
-			Trafficeye.pageManager = pm;
+			var pm = null;
+            if(Trafficeye.pageManager == null){
+                pm = new PageManager();
+                Trafficeye.pageManager = pm;
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
+
 			//初始化用户界面
 			pm.init();
 			pm.userInfoManager.setUid(uid);

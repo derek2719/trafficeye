@@ -182,7 +182,7 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
-            history.go(-1);
+            Trafficeye.pageBack(-1);
 
              //Trafficeye.toPage("pcar_index.html");
          },

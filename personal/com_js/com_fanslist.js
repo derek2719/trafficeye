@@ -128,7 +128,7 @@
          * 返回上一页面
          */
         backPage : function() {
-            history.go(-1);
+            Trafficeye.pageBack(-1);
 
             //以前的代码
             /*

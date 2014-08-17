@@ -51,7 +51,7 @@
                 $(elem).removeClass("curr");
                 Trafficeye.offlineStore.set("traffic_infosurveycar","survey");
                 var backNum = Trafficeye.offlineStore.get("traffic_mobile_fail_back") - 0 + 1;
-                history.go(-backNum);
+                Trafficeye.pageBack(-backNum);
                 //Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         }

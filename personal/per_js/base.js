@@ -415,6 +415,46 @@
         return str2Json(myInfoStr);
     };
 
+    //判断URL是否存在
+    function pageUrlIndex(url){
+        var pageUrl = Trafficeye.offlineStore.get("traffic_pageurl",true) || "";
+        if(pageUrl == ""){
+            pageUrl = [];
+        }
+        else{
+            pageUrl = str2Json(pageUrl);
+        }
+        var index = pageUrl.indexOf(url);
+        if(index == -1){
+            //页面没有加载过
+            pageUrl.unshift(url);
+            var jsonStr = json2Str(pageUrl);
+            Trafficeye.offlineStore.set("traffic_pageurl",jsonStr,true);
+            //标识load页面
+            return 99;
+        }
+        return index == 0 ? 0 : -index;
+    }
+
+    //返回
+    function pageBack(index){
+        var i = index;
+        var pageUrl = Trafficeye.offlineStore.get("traffic_pageurl",true) || "";
+        if(pageUrl == ""){
+            pageUrl = [];
+        }
+        else{
+            pageUrl = str2Json(pageUrl);
+        }
+        while(i < 0){
+            pageUrl.shift();
+            i++;
+        }
+        var jsonStr = json2Str(pageUrl);
+        Trafficeye.offlineStore.set("traffic_pageurl",jsonStr,true);
+        history.go(index);
+    }
+
     /**
      * 跳转页面
      * @param  {[type]} url [description]
@@ -440,11 +480,19 @@
             }
         }
         if (url) {
-            setTimeout(function() {
-                window.location.href = url;
-            }, 1);
+            //判断URL栈,判断是否有历史页面
+            var index = pageUrlIndex(url);
+            if(index == 99){
+                setTimeout(function() {
+                    window.location.href = url;
+                }, 1);
+            }
+            else{
+                pageBack(index);
+            }
         }
     };
+
 
     Trafficeye.pageManager = null;
     Trafficeye.PageNumManager = PageNumManager;
@@ -460,6 +508,7 @@
     Trafficeye.getMyInfo = getMyInfo;
     Trafficeye.fromSource = fromSource;
     Trafficeye.toPage = toPage;
+    Trafficeye.pageBack = pageBack;
     Trafficeye.trafficeyeAlert = trafficeyeAlert;
     Trafficeye.BASE_USER_URL = BASE_USER_URL;
     Trafficeye.BASE_RIDE_URL = BASE_RIDE_URL;

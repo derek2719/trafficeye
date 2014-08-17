@@ -231,7 +231,7 @@
         },
 
         backPage : function() {
-            history.go(-1);
+            Trafficeye.pageBack(-1);
 
             //以前的代码
             //Trafficeye.toPage("message.html");
