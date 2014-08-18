@@ -194,8 +194,10 @@
                     //标识进入个人资料页面是否第一个启动页面
                     Trafficeye.offlineStore.set("traffic_myinfo_source","first");
 
-                    window.location.replace("pre_info.html");
-
+                    setTimeout(function(){
+                        //让用户重新登录
+                        window.location.replace("pre_info.html")
+                    },Trafficeye.replaceTimeOut);
                     //Trafficeye.toPage("pre_info.html");
                 }
                 else if(isEdit == 2){
@@ -246,7 +248,10 @@
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
             
             Trafficeye.offlineStore.set("traffic_myinfo_count","1",true);
-            window.location.replace("pre_info.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_info.html")
+            },Trafficeye.replaceTimeOut);
             //Trafficeye.toPage("pre_info.html");
         };
         

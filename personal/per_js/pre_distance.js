@@ -515,8 +515,10 @@
                                  } else {
                                      alert("调用注销用户信息接口,PC不支持.");
                                  }
-                                 //返回到登录界面
-                                 window.location.replace("pre_login.html")
+                                 setTimeout(function(){
+                                        //让用户重新登录
+                                        window.location.replace("pre_login.html")
+                                    },Trafficeye.replaceTimeOut);
                              } else {
                                  Trafficeye.trafficeyeAlert(data.state.desc + "(" + data.state.code + ")");
                              }
@@ -564,8 +566,10 @@
                  pm.reqUserInfo(myInfo.uid, myInfo.friend_uid); //请求朋友的页面信息
              }
          } else {
-             //让用户重新登录
-             window.location.replace("pre_login.html")
+             setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html")
+            },Trafficeye.replaceTimeOut);
          }
          // 设置头像成功的回调函数,输入是字符串，要转为json对象
          window.callbackSetUserAvatar = function(data) {

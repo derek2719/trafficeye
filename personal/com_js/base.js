@@ -5,6 +5,9 @@
     }
     Trafficeye.global = global;
 
+    //ios采用replace跳转需要延迟,不然拦截不到
+    var replaceTimeOut = 100;
+    
     var emptyFn = function() {};
 
     var mobilePlatform = {
@@ -17,6 +20,8 @@
     var UrlPort = 21290; //正式URL端口号为21290,测试URL端口号为8008
     
     var MaskTimeOut = 1000; //蒙版效果等待时间
+
+    
     /**
      * 判断是否是移动平台
      */
@@ -511,4 +516,5 @@
     Trafficeye.pageBack = pageBack;
     Trafficeye.UrlPort = UrlPort;
     Trafficeye.MaskTimeOut = MaskTimeOut;
+    Trafficeye.replaceTimeOut = replaceTimeOut;
 }(window));

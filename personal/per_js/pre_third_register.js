@@ -177,7 +177,11 @@
 
                                 //控制返回,注册成功当做第一次启动,返回调用本地函数
                                 Trafficeye.offlineStore.set("traffic_myinfo_count","1",true);
-                                window.location.replace("pre_info.html");
+                               
+                                setTimeout(function(){
+                                    //让用户重新登录
+                                    window.location.replace("pre_info.html");
+                                },Trafficeye.replaceTimeOut);
                                 //Trafficeye.toPage("pre_info.html");
                             } else{
                                 //注册失败

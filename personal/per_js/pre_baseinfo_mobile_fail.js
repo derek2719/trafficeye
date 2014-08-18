@@ -96,8 +96,10 @@
         if(myInfo.userinfo){
 
         }else{
-            //让用户重新登录
-            window.location.replace("pre_login.html")
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html")
+            },Trafficeye.replaceTimeOut);
         }
         
         window.topage = function(evt) {

@@ -5,6 +5,9 @@
     }
     Trafficeye.global = global;
 
+    //ios采用replace跳转需要延迟,不然拦截不到
+    var replaceTimeOut = 100;
+    
     var emptyFn = function() {};
 
     var mobilePlatform = {
@@ -23,7 +26,7 @@
  
  
     var MaskTimeOut = 1000; //蒙版效果等待时间
-        
+
     /**
      * 判断是否是移动平台
      */
@@ -519,4 +522,5 @@
     Trafficeye.BASE_USER_URL = BASE_USER_URL;
     Trafficeye.UrlPort = UrlPort;
     Trafficeye.MaskTimeOut = MaskTimeOut;
+    Trafficeye.replaceTimeOut = replaceTimeOut;
 }(window));

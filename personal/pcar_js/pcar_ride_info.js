@@ -341,8 +341,10 @@
              if (myInfo.userinfo) {
                 pm.reqRideInfo(pcar_publishid.ride_id);
              } else {
-                 //让用户重新登录
-                 window.location.replace("pre_login.html")
+                setTimeout(function(){
+                    //让用户重新登录
+                    window.location.replace("pre_login.html")
+                },Trafficeye.replaceTimeOut);
              }
          }
          

@@ -153,19 +153,20 @@
          * 初始化页面对象
          */
         init : function() {
-            var me = this;
-            me.pageNumManager = new Trafficeye.PageNumManager();
-            me.userInfoManager = new UserInfoManager();
+            if(!this.inited){
+                var me = this;
+                me.pageNumManager = new Trafficeye.PageNumManager();
+                me.userInfoManager = new UserInfoManager();
 
-            me.UserMessages = new UserMessages();
-            me.UserLetters = new UserLetters();          
-            me.UserMessages.setUserInfoManager(me.userInfoManager);
-            me.UserLetters.setUserInfoManager(me.userInfoManager);
-            me.pageNumManager.reset();
-            me.initElems();
-            me.initEvents();
-            me.inited = true;
-
+                me.UserMessages = new UserMessages();
+                me.UserLetters = new UserLetters();          
+                me.UserMessages.setUserInfoManager(me.userInfoManager);
+                me.UserLetters.setUserInfoManager(me.userInfoManager);
+                me.pageNumManager.reset();
+                me.initElems();
+                me.initEvents();
+                me.inited = true;
+            }
         },
         /**
          * 初始化页面元素对象
