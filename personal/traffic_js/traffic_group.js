@@ -544,11 +544,12 @@
 			var w = parseInt(this.bodyWidth * 0.725) || 232;
 			var h = parseInt(w * 0.75) || 163;
 			var html = [];
-			html.push('<div class="map_1"><p id="trafficMapTime' + i + '" class="time"></p>');
+			html.push('<div class="map_1">');
 			html.push('<div class="map_l">');
-			html.push('<img id="cityMapImg' + id + '" src="traffic_img/default.jpg"  />');
+			html.push('<img id="cityMapImg' + id + '" src="traffic_img/loading.gif"  />');
 			html.push('</div>');
 			html.push('<div id="trafficMapType' + id + '" class="map_r">');
+			html.push('<span id="trafficMapTime' + i + '" class="time"></span>');
 			html.push('<a id="cityMap_' + id + '" class="qs selected">全市简图</a>');
 			if(m1 && (id == this.currentCityCode)){
 				html.push('<a id="peripheryMap_' + id + '" class="zb">周边简图</a>');
@@ -576,7 +577,7 @@
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl);
 			//显示历史简图
-			var url = this.mapOldUrl["cityMap" + code] || "traffic_img/default.jpg";
+			var url = this.mapOldUrl["cityMap" + code] || "traffic_img/loading.gif";
 			$("#cityMapImg" + code).attr("src",url);
 
 			//重新请求数据,需求改变城市简图按钮高亮样式
@@ -635,7 +636,7 @@
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl);
 			//显示历史简图
-			var url = this.mapOldUrl["peripheryMap" + code] || "traffic_img/default.jpg";
+			var url = this.mapOldUrl["peripheryMap" + code] || "traffic_img/loading.gif";
 			$("#cityMapImg" + code).attr("src",url);
 
 			$.ajaxJSONP({
@@ -689,7 +690,7 @@
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl);
 			//显示历史简图
-			var url = this.mapOldUrl["trafficMap" + code] || "traffic_img/default.jpg";
+			var url = this.mapOldUrl["trafficMap" + code] || "traffic_img/loading.gif";
 			$("#cityMapImg" + code).attr("src",url);
 
 			$.ajaxJSONP({
@@ -821,7 +822,7 @@
 			html.push('<div class="map_2">');
 			html.push('<h3 class="map_bt">交通指数<span id="trafficIndexTime' + id + '" class="titletime"></span></h3>');
 			html.push('<div>');
-			html.push('<img id="trafficIndexImg' + id + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
+			html.push('<img id="trafficIndexImg' + id + '" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
 			html.push('</div></div></div>');
 			return html.join('');
 			
@@ -879,7 +880,7 @@
 			html.push('<div id="trafficInfo' + id + '" class="map_2">');
 			html.push('<h3 class="map_bt">交通资讯</h3>');
 			html.push('<div class="zixun">');
-			html.push('<img src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
+			html.push('<img src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
 			html.push('<h3></h3>');
 			html.push('<p></p></div>');
 			html.push('<p class="jiaot"><span></span></p>');
@@ -921,7 +922,7 @@
 			var html = [];
 			html.push('<h3 class="map_bt">交通资讯</h3>');
 			html.push('<div id="trafficInfoBtn' + code + '" class="zixun">');
-			html.push('<img id="trafficInfoImg' + code + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
+			html.push('<img id="trafficInfoImg' + code + '" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
 			html.push('<h3>' + title + '</h3>');
 			html.push('<p>' + content + '</p></div>');
 			html.push('<p class="jiaot">' + address + '<span>' + time + '</span></p>');
@@ -963,17 +964,17 @@
 
 			if(m7 === 1 || m8 === 1){
 				html.push('<div class="map_2_img">');
-				html.push('<img id="taxiIndexImg' + id + '" src="traffic_img/default.jpg" width="' + w + '" height="' + h + '" />');
+				html.push('<img id="taxiIndexImg' + id + '" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
 				html.push('<div id="taxiIndexBtn' + id + '" class="imgbtn">');
 				if(m7 === 1){
 					html.push('<a id="taxiLocation_' + id + '" class="dc" >建议打车位置</a>');
 					
-					this.taxiImgUrl["taxiLocation" + id] = "traffic_img/default.jpg";
+					this.taxiImgUrl["taxiLocation" + id] = "traffic_img/loading.gif";
 				}
 				if(m8 === 1){
 					html.push('<a id="taxiHot_' + id + '" class="rq" >上下客热图</a>');
 
-					this.taxiImgUrl["taxiHot" + id] = "traffic_img/default.jpg";
+					this.taxiImgUrl["taxiHot" + id] = "traffic_img/loading.gif";
 				}
 				html.push('</div></div></div>');
 			}
@@ -1068,7 +1069,7 @@
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl)
 			//显示历史打车位置/热图
-			var url = this.taxiImgUrl[imgId + code] || "traffic_img/default.jpg";
+			var url = this.taxiImgUrl[imgId + code] || "traffic_img/loading.gif";
 			$("#taxiIndexImg" + code).attr("src",url);
 
 			$.ajaxJSONP({
