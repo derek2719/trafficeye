@@ -409,6 +409,9 @@
 						}
 						//根据城市数据生成页面结构
 						this.buildVisibleCityHtml(citys);
+						$('#theHotWeather').rebind('touchstart',function(){
+							$(this).next().toggle();
+						});
 					}
 					else{
 						var citys = city.split("_");
@@ -499,7 +502,6 @@
 			}
 			//加载页面结构
 			this.iScroller.html(page.join(""));
-
 			//初始化iscroll
 			this.initiScroll();
 
@@ -728,7 +730,7 @@
 		*/
 		getWeatherHtml:function(id){
 			var html = [];
-			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" onclick="toggle_weather.call(this)">天气<span id="weatherTime' + id + '" class="titletime"></span></h3>');
+			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" id="theHotWeather">天气<span id="weatherTime' + id + '" class="titletime"></span></h3>');
 			html.push('<div id="weather' +id + '" class="weather-warp"><div class="tdiv">');
 			html.push('<h4><img src="traffic_img/day/54.png" width="60" height="60"/><span></span></h4>');
 			html.push('<div class="tdivr"><span class="h">-°</span><span class="l">-°</span>');
@@ -1177,11 +1179,3 @@
 		};
 	});
 }(window));
-function toggle_weather(){
-	var iSign=this.parentNode.children[1].style.display;
-	if(iSign!='block'){
-		this.parentNode.children[1].style.display='block';
-	}else{
-		this.parentNode.children[1].style.display='none';
-	}
-}
