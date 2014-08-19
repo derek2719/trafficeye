@@ -110,8 +110,8 @@
 			
 
 			//测试调用
-			/*
-			callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
+			
+			/*callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
 			
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","101230101_101210101");
@@ -119,8 +119,8 @@
 			
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","");
-			},20000);
-			*/
+			},20000);*/
+			
 		},
 		pageMove:function(evt){
 			this.moved = true;
@@ -563,7 +563,7 @@
 		},
 		/**
 		 * 获取城市简图服务请求
-		 * 请求图片类型,1：全市简图,2：周边简图,3：周边路况图,4：打车热图,5：打车建议位置图,6:交通指数
+		 * 请求图片类型,1:全市简图,2:周边简图,3:周边路况图,4:打车热图,5:打车建议位置图,6:交通指数
 		*/
 		getCityMapImg:function(){
 			var code = this.cityList[this.cityIndex];
@@ -958,7 +958,7 @@
 			html.push('<div class="map_2_box">');
 			html.push('<div class="map_2"><h3 class="map_bt">打车指数<span id="taxiIndexTime' + id + '" class="titletime"></span></h3>');
 			html.push('<div class="dche">');
-			html.push('当前位置打车指数：');
+			html.push('当前位置打车指数:');
 			html.push('<div id="taxiIndex' + id + '" class="score"></div>');
 			html.push('</div></div>');
 
@@ -1051,7 +1051,7 @@
 			}
 		},
 		getTaxiImg:function(code,type,imgId){
-			//4：打车热图,5：打车建议位置图
+			//4:打车热图,5:打车建议位置图
 			var options = {};
 			//是否当前定位城市 0是 / 1否
 			var isLoc = this.currentCityCode == code ? 0 : 1;
