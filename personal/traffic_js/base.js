@@ -54,7 +54,7 @@
 
     (function($) {
         /**
-         * 扩展Zepto事件绑定功能，支持PC事件
+         * 扩展Zepto事件绑定功能,支持PC事件
          * @param  {Sting} evtName 事件名称
          * @param  {function} fn 事件处理函数
          * @param  {Object} scope 事件处理函数作用域
@@ -89,7 +89,7 @@
      * @param  {Object} elems
      * @return {Object}
      * remark:
-     * 对象格式为JSON格式：{"元素ID", "元素对象"}
+     * 对象格式为JSON格式:{"元素ID", "元素对象"}
      */
     function queryElemsByIds(elems) {
         if (elems) {
@@ -105,10 +105,10 @@
      * @param  {Zepto} imgElem Img元素对象
      * @param  {String} imgUrl 图片资源URL
      * @param  {Object} opts 可选参数
-     * opts属性：
-     * success ：图片加载成功后的回调函数
-     * fail ：图片加载失败后的回调函数
-     * scope ：回调函数的作用域，默认是Trafficeye对象
+     * opts属性:
+     * success :图片加载成功后的回调函数
+     * fail :图片加载失败后的回调函数
+     * scope :回调函数的作用域,默认是Trafficeye对象
      */
     function imageLoaded(imgElem, imgUrl, opts) {
         if (!imgElem) {
@@ -310,7 +310,7 @@
          */
         set: function(key, value,isSession) {
             if (isEnableStore) {
-                //删除本地以前存储的JS模块信息，先removeItem后setItem防止在iphone浏览器上报错
+                //删除本地以前存储的JS模块信息,先removeItem后setItem防止在iphone浏览器上报错
                 for (var name = key, len = localStore.length, id; len--;) {
                     id = localStore.key(len);
                     - 1 < id.indexOf(name) && localStore.removeItem(id);
@@ -529,7 +529,7 @@
                         break;
                         case "setCurrentCity":
                             setTimeout(function(){
-                                window.JSAndroidBridge.setCurrentCity(condi);
+                            	window.JSAndroidBridge.setCurrentCity(condi);
                             },100);
                         break;
                         default:
