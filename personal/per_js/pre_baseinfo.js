@@ -72,11 +72,13 @@
          * 初始化页面对象
          */
         init : function() {
-            var me = this;
-            me.userInfoManager = new UserInfoManager();
-            me.initElems();
-            me.initEvents();
-            me.inited = true;
+            if(!this.inited){
+                var me = this;
+                me.userInfoManager = new UserInfoManager();
+                me.initElems();
+                me.initEvents();
+                me.inited = true;
+            }
         },
         /**
          * 初始化页面元素对象
@@ -117,6 +119,32 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+
+            var count = Trafficeye.offlineStore.get("traffic_baseinfo_count",true);
+            if(count != ""){
+                //没有启动过页面不管
+                count = count - 0;
+                if(count == 1){
+                    Trafficeye.offlineStore.set("traffic_baseinfo_count","",true);
+                    //如果是首次启动页面,需要调用本地返回
+                    if (Trafficeye.mobilePlatform.android) {
+                        window.JSAndroidBridge.gotoPrePage();
+                    } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
+                        window.location.href=("objc:??gotoPrePage");
+                    } else {
+                        alert("调用本地goPersonal方法,PC不支持.");
+                    }
+                }
+                else{
+                    count --;
+                    Trafficeye.offlineStore.set("traffic_baseinfo_count",count,true);
+                    Trafficeye.pageBack(-1);
+                }
+            }
+            else{
+                Trafficeye.pageBack(-1);
+            }
+            /*
             var fromSource = Trafficeye.fromSource();
             var myInfo = Trafficeye.getMyInfo();
             if(myInfo.isEdit == 1)
@@ -131,6 +159,7 @@
             }else{
                 Trafficeye.toPage("pre_info.html");
             }
+            */
         },
         /**
          * 选择用户基础信息列表处理器
@@ -649,26 +678,40 @@
     };
     
     $(function(){
-       
-        //把来源信息存储到本地
-         var presource = Trafficeye.fromSource();
-         var fromSource = {"sourcepage":"pre_baseinfo.html","currpage" : "pre_baseinfo.html","prepage" : presource.currpage}
-         var fromSourceStr = Trafficeye.json2Str(fromSource);
-         Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-         //获取我的用户信息
-        var myInfo = Trafficeye.getMyInfo();
-        if (!myInfo) {
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
-        }
         
-        var pm = new PageManager();
+        window.initPageManagerCurrent=function(){
+            /*
+            //把来源信息存储到本地
+             var presource = Trafficeye.fromSource();
+             var fromSource = {"sourcepage":"pre_baseinfo.html","currpage" : "pre_baseinfo.html","prepage" : presource.currpage}
+             var fromSourceStr = Trafficeye.json2Str(fromSource);
+             Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+             */
+             //获取我的用户信息
+            var myInfo = Trafficeye.getMyInfo();
+            if (!myInfo) {
+                //让用户重新登录
+                //window.location.replace("pre_login.html");
+                return;
+            }
+            var dataClient = myInfo.dataclient || {};
+            var tab = dataClient.tab || "";
+            if(tab != ""){
+                Trafficeye.offlineStore.set("traffic_infosurveycar",tab);
+            }
 
-        Trafficeye.pageManager = pm;
-        //初始化用户界面
-        pm.init();
-        pm.myInfo = myInfo;
-        var   baseinfobtnElem = pm.elems["baseinfo"],
+            var pm = null;
+            if(Trafficeye.pageManager == null){
+                pm = new PageManager();
+                Trafficeye.pageManager = pm;
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
+            //初始化用户界面
+            pm.init();
+            pm.myInfo = myInfo;
+            var baseinfobtnElem = pm.elems["baseinfo"],
                 surveybtnElem = pm.elems["survey"],
                 carbtnElem = pm.elems["car"],
                 baseinfolistElem = pm.elems["baseinfolist"],
@@ -746,10 +789,11 @@
                     pm.baseinfobtnUp();
                     break;
             }
+        }
         // 设置头像成功的回调函数
         window.callbackSetUserAvatar = function(data){
             Trafficeye.httpTip.closed();
-            var myInfo = Trafficeye.getMyInfo();
+            var myInfo = Trafficeye.getMyInfo() || {};
             //把用户信息写入到本地
             //pid,ua,userinfo存入到浏览器本地缓存
             var userinfodata = {
@@ -966,6 +1010,15 @@
                  pm.pcarqqnum(evt);
              }
          };
+
+         //初始化
+         window.initPageManager = function(){
+            //控制返回,如果第一次启动,返回调用本地函数
+            Trafficeye.offlineStore.set("traffic_baseinfo_count","1",true);
+            window.initPageManagerCurrent();
+         }
+
+         window.initPageManagerCurrent();
     }); 
     
  }(window));

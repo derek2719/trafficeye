@@ -69,7 +69,8 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_publishinfo.html");
+             Trafficeye.pageBack(-1);
+             // Trafficeye.toPage("pcar_publishinfo.html");
          },
          //发布拼车信息
          submitTime: function(evt) {
@@ -96,7 +97,8 @@
 
              setTimeout((function() {
                  $(elem).removeClass("curr");
-                 Trafficeye.toPage("pcar_publishinfo.html");
+                 Trafficeye.pageBack(-1);
+                 //Trafficeye.toPage("pcar_publishinfo.html");
              }), Trafficeye.MaskTimeOut);
          }
      };
@@ -119,8 +121,10 @@
              pm.myInfo = myInfo;
              //判断缓存中是否有userinfo信息
              if (!myInfo.userinfo) {
-                 //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                 setTimeout(function(){
+                    //让用户重新登录
+                    window.location.replace("pre_login.html")
+                },Trafficeye.replaceTimeOut);
              }
          }
          

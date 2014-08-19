@@ -1,4 +1,4 @@
- (function(window) {
+(function(window) {
      function UserInfoManager() {
          this.userinfo = null;
          this.ua = null;
@@ -170,11 +170,16 @@
              this.addClass("curr");
          },
          backpagebtnUp: function(evt) {
-             var me = this,
-                 elem = evt.currentTarget;
-             $(elem).removeClass("curr");
-             var fromSource = Trafficeye.fromSource();
-             Trafficeye.toPage(fromSource.sourcepage);
+            var me = this,
+                elem = evt.currentTarget;
+            $(elem).removeClass("curr");
+
+            Trafficeye.pageBack(-1);
+            
+            /*
+            var fromSource = Trafficeye.fromSource();
+            Trafficeye.toPage(fromSource.sourcepage);
+            */
          },
          /**
           * 搭车信息列表请求函数
@@ -326,6 +331,8 @@
      $(function() {
         
         window.initPageManager = function() {
+
+             /*
              //把来源信息存储到本地
              var presource = Trafficeye.fromSource();
              var fromSource = {
@@ -335,6 +342,7 @@
              }
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+             */
              
              var traffic_pcar_flag = Trafficeye.offlineStore.get("traffic_pcar_flag");
              var pcar_flag = Trafficeye.str2Json(traffic_pcar_flag);
@@ -360,8 +368,10 @@
              if (myInfo.userinfo) {
                 pm.reqRideInfo("0",pcar_flag.flag,pcar_flag.type);
              } else {
-                 //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                 setTimeout(function(){
+                    //让用户重新登录
+                    window.location.replace("pre_login.html")
+                },Trafficeye.replaceTimeOut);
              }
          }
      

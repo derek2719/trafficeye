@@ -284,8 +284,10 @@
              if (myInfo.userinfo) {
                 pm.reqUserInfo();
              } else {
-                 //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                setTimeout(function(){
+                    //让用户重新登录
+                    window.location.replace("pre_login.html")
+                },Trafficeye.replaceTimeOut);
              }
          }
          

@@ -50,7 +50,11 @@
             setTimeout((function(){
                 $(elem).removeClass("curr");  
                 Trafficeye.offlineStore.set("traffic_infosurveycar","info");
-                Trafficeye.toPage("pre_baseinfo.html");
+                
+                var backNum = Trafficeye.offlineStore.get("traffic_mobile_fail_back") - 0 + 1;
+                Trafficeye.pageBack(-backNum);
+                
+                //Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         }
     };
@@ -71,8 +75,10 @@
         if(myInfo.userinfo){
 
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html")
+            },Trafficeye.replaceTimeOut);
         }
         
         window.topage = function(evt) {

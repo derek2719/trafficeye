@@ -121,7 +121,8 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_index.html");
+             Trafficeye.pageBack(-1);
+             //Trafficeye.toPage("pcar_index.html");
          },
          ridebtnUp : function(evt) {
             var me = this,
@@ -251,8 +252,9 @@
                              if (state == 0) {
                                  Trafficeye.trafficeyeAlert("发布成功!");
                                  if(Trafficeye.fromSource){
-                                      var presource = Trafficeye.fromSource();
+                                     var presource = Trafficeye.fromSource();
                                      Trafficeye.toPage(presource.currpage);
+                                     //pcar_mypublish.html
                                  }else{
                                     Trafficeye.toPage("pcar_index.html");
                                  }
@@ -317,8 +319,10 @@
                 // pm.reqRideInfo(0,pcar_flag.flag,pcar_flag.type);
                 pm.reqUserInfo();
              } else {
-                 //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                 setTimeout(function(){
+                    //让用户重新登录
+                    window.location.replace("pre_login.html")
+                },Trafficeye.replaceTimeOut);
              }
          }
          

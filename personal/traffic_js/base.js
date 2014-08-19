@@ -5,6 +5,9 @@
     }
     Trafficeye.global = global;
 
+    //ios采用replace跳转需要延迟,不然拦截不到
+    var replaceTimeOut = 100;
+
     var emptyFn = function() {};
 
     var mobilePlatform = {
@@ -305,24 +308,39 @@
          * @param {String} value 存储的值
          * @private
          */
-        set: function(key, value) {
+        set: function(key, value,isSession) {
             if (isEnableStore) {
                 //删除本地以前存储的JS模块信息，先removeItem后setItem防止在iphone浏览器上报错
                 for (var name = key, len = localStore.length, id; len--;) {
-                    id = localStore.key(len); - 1 < id.indexOf(name) && localStore.removeItem(id);
+                    id = localStore.key(len);
+                    - 1 < id.indexOf(name) && localStore.removeItem(id);
                 }
                 try {
+                    if(isSession){
+                        sessionStorage.setItem(key,value);
+                    }
+                    else{
+                        localStore.setItem(key, value);
+                    }
+                    
+                    /*
                     if (value) {
                         localStore.setItem(key, value);
                     }
+                    */
                 } catch (error) {
                     localStore.clear();
                 }
             }
         },
         //清楚本地缓存
-        remove: function(key){
-            localStore.removeItem(key);
+        remove: function(key,isSession){
+            if(isSession){
+                sessionStorage.removeItem(key);
+            }
+            else{
+                localStore.removeItem(key);
+            }
         },
         /**
          * 根据关键字获取某值
@@ -330,8 +348,13 @@
          * @return {*}
          * @private
          */
-        get: function(key) {
-            return isEnableStore && this.isExist(key) ? localStore.getItem(key) : false;
+        get: function(key,isSession) {
+            if(isSession){
+                return sessionStorage.getItem(key) || "";
+            }
+            else{
+                return isEnableStore && this.isExist(key) ? localStore.getItem(key) : false;
+            }
         },
         /**
          * 根据关键字判断是否有本地存储
@@ -409,20 +432,85 @@
         return str2Json(myInfoStr);
     };
 
+    //判断URL是否存在
+    function pageUrlIndex(url){
+        var pageUrl = Trafficeye.offlineStore.get("traffic_pageurl",true) || "";
+        if(pageUrl == ""){
+            pageUrl = [];
+        }
+        else{
+            pageUrl = str2Json(pageUrl);
+        }
+        var index = pageUrl.indexOf(url);
+        if(index == -1){
+            //页面没有加载过
+            pageUrl.unshift(url);
+            var jsonStr = json2Str(pageUrl);
+            Trafficeye.offlineStore.set("traffic_pageurl",jsonStr,true);
+            //标识load页面
+            return 99;
+        }
+        return index == 0 ? 0 : -index;
+    }
+
+    //返回
+    function pageBack(index){
+        var i = index;
+        var pageUrl = Trafficeye.offlineStore.get("traffic_pageurl",true) || "";
+        if(pageUrl == ""){
+            pageUrl = [];
+        }
+        else{
+            pageUrl = str2Json(pageUrl);
+        }
+        while(i < 0){
+            pageUrl.shift();
+            i++;
+        }
+        var jsonStr = json2Str(pageUrl);
+        Trafficeye.offlineStore.set("traffic_pageurl",jsonStr,true);
+        history.go(index);
+    }
+
     /**
      * 跳转页面
      * @param  {[type]} url [description]
      * @return {[type]}     [description]
      */
     function toPage(url) {
+        if(url == "pre_info.html"){
+            var count = Trafficeye.offlineStore.get("traffic_myinfo_count",true);
+            if(count != ""){
+                //没有启动过页面不管
+                count = count - 0;
+                count ++;
+                Trafficeye.offlineStore.set("traffic_myinfo_count",count,true);
+            }
+        }
+        if(url == "pre_baseinfo.html"){
+            var count = Trafficeye.offlineStore.get("traffic_baseinfo_count",true);
+            if(count != ""){
+                //没有启动过页面不管
+                count = count - 0;
+                count ++;
+                Trafficeye.offlineStore.set("traffic_baseinfo_count",count,true);
+            }
+        }
         if (url) {
-            setTimeout(function() {
-                console.log(url)
-                window.location.href = url;
-            }, 1);
+            //判断URL栈,判断是否有历史页面
+            var index = pageUrlIndex(url);
+            if(index == 99){
+                setTimeout(function() {
+                    window.location.href = url;
+                }, 1);
+            }
+            else{
+                pageBack(index);
+            }
         }
     };
 
+    
     /**
      * web给平台发送事件
      * @param name 事件名称
@@ -501,10 +589,12 @@
     Trafficeye.getMyInfo = getMyInfo;
     Trafficeye.fromSource = fromSource;
     Trafficeye.toPage = toPage;
+    Trafficeye.pageBack = pageBack;
     Trafficeye.sendNativeEvent = sendNativeEvent;
     Trafficeye.trafficeyeAlert = trafficeyeAlert;
     Trafficeye.BASE_USER_URL = BASE_USER_URL;
     Trafficeye.BASE_RIDE_URL = BASE_RIDE_URL;
     Trafficeye.UrlPort = UrlPort;
     Trafficeye.MaskTimeOut = MaskTimeOut;
+    Trafficeye.replaceTimeOut = replaceTimeOut;
 }(window));

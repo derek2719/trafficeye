@@ -73,8 +73,9 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            Trafficeye.pageBack(-1);
             // var fromSource = Trafficeye.fromSource();
-            Trafficeye.toPage("pcar_mobile.html");
+            //Trafficeye.toPage("pcar_mobile.html");
         }
     };
     
@@ -97,8 +98,10 @@
         if(myInfo.userinfo){
             pm.elems["inputmobile"].html(phonenumber.phonenumber);
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html")
+            },Trafficeye.replaceTimeOut);
         }
         
         window.saveFunction = function(evt) {

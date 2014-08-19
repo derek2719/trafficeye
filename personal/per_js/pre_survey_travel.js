@@ -91,8 +91,11 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            Trafficeye.pageBack(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.sourcepage);
+            */
         },
         infoabtnUp : function(evt) {
             var me = this,
@@ -271,6 +274,7 @@
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
 //                                console.log(dataReward);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
+                                /*
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -280,8 +284,10 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
+                                */
                                 Trafficeye.offlineStore.set("traffic_infosurveycar","survey");
-                                Trafficeye.toPage("pre_baseinfo.html");
+                                Trafficeye.pageBack(-1);
+                                //Trafficeye.toPage("pre_baseinfo.html");
                             } else{
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                             }
@@ -314,8 +320,10 @@
         if(myInfo.userinfo){
             Trafficeye.offlineStore.set("traffic_infosurveycar","survey");
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html");
+            },Trafficeye.replaceTimeOut);
         }
         
         window.saveFunction = function(evt) {

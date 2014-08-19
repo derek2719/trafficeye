@@ -1,4 +1,4 @@
- (function(window) {
+(function(window) {
      function UserInfoManager() {
          this.userinfo = null;
          this.ua = null;
@@ -179,10 +179,12 @@
              this.addClass("curr");
          },
          backpagebtnUp: function(evt) {
-             var me = this,
-                 elem = evt.currentTarget;
-             $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_index.html");
+            var me = this,
+                elem = evt.currentTarget;
+            $(elem).removeClass("curr");
+            Trafficeye.pageBack(-1);
+
+             //Trafficeye.toPage("pcar_index.html");
          },
          /**
           * 搭车信息列表请求函数
@@ -405,8 +407,10 @@
              if (myInfo.userinfo) {
                 pm.reqRideInfo("0");
              } else {
-                 //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                 setTimeout(function(){
+                    //让用户重新登录
+                    window.location.replace("pre_login.html")
+                },Trafficeye.replaceTimeOut);
              }
          }
          

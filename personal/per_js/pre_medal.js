@@ -91,8 +91,11 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            Trafficeye.pageBack(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.sourcepage);
+            */
         },
         //点击关注按钮，跳转到社区的关注页面
         looklistbtnUp : function(evt) {
@@ -105,6 +108,18 @@
                 "traffic_lookfans" : "look"
             };
             var dataStr = Trafficeye.json2Str(data);
+
+            if(myInfo.userinfo){
+                if(myInfo.uid == myInfo.friend_uid){
+                    //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+                    Trafficeye.offlineStore.set("traffic_lookfans", "look");
+                    Trafficeye.toPage("com_lookfans.html");
+                    return;
+                }
+            }
+            Trafficeye.toPage("com_looklist.html");
+
+            /*
             if (Trafficeye.mobilePlatform.android) {
                 window.JSAndroidBridge.gotoCommunity("lookfans",dataStr);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -113,6 +128,7 @@
             } else {
                 alert("调用修改用户信息接口,PC不支持.");
             }
+            */
         },
         //点击粉丝按钮，跳转到社区的粉丝页面
         fanslistbtnUp : function(evt) {
@@ -125,6 +141,18 @@
                 "traffic_lookfans" : "fans"
             };
             var dataStr = Trafficeye.json2Str(data);
+
+            if(myInfo.userinfo){
+                if(myInfo.uid == myInfo.friend_uid){
+                    //跳转到关注/粉丝页面,控制tab栏目显示look/fans
+                    Trafficeye.offlineStore.set("traffic_lookfans", "fans");
+                    Trafficeye.toPage("com_lookfans.html");
+                    return;
+                }
+            }
+            Trafficeye.toPage("com_fanslist.html");
+
+            /*
             if (Trafficeye.mobilePlatform.android) {
                 window.JSAndroidBridge.gotoCommunity("lookfans",dataStr);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -133,6 +161,7 @@
             } else {
                 alert("调用修改用户信息接口,PC不支持.");
             }
+            */
         },
         /**
          * 用户信息请求函数
@@ -313,7 +342,8 @@
             var me = this;
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
-                $(elem).removeClass("curr");  
+                $(elem).removeClass("curr");
+                Trafficeye.offlineStore.set("traffic_infosurveycar","info");
                 Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         },
@@ -360,8 +390,10 @@
                                 } else {
                                     alert("调用注销用户信息接口,PC不支持.");
                                 }
-                                //返回到登录界面
-                                Trafficeye.toPage("pre_login.html");
+                                setTimeout(function(){
+                                    //让用户重新登录
+                                    window.location.replace("pre_login.html");
+                                },Trafficeye.replaceTimeOut);
                             } else{
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                             }
@@ -393,13 +425,16 @@
     };
     
     $(function(){
-       
+        
+        /*
         //把来源信息存储到本地
-         var presource = Trafficeye.fromSource();
-         var fromSource = {"sourcepage" : presource.sourcepage,"currpage" : "pre_medal.html","prepage" : presource.currpage}
-         var fromSourceStr = Trafficeye.json2Str(fromSource);
-         Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-         //获取我的用户信息
+        var presource = Trafficeye.fromSource();
+        var fromSource = {"sourcepage" : presource.sourcepage,"currpage" : "pre_medal.html","prepage" : presource.currpage}
+        var fromSourceStr = Trafficeye.json2Str(fromSource);
+        Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+        */
+        
+        //获取我的用户信息
         var myInfo = Trafficeye.getMyInfo();
         if (!myInfo) {
             return;
@@ -419,8 +454,10 @@
                 pm.reqUserInfo(myInfo.uid,myInfo.friend_uid); //请求朋友的页面信息
             }
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html");
+            },Trafficeye.replaceTimeOut);
         }
         // 设置头像成功的回调函数
         window.callbackSetUserAvatar = function(data){

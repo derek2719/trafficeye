@@ -91,7 +91,7 @@
                 } else {
                     alert("调用本地getSNSUserInfo方法,PC不支持.");
                 }
-            }),Trafficeye.MaskTimeOut);       
+            }),Trafficeye.MaskTimeOut);
         },
         
         loginQQWeibo : function(evt) {
@@ -189,10 +189,18 @@
                 {
                     Trafficeye.offlineStore.set("traffic_infosurveycar",baseinfoflag);
                     Trafficeye.toPage("pre_baseinfo.html");
-                }else if(isEdit == 0){
-                    Trafficeye.toPage("pre_info.html");
-                }else if(isEdit == 2)
-                {
+                }
+                else if(isEdit == 0){
+                    //标识进入个人资料页面是否第一个启动页面
+                    Trafficeye.offlineStore.set("traffic_myinfo_source","first");
+
+                    setTimeout(function(){
+                        //让用户重新登录
+                        window.location.replace("pre_info.html")
+                    },Trafficeye.replaceTimeOut);
+                    //Trafficeye.toPage("pre_info.html");
+                }
+                else if(isEdit == 2){
                     var paramFriend = Trafficeye.str2Json(param);
                      userinfodata = {
                         "pid" : pid,
@@ -238,7 +246,13 @@
             };
             var dataStr = Trafficeye.json2Str(userinfodata);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
-            Trafficeye.toPage("pre_info.html");
+            
+            Trafficeye.offlineStore.set("traffic_myinfo_count","1",true);
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_info.html")
+            },Trafficeye.replaceTimeOut);
+            //Trafficeye.toPage("pre_info.html");
         };
         
         // 获取SNS平台用户信息，回调函数
@@ -260,17 +274,23 @@
         
         window.initPageManager = function() {
             //把来源信息存储到本地
+            /*
              var fromSource = {"sourcepage" : "pre_login.html","currpage" : "pre_login.html","prepage" : "pre_login.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+            */
+            if(Trafficeye.pageManager == null){
+                var pm = new PageManager();
 
-            var pm = new PageManager();
-
-            Trafficeye.pageManager = pm;
+                Trafficeye.pageManager = pm;
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
             //初始化用户界面
             pm.init();
             //启动等待动画，等待客户端回调函数            
-            Trafficeye.httpTip.opened();
+            //Trafficeye.httpTip.opened();
         };
         
         window.loginSina = function(evt) {

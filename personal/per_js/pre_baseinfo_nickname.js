@@ -68,16 +68,23 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            
+            Trafficeye.pageBack(-1);
+
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.sourcepage);
+            */
         },
         //清除用户昵称
         trunceName : function(evt) {
             var me = this;
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
-                $(elem).removeClass("curr");  
-                Trafficeye.toPage("pre_baseinfo.html");
+                $(elem).removeClass("curr");
+                Trafficeye.pageBack(-1);
+
+                //Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);   
         },
         //保存用户昵称
@@ -144,6 +151,9 @@
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
 //                                console.log(dataReward);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
+                                
+                                //这些方法都不存在了
+                                /*
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -153,8 +163,12 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
+                                */
+
                                 Trafficeye.offlineStore.set("traffic_infosurveycar","info");
-                                Trafficeye.toPage("pre_baseinfo.html");
+                                
+                                Trafficeye.pageBack(-1);
+                                //Trafficeye.toPage("pre_baseinfo.html");
                             } else{
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                             }
@@ -189,8 +203,10 @@
             }
             Trafficeye.offlineStore.set("traffic_infosurveycar","info");
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html")
+            },Trafficeye.replaceTimeOut);
         }
         
         window.saveNameFunction = function(evt) {

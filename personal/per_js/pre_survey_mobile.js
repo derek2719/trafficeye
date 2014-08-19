@@ -68,16 +68,21 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+
+            Trafficeye.pageBack(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.sourcepage);
+            */
         },
         //清除用户昵称
         trunce : function(evt) {
             var me = this;
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
-                $(elem).removeClass("curr");  
-                Trafficeye.toPage("pre_baseinfo.html");
+                $(elem).removeClass("curr");
+                Trafficeye.pageBack(-1);
+                //Trafficeye.toPage("pre_baseinfo.html");
             }),Trafficeye.MaskTimeOut);     
         },
         //保存用户昵称
@@ -104,10 +109,12 @@
     $(function(){
        
         //把来源信息存储到本地
-         var presource = Trafficeye.fromSource();
-         var fromSource = {"sourcepage":presource.sourcepage,"currpage" : "pre_survey_mobile.html","prepage" : presource.currpage}
-         var fromSourceStr = Trafficeye.json2Str(fromSource);
-         Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+        /*
+        var presource = Trafficeye.fromSource();
+        var fromSource = {"sourcepage":presource.sourcepage,"currpage" : "pre_survey_mobile.html","prepage" : presource.currpage}
+        var fromSourceStr = Trafficeye.json2Str(fromSource);
+        Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+        */
          //获取我的用户信息
         var myInfo = Trafficeye.getMyInfo();
         if (!myInfo) {
@@ -126,8 +133,10 @@
             }
             Trafficeye.offlineStore.set("traffic_infosurveycar","survey");
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html");
+            },Trafficeye.replaceTimeOut);
         }
         
         window.saveFunction = function(evt) {

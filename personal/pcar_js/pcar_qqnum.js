@@ -68,8 +68,11 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            Trafficeye.pageBack(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.currpage);
+            */
         },
         //保存用户昵称
         saveFunction : function(evt) {
@@ -128,6 +131,7 @@
                                 var dataUserInfo = Trafficeye.json2Str(data.userInfo);
 //                                console.log(dataReward);
                                 Trafficeye.offlineStore.set("traffic_reward",dataReward);
+                                /*
                                 if (Trafficeye.mobilePlatform.android) {
                                     window.JSAndroidBridge.updateUserInfo(dataUserInfo,dataReward);
                                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -137,9 +141,11 @@
                                 } else {
                                     alert("调用修改用户信息接口,PC不支持.");
                                 }
+                                */
                                 Trafficeye.offlineStore.set("traffic_infosurveycar","car");
-                                var fromSource = Trafficeye.fromSource();
-                                Trafficeye.toPage(fromSource.currpage);
+                                Trafficeye.pageBack(-1);
+                                //var fromSource = Trafficeye.fromSource();
+                                //Trafficeye.toPage(fromSource.currpage);
                             } else{
                                 Trafficeye.trafficeyeAlert(data.state.desc+"("+data.state.code+")");
                             }
@@ -174,8 +180,10 @@
             }
             Trafficeye.offlineStore.set("traffic_infosurveycar","car");
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html")
+            },Trafficeye.replaceTimeOut);
         }
         
         window.saveFunction = function(evt) {
