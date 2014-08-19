@@ -49,8 +49,12 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
+                var backNum = Trafficeye.offlineStore.get("traffic_pcar_mobile_back") - 0 + 1;
+                Trafficeye.pageBack(-backNum);
+                /*
                 var fromSource = Trafficeye.fromSource();
                 Trafficeye.toPage(fromSource.currpage);
+                */
             }),Trafficeye.MaskTimeOut);     
         },
         //
@@ -59,7 +63,9 @@
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
-                Trafficeye.toPage("pcar_mobile.html");
+                var backNum = Trafficeye.offlineStore.get("traffic_pcar_mobile_back") - 0;
+                Trafficeye.pageBack(-backNum);
+                //Trafficeye.toPage("pcar_mobile.html");
             }),Trafficeye.MaskTimeOut);     
         },
         //
@@ -92,8 +98,10 @@
         if(myInfo.userinfo){
 
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html")
+            },Trafficeye.replaceTimeOut);
         }
         
         window.topage = function(evt) {

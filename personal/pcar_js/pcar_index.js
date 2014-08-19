@@ -1,4 +1,4 @@
- (function(window) {
+(function(window) {
     function UserInfoManager() {
         this.userinfo = null;
         this.ua = null;
@@ -68,6 +68,7 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            
             if (Trafficeye.mobilePlatform.android) {
                 window.JSAndroidBridge.gotoPrePage();
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
@@ -79,19 +80,21 @@
         //跳转到我要搭车，请求要是送人的请求,type为2
         carpool : function(evt) {
             var me = this;
+            
             //把来源信息存储到本地
-             var fromSource = {"flag" : "ride","type" : "2"};
-             var fromSourceStr = Trafficeye.json2Str(fromSource);
-             Trafficeye.offlineStore.set("traffic_pcar_flag", fromSourceStr);
+            var fromSource = {"flag" : "ride","type" : "2"};
+            var fromSourceStr = Trafficeye.json2Str(fromSource);
+            Trafficeye.offlineStore.set("traffic_pcar_flag", fromSourceStr);
+            
             var elem = $(evt).addClass("curr");
             setTimeout((function(){
-                $(elem).removeClass("curr");  
+                $(elem).removeClass("curr");
                 if(document.getElementById("ruleride").checked){
                     Trafficeye.toPage("pcar_ride.html");
                 }else{
                     Trafficeye.trafficeyeAlert("请阅读并同意《路况交通眼》拼车服务条款");
                 }
-            }),Trafficeye.MaskTimeOut);     
+            }),Trafficeye.MaskTimeOut);
         },
         //我能送人，跳转到送人的节目，请求是搭车的请求，type为1
         passenger : function(evt) {
@@ -196,13 +199,20 @@
         window.initPageManager = function() {
             Trafficeye.httpTip.closed();
             //把来源信息存储到本地
+            /*
              var fromSource = {"sourcepage" : "pcar_index.html","currpage" : "pcar_index.html","prepage" : "pcar_index.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
+            */
 
-            var pm = new PageManager();
-
-            Trafficeye.pageManager = pm;
+            var pm = "";
+            if(Trafficeye.pageManager == null){
+                pm = new PageManager();
+                Trafficeye.pageManager = pm;
+            }
+            else{
+                pm = Trafficeye.pageManager;
+            }
             //初始化用户界面
             pm.init();
             //启动等待动画，等待客户端回调函数            
@@ -250,6 +260,6 @@
         
         window.initPageManager();
         // window.callbackInitPage(1,"{\"badgeNum\":12,\"avatarUrl\":\"http://mobile.trafficeye.com.cn/media/avatars/29178/image.jpg\",\"wxNum\":\"建立起来\",\"level\":18,\"eventNum\":43,\"mobile\":\"13581604288\",\"frineds\":16,\"idNum\":\"\",\"totalMilage\":1147.8,\"nextLevel\":19,\"city\":\"福建 永泰县\",\"realName\":\"董杉\",\"ownedBadges\":[{\"name\":\"诚信用户\",\"id\":2,\"obtainTime\":\"2014-03-23 20:53:24\",\"smallImgName\":\"badge_register_complete.png\",\"imgName\":\"badge_big_register_complete.png\",\"desc\":\"个人资料完整度100%\"},{\"name\":\"上报 20 件交通事件\",\"id\":21,\"obtainTime\":\"2013-10-15 15:59:41\",\"smallImgName\":\"badge_event_20.png\",\"imgName\":\"badge_big_event_20.png\",\"desc\":\"上报 20 件交通事件\"},{\"name\":\"上报 10 件交通事件\",\"id\":22,\"obtainTime\":\"2013-10-14 16:00:58\",\"smallImgName\":\"badge_event_10.png\",\"imgName\":\"badge_big_event_10.png\",\"desc\":\"上报 10 件交通事件\"},{\"name\":\"路况贡献 100km\",\"id\":27,\"obtainTime\":\"2013-09-29 16:55:02\",\"smallImgName\":\"badge_track_100km.png\",\"imgName\":\"badge_big_track_100km.png\",\"desc\":\"路况贡献 100km\"},{\"name\":\"上报 5 件交通事件\",\"id\":23,\"obtainTime\":\"2013-09-11 17:25:14\",\"smallImgName\":\"badge_event_5.png\",\"imgName\":\"badge_big_event_5.png\",\"desc\":\"上报 5 件交通事件\"},{\"name\":\"路况贡献 50km\",\"id\":28,\"obtainTime\":\"2013-08-29 15:02:45\",\"smallImgName\":\"badge_track_50km.png\",\"imgName\":\"badge_big_track_50km.png\",\"desc\":\"路况贡献 50km\"},{\"name\":\"路况贡献 10km\",\"id\":29,\"obtainTime\":\"2013-08-28 18:56:24\",\"smallImgName\":\"badge_track_10km.png\",\"imgName\":\"badge_big_track_10km.png\",\"desc\":\"路况贡献 10km\"},{\"name\":\"一鸣惊人\",\"id\":4,\"obtainTime\":\"2013-08-09 18:32:24\",\"smallImgName\":\"badge_weibo_first.png\",\"imgName\":\"badge_big_weibo_first.png\",\"desc\":\"第一次分享微博\"},{\"name\":\"首次上报交通事件\",\"id\":17,\"obtainTime\":\"2013-08-09 18:31:52\",\"smallImgName\":\"badge_event_1.png\",\"imgName\":\"badge_big_event_1.png\",\"desc\":\"首次上报交通事件\"},{\"name\":\"忠实用户\",\"id\":3,\"obtainTime\":\"2013-07-17 10:44:10\",\"smallImgName\":\"badge_login_7days.png\",\"imgName\":\"badge_big_login_7days.png\",\"desc\":\"连续七日登录\"},{\"name\":\"路况贡献 3km\",\"id\":30,\"obtainTime\":\"2013-07-14 15:51:20\",\"smallImgName\":\"badge_track_3km.png\",\"imgName\":\"badge_big_track_3km.png\",\"desc\":\"路况贡献 3km\"},{\"name\":\"新人徽章\",\"id\":1,\"obtainTime\":\"2013-07-11 14:31:49\",\"smallImgName\":\"badge_register.png\",\"imgName\":\"badge_big_register.png\",\"desc\":\"注册账号\"}],\"email\":\"\",\"totalBadges\":30,\"totalTrackMilage\":321,\"fans\":14,\"carNum\":\"海伦凯勒15\",\"totalCoins\":0,\"username\":\"董小杉\",\"userType\":\"sinaweibo\",\"levelPoint\":2222,\"levelPercent\":68,\"uid\":\"29178\",\"birthdate\":\"1988-07-11\",\"gender\":\"M\",\"totalPoints\":2451,\"nextLevelPoint\":2555,\"mobileValidate\":1,\"qq\":\"16685265\",\"description\":\"\",\"userGroup\":0}","I_7.1,i_2.2.6","A527E98B-27AC-47AA-9293-AACAE23BAB59","{\"lon\":\"116.407923\",\"lat\":\"39.909103\"}");
-        }); 
+    }); 
     
  }(window));

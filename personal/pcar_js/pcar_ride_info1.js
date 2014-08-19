@@ -79,7 +79,8 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_ride_info.html");
+             Trafficeye.pageBack(-1);
+             //Trafficeye.toPage("pcar_ride_info.html");
          },
         /**
           * 搭车信息列表请求函数
@@ -462,8 +463,10 @@
                 pm.reqRideInfo(pcar_publishid.ride_id);
                 pm.reqUserInfo(pcar_publish_uid.pcar_publishuid);
              } else {
-                 //让用户重新登录
-                 Trafficeye.toPage("pre_login.html");
+                setTimeout(function(){
+                    //让用户重新登录
+                    window.location.replace("pre_login.html")
+                },Trafficeye.replaceTimeOut);
              }
          }
          

@@ -567,8 +567,8 @@
 		*/
 		getCityMapImg:function(){
 			var code = this.cityList[this.cityIndex];
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 1;
@@ -616,7 +616,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -626,8 +626,8 @@
 		*/
 		getPeripheryMapImg:function(){
 			var code = this.cityList[this.cityIndex];
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 2;
@@ -664,7 +664,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -674,8 +674,8 @@
 		*/
 		getTrafficMapImg:function(){
 			var code = this.cityList[this.cityIndex];
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio * 0.725) || 232;
 			options.type = 3;
@@ -718,7 +718,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -758,7 +758,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -829,8 +829,8 @@
 		},
 		getTrafficIndex:function(){
 			var code = this.cityList[this.cityIndex];
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio - 20) || 300;
 			options.type = 6;
@@ -864,7 +864,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -904,7 +904,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -985,6 +985,12 @@
 			var options = {};
 			options.width = parseInt(this.bodyWidth * this.ratio) || 320;
 			options.code = code;
+			//如果不是当前城市,经纬度传入城市中心点
+			if(code !== this.currentCityCode){
+				var lonlat = this.cityCenterLonLat[code];
+				options.lon = lonlat[0];
+				options.lat = lonlat[1];
+			}
 			var reqUrl = this.bulidSendUrl("taxiIndex",options);
 			// console.log(reqUrl);
 			$.ajaxJSONP({
@@ -997,7 +1003,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -1047,12 +1053,19 @@
 		getTaxiImg:function(code,type,imgId){
 			//4：打车热图,5：打车建议位置图
 			var options = {};
-			//是否当前定位城市 1是 / 0否
-			var isLoc = this.currentCityCode == code ? 1 : 0;
+			//是否当前定位城市 0是 / 1否
+			var isLoc = this.currentCityCode == code ? 0 : 1;
 			options.width = parseInt(this.bodyWidth * this.ratio) || 320;
 			options.type = type;
 			options.code = code;
 			options.isLoc = isLoc;
+			//如果不是当前城市,经纬度传入城市中心点
+			if(code !== this.currentCityCode){
+				var lonlat = this.cityCenterLonLat[code];
+				options.lon = lonlat[0];
+				options.lat = lonlat[1];
+			}
+
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl)
 			//显示历史打车位置/热图
@@ -1083,7 +1096,7 @@
 					}
 					else{
 						var msg = data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});

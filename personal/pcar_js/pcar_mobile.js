@@ -68,8 +68,11 @@
             var me = this,
                 elem = evt.currentTarget;
             $(elem).removeClass("curr");
+            Trafficeye.pageBack(-1);
+            /*
             var fromSource = Trafficeye.fromSource();
             Trafficeye.toPage(fromSource.currpage);
+            */
         },
         //保存用户昵称
         saveFunction : function(evt) {
@@ -113,8 +116,10 @@
             }
             Trafficeye.offlineStore.set("traffic_infosurveycar","car");
         }else{
-            //让用户重新登录
-            Trafficeye.toPage("pre_login.html");
+            setTimeout(function(){
+                //让用户重新登录
+                window.location.replace("pre_login.html")
+            },Trafficeye.replaceTimeOut);
         }
         
         window.saveFunction = function(evt) {
