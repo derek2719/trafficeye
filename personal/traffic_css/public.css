@@ -47,6 +47,7 @@ a:active { color:#6d7579; }
 .map_2 { margin:0 10px; }
 .map_2 img { display:block }
 .map_bt { height:32px; line-height:32px; color:#292929; font-size:16px; border-bottom:1px solid #ededed; margin-bottom:6px }
+.map_bt span,.map_bt strong{font-size:12px;color:#333;font-weight:normal;}
 .zixun img { float:left; clear:left;margin-right:6px;}
 .zixun h3 { color:#343434; font-size:14px; /*margin-left:116px;*/ line-height:100% }
 .zixun p { color:#7e7e7e; font-size:12px; line-height:140%; /*margin-left:116px; */margin-top:8px }

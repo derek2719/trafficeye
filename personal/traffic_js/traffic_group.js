@@ -111,7 +111,7 @@
 
 			//测试调用
 			
-			/*callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
+			callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
 			
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","101230101_101210101");
@@ -119,7 +119,7 @@
 			
 			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","");
-			},20000);*/
+			},20000);
 			
 		},
 		pageMove:function(evt){
@@ -409,8 +409,21 @@
 						}
 						//根据城市数据生成页面结构
 						this.buildVisibleCityHtml(citys);
+						var iSign_weather=true;
 						$('#theHotWeather').rebind('touchstart',function(){
-							$(this).next().toggle();
+							if(iSign_weather){
+								$(this).next().show();
+								var h=$(document).height()+$(this).next().height();
+								$('#viewport').height(h);
+								$('#scroller').height(h);
+								$('#scroller .slide').each(function(index, element) {
+                                    $(this).height(h);
+                                });
+								iSign_weather=false;
+							}else{
+								$(this).next().hide();
+								iSign_weather=true;
+							};
 						});
 					}
 					else{
@@ -730,8 +743,8 @@
 		*/
 		getWeatherHtml:function(id){
 			var html = [];
-			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" id="theHotWeather">天气<span id="weatherTime' + id + '" class="titletime"></span></h3>');
-			html.push('<div id="weather' +id + '" class="weather-warp"><div class="tdiv">');
+			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" id="theHotWeather">天气<span id="theHotVal"></span><strong id="theHotTxt"></strong><span id="theHotVals"></span><span id="weatherTime' + id + '" class="titletime"></span></h3>');
+			html.push('<div id="weather' +id + '" class="weather-warp"><div class="tdiv" id="nowWeather">');
 			html.push('<h4><img src="traffic_img/day/54.png" width="60" height="60"/><span></span></h4>');
 			html.push('<div class="tdivr"><span class="h">-°</span><span class="l">-°</span>');
 			html.push('</div><div class="clear"></div></div>');
@@ -812,6 +825,9 @@
 			var time = obj.publishedTime || "10:00";
 			//更新时间
 			$("#weatherTime" + code).html(time);
+			$('#theHotVal').html(todayTemp+'°');
+			$('#theHotTxt').html(todayDesc);
+			$('#theHotVals').html(todayMaxTemp+'°/'+todayMinTemp+'°');
 		},
 		/**
 		 * 获取交通指数图片html
