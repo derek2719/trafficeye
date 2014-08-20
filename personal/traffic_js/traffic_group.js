@@ -313,6 +313,12 @@
 				//通知平台显示城市
 				Trafficeye.sendNativeEvent("setCurrentCity",code);
 			}
+			else{
+				var iScrollY = this.iScrollY[this.cityIndex];
+				if(iScrollY != null){
+					iScrollY.refresh();
+				}
+			}
 		},
 		/**
 		 * 查询定时器,5分钟更新一次数据
