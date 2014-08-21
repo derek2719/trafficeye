@@ -113,9 +113,9 @@
 
 			//测试调用
 			
-			callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
+			/*callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
 			
-			/*setTimeout(function(){
+			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","101230101_101210101");
 			},2000);
 			
@@ -743,7 +743,7 @@
 		*/
 		getWeatherHtml:function(id){
 			var html = [];
-			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" id="theHotWeather'+id+'">天气<span id="theHotVal'+id+'"></span><strong id="theHotTxt'+id+'"></strong><span id="theHotVals'+id+'"></span><span id="weatherTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
+			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" id="theHotWeather'+id+'">天气<span id="theHotVal'+id+'" style="color:#157dfb;"></span><strong id="theHotTxt'+id+'"></strong><span id="theHotVals'+id+'"></span><span id="weatherTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
 			html.push('<div id="weather' +id + '" class="weather-warp"><div class="tdiv" id="nowWeather">');
 			html.push('<h4><img src="traffic_img/day/54.png" width="60" height="60"/><span></span></h4>');
 			html.push('<div class="tdivr"><span class="h">-°</span><span class="l">-°</span>');
@@ -758,6 +758,7 @@
 			return html.join("");
 		},
 		getWeather:function(){
+			var _this=this;
 			var code = this.cityList[this.cityIndex];
 			var options = {};
 			options.code = code;
@@ -787,6 +788,7 @@
 								iSign_weather=true;
 							};
 							e.stopPropagation();
+							_this.initiScroll();
 						});
 				}
 			});
@@ -851,7 +853,7 @@
 			var html = [];
 			html.push('<div class="map_2_box">');
 			html.push('<div class="map_2">');
-			html.push('<h3 class="map_bt" id="theTrafficItem'+id+'">交通指数<span id="theTrafficItem_index'+id+'"></span><span id="trafficIndexTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
+			html.push('<h3 class="map_bt" id="theTrafficItem'+id+'">交通指数<span>当前指数: </span><span id="theTrafficItem_index'+id+'" style="color:#157dfb;margin-left:0;"></span><span id="trafficIndexTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
 			html.push('<div id="theTrafficWrap" style="display:none;">');
 			html.push('<img id="trafficIndexImg' + id + '" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
 			html.push('</div></div></div>');
@@ -859,6 +861,7 @@
 			
 		},
 		getTrafficIndex:function(){
+			var _this=this;
 			var code = this.cityList[this.cityIndex];
 			//是否当前定位城市 0是 / 1否
 			var isLoc = this.currentCityCode == code ? 0 : 1;
@@ -869,6 +872,20 @@
 			options.isLoc = isLoc;
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//console.log(reqUrl);
+			var iSign_traffic=true;
+			$('#theTrafficItem'+code).rebind('touchstart',function(e){
+				if(iSign_traffic){
+					$(this).next().show();
+					$(this).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
+					iSign_traffic=false;
+				}else{
+					$(this).next().hide();
+					$(this).find('.jiantou').attr('src','traffic_img/sanjiao.png');
+					iSign_traffic=true;
+				};
+				_this.initiScroll();
+				e.stopPropagation();
+			});
 			$.ajaxJSONP({
 				url:reqUrl,
 				context:this,
@@ -897,22 +914,10 @@
 								data:{cityname:theCityhull+'-'+theAreahull,areaname:true},
 								success:function(data){
 									var iNum=data.trafficIndexList[0].index;
-									$('#theTrafficItem_index'+code).html('当前指数:'+iNum);
+									$('#theTrafficItem_index'+code).html(iNum);
 								}
 							});
-						var iSign_traffic=true;
-						$('#theTrafficItem'+code).rebind('touchstart',function(e){
-							if(iSign_traffic){
-								$(this).next().show();
-								$(this).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
-								iSign_traffic=false;
-							}else{
-								$(this).next().hide();
-								$(this).find('.jiantou').attr('src','traffic_img/sanjiao.png');
-								iSign_traffic=true;
-							};
-							e.stopPropagation();
-						});
+						
 						}
 						else{
 							Trafficeye.trafficeyeAlert("没有返回交通指数图片地址");
