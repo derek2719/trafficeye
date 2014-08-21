@@ -48,7 +48,7 @@ a:active { color:#6d7579; }
 .map_2 img { display:block }
 .map_bt { height:32px; line-height:32px; color:#292929; font-size:16px; border-bottom:1px solid #ededed; margin-bottom:6px;position:relative; }
 .map_bt span,.map_bt strong{font-size:12px;color:#333;font-weight:normal;margin-left:10px;}
-.map_bt .titletime{color:#b8b8b8;}
+.map_bt .titletime{color:#b8b8b8;position:absolute;right:30px;top:0;}
 .map_bt .jiantou{width:32px;height:32px;position:absolute;right:0;top:0;}
 .zixun img { float:left; clear:left;margin-right:6px;}
 .zixun h3 { color:#343434; font-size:14px; /*margin-left:116px;*/ line-height:100% }
