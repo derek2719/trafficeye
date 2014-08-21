@@ -800,12 +800,14 @@
                 "pid" : myInfo.pid,
                 "ua" : myInfo.ua,
                 "uid" : myInfo.uid,
-                "friend_uid" : data.uid,
+                "friend_uid" : myInfo.uid,
                 "isEdit" : myInfo.isEdit,
                 "userinfo" : Trafficeye.str2Json(data)
             };
             var dataStr = Trafficeye.json2Str(userinfodata);
             Trafficeye.offlineStore.set("traffic_myinfo", dataStr);
+
+            window.initPageManagerCurrent();
         }
         
         //设置头像处理函数，回调方法callbackSetUserAvatar
