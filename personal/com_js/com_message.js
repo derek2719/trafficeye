@@ -153,11 +153,10 @@
          * 初始化页面对象
          */
         init : function() {
+            var me = this;
+            me.pageNumManager = new Trafficeye.PageNumManager();
             if(!this.inited){
-                var me = this;
-                me.pageNumManager = new Trafficeye.PageNumManager();
                 me.userInfoManager = new UserInfoManager();
-
                 me.UserMessages = new UserMessages();
                 me.UserLetters = new UserLetters();          
                 me.UserMessages.setUserInfoManager(me.userInfoManager);
@@ -611,7 +610,7 @@
                 //  var followersInfo_url = BASE_URL + "followers";
                 var messageInfo_data = {
                     "uid" : uid
-                };               
+                };
                 //请求用户数据，填充用户界面元素
                 pm.reqMessagesInfo(messageInfo_url, messageInfo_data);
             }else{   
