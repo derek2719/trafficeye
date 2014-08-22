@@ -612,7 +612,7 @@
 							Trafficeye.imageLoaded(img,imgUrl);
 						}
 						else{
-							Trafficeye.trafficeyeAlert("没有返回全市简图地址");
+							//Trafficeye.trafficeyeAlert("没有返回全市简图地址");
 						}
 						//注册按钮事件,交通简图事件
 						$("#trafficMapType" + code + " > a").rebind("touchstart",this.btnDown,this);
@@ -623,7 +623,7 @@
 					}
 					else{
 						var msg = "获取全市简图:" + data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -666,12 +666,12 @@
 							Trafficeye.imageLoaded(img,imgUrl);
 						}
 						else{
-							Trafficeye.trafficeyeAlert("没有返回简图地址");
+							//Trafficeye.trafficeyeAlert("没有返回简图地址");
 						}
 					}
 					else{
 						var msg = "获取周边简图:" + data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -720,12 +720,12 @@
 							Trafficeye.imageLoaded(img,imgUrl);
 						}
 						else{
-							Trafficeye.trafficeyeAlert("没有返回简图地址");
+							//Trafficeye.trafficeyeAlert("没有返回简图地址");
 						}
 					}
 					else{
 						var msg = "获取交通地图:" + data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -766,7 +766,7 @@
 					}
 					else{
 						var msg = "获取天气数据:" + data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 						$('#theHotWeather'+code).rebind('touchstart',function(e){
 							if($(this).next().css('display')!='block'){
@@ -905,12 +905,12 @@
 						
 						}
 						else{
-							Trafficeye.trafficeyeAlert("没有返回交通指数图片地址");
+							//Trafficeye.trafficeyeAlert("没有返回交通指数图片地址");
 						}
 					}
 					else{
 						var msg = "获取交通指数:" + data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -950,7 +950,7 @@
 					}
 					else{
 						var msg = "获取交通资讯:" + data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -1049,7 +1049,7 @@
 					}
 					else{
 						var msg = "获取打车指数:" + data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -1137,12 +1137,12 @@
 							$("#taxiIndexImg" + code).rebind("touchend",this.taxiImgBtnUp,this);
 						}
 						else{
-							Trafficeye.trafficeyeAlert("没有返回打车位置/热图图片地址");
+							//Trafficeye.trafficeyeAlert("没有返回打车位置/热图图片地址");
 						}
 					}
 					else{
 						var msg = "获取打车热图:" + data.state.desc + "(" + state + ")";
-						Trafficeye.trafficeyeAlert(msg);
+						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
