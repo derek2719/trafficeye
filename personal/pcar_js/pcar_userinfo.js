@@ -78,7 +78,8 @@
              var me = this,
                  elem = evt.currentTarget;
              $(elem).removeClass("curr");
-             Trafficeye.toPage("pcar_index.html");
+             Trafficeye.pageBack(-1);
+             //Trafficeye.toPage("pcar_index.html");
          },
          /**
          * 用户信息请求函数
@@ -259,12 +260,12 @@
      $(function() {
         
         window.initPageManager = function() {
-//把来源信息存储到本地
-
+            //把来源信息存储到本地
+            /*
              var fromSource = {"sourcepage":"pcar_index.html","currpage" : "pcar_userinfo.html","prepage" : "pcar_publishinfo.html"}
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-             
+             */
     
              
              //获取我的用户信息
