@@ -107,6 +107,9 @@
             surveybtnElem.onbind("touchend",me.surveybtnUp,me);
             //查看拼车列表按钮
             carbtnElem.onbind("touchend",me.carbtnUp,me);
+
+            //昵称事件
+            $("#infonickname").onbind("touchend",me.infonicknameClick,me);
         },
         /**
          * 按钮按下事件处理器
@@ -422,7 +425,7 @@
         //设置昵称的onclick事件响应函数
         infonicknameClick : function(evt) {
             var me = this;
-            var elem = $(evt).addClass("curr");
+            var elem = $("#infonickname").addClass("curr");
             setTimeout((function(){
                 $(elem).removeClass("curr");  
                 Trafficeye.toPage("pre_baseinfo_nickname.html");
