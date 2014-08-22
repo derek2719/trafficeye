@@ -615,8 +615,8 @@
 						$("#cityMapImg" + code).rebind("touchend",this.cityMapImgBtnUp,this);
 					}
 					else{
-						var msg = data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
+						var msg = "获取全市简图:" + data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -663,8 +663,8 @@
 						}
 					}
 					else{
-						var msg = data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
+						var msg = "获取周边简图:" + data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -717,8 +717,8 @@
 						}
 					}
 					else{
-						var msg = data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
+						var msg = "获取交通地图:" + data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -757,8 +757,8 @@
 						this.getWeatherCallback(data,code);
 					}
 					else{
-						var msg = data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
+						var msg = "获取天气数据:" + data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -863,8 +863,8 @@
 						}
 					}
 					else{
-						var msg = data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
+						var msg = "获取交通指数:" + data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -903,8 +903,8 @@
 						this.trafficInfoCallback(data,code);
 					}
 					else{
-						var msg = data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
+						var msg = "获取交通资讯:" + data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -1002,8 +1002,8 @@
 						this.taxiIndexCallback(data,code);
 					}
 					else{
-						var msg = data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
+						var msg = "获取打车指数:" + data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
@@ -1095,8 +1095,8 @@
 						}
 					}
 					else{
-						var msg = data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
+						var msg = "获取打车热图:" + data.state.desc + "(" + state + ")";
+						Trafficeye.trafficeyeAlert(msg);
 					}
 				}
 			});
