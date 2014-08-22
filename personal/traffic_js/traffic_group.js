@@ -417,14 +417,6 @@
 						}
 						//根据城市数据生成页面结构
 						this.buildVisibleCityHtml(citys);
-						/*$(document).rebind('touchstart',function(){
-							$('#theTrafficItem').next().hide();
-							$('#theTrafficItem').find('.jiantou').attr('src','traffic_img/sanjiao2.png');
-							iSign_traffic=true;
-							$('#theHotWeather').next().hide();
-							$('#theHotWeather').find('.jiantou').attr('src','traffic_img/sanjiao2.png');
-							iSign_weather=true;
-						});*/
 					}
 					else{
 						var citys = city.split("_");
@@ -776,16 +768,13 @@
 						var msg = data.state.desc + "(" + state + ")";
 						//Trafficeye.trafficeyeAlert(msg);
 					}
-						var iSign_weather=true;
 						$('#theHotWeather'+code).rebind('touchstart',function(e){
-							if(iSign_weather){
+							if($(this).next().css('display')!='block'){
 								$(this).next().show();
 								$(this).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
-								iSign_weather=false;
 							}else{
 								$(this).next().hide();
 								$(this).find('.jiantou').attr('src','traffic_img/sanjiao.png');
-								iSign_weather=true;
 							};
 							e.stopPropagation();
 							_this.initiScroll();
@@ -871,17 +860,13 @@
 			options.code = code;
 			options.isLoc = isLoc;
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
-			//console.log(reqUrl);
-			var iSign_traffic=true;
 			$('#theTrafficItem'+code).rebind('touchstart',function(e){
-				if(iSign_traffic){
+				if($(this).next().css('display')!='block'){
 					$(this).next().show();
 					$(this).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
-					iSign_traffic=false;
 				}else{
 					$(this).next().hide();
 					$(this).find('.jiantou').attr('src','traffic_img/sanjiao.png');
-					iSign_traffic=true;
 				};
 				_this.initiScroll();
 				e.stopPropagation();
