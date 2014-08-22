@@ -568,6 +568,9 @@
                                 } else {
                                     alert("调用注销用户信息接口,PC不支持.");
                                 }
+                                //清除URL栈数据
+                                Trafficeye.offlineStore.set("traffic_pageurl","",true);
+
                                 setTimeout(function(){
                                     //让用户重新登录
                                     window.location.replace("pre_login.html")
