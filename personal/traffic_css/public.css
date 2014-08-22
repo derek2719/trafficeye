@@ -33,7 +33,7 @@ a:active { color:#6d7579; }
 .header_text p { font-size:12px; }
 .map_l {/* margin-right:94px;*/ }
 .map_l img{width:100%;}
-.map_r {/* position:absolute; right:0; bottom:10px; width:84px;*/position:relative;}
+.map_r {/* position:absolute; right:0; bottom:10px; width:84px;*/position:relative;height:34px;background:#fff;}
 .map_r a { /*display:block;*/ color:#292929; font-size:12px; padding-left:28px; line-height:36px; height:36px;}
 .map_r a.qs { background:url(../traffic_img/dpi1/qs.png) no-repeat 8px center; }
 .map_r a.zb { background:url(../traffic_img/dpi1/zb.png) no-repeat 8px center; }
@@ -41,9 +41,9 @@ a:active { color:#6d7579; }
 .map_r a.qs.curr,.map_r a.qs.selected{ color:#818181; background:url(../traffic_img/dpi1/qs_h.png) no-repeat 8px center; }
 .map_r a.zb.curr,.map_r a.zb.selected{ color:#818181; background:url(../traffic_img/dpi1/zb_h.png) no-repeat 8px center; }
 .map_r a.jt.curr,.map_r a.jt.selected{ color:#818181; background:url(../traffic_img/dpi1/jt_h.png) no-repeat 8px center; }
-.map_1 { padding-bottom:10px; position:relative }
+.map_1 { padding-bottom:10px; position:relative;background:#f7f7f7; }
 .map_1 img { display:block }
-.map_2_box { background-color:#FFF; border-top:1px solid #157dfb; margin-bottom:6px; }
+.map_2_box { background-color:#FFF; border-top:1px solid #157dfb;margin-bottom:6px; }
 .map_2 { margin:0 10px; }
 .map_2 img { display:block }
 .map_bt { height:32px; line-height:32px; color:#292929; font-size:16px; border-bottom:1px solid #ededed; margin-bottom:6px;position:relative; }
