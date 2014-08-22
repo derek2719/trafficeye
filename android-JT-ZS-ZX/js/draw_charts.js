@@ -4,7 +4,7 @@ $(function () {
 		colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655','#FFF263', '#6AF9C4'] 
 	}); //自定义栏目颜色
 	//测试数据
-	//draw_charts({'id':'indexCon','city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':15});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值
+	//draw_charts({'id':'indexCon','city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值
 function draw_charts(obj){
 	var id=obj.id,city=obj.city,place=obj.place,yData1=obj.yData1,yData2=obj.yData2,maxData=obj.maxData;
 	var oDate=new Date();
@@ -60,7 +60,8 @@ function draw_charts(obj){
 				y:3,
 				x:-5
 			},
-			plotBands: [{ // Light air
+			plotBands:(function(){
+				var signDate=[{ // Light air
 					  from: 0,
 					  to: maxData/5,
 					  color: 'rgba(2,121,2,0.3)',
@@ -110,7 +111,51 @@ function draw_charts(obj){
 							  color: '#666'
 						  }
 					  }
-				  }]
+				  }];
+				if(obj.maxData==100){
+				signDate=[{ // Light air
+					  from: 0,
+					  to: maxData/4,
+					  color: 'rgba(2,121,2,0.3)',
+					  label: {
+						  text: '畅通',
+						  style: {
+							  color: '#666'
+						  }
+					  }
+				  }, { // Light breeze
+					  from: maxData/4,
+					  to: maxData/4*2,
+					  color: 'rgba(0,255,0,0.3)',
+					  label: {
+						  text: '较畅通',
+						  style: {
+							  color: '#666'
+						  }
+					  }
+				  }, { // Gentle breeze
+					  from: maxData/4*2,
+					  to: maxData/4*3,
+					  color: 'rgba(255,255,0,0.3)',
+					  label: {
+						  text: '拥挤',
+						  style: {
+							  color: '#666'
+						  }
+					  }
+				  }, { // Moderate breeze
+					  from: maxData/4*3,
+					  to: maxData,
+					  color: 'rgba(204,0,0,0.3)',
+					  label: {
+						  text: '堵塞',
+						  style: {
+							  color: '#666'
+						  }
+					  }
+				  }]};
+				  return signDate;
+				})()
 		},
 		series:[{
 			name:'上周五指数',
