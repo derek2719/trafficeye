@@ -70,6 +70,10 @@ ImageItem.prototype = {
 			image.src = me.imgUrl;
 			image .id=me.i;
 			$("#lunboImg" + me.i).append(image);
+			/*var imgDraw=document.createElement('div');
+			imgDraw.id='imgDraw'+me.i;
+			$("#lunboImg" + me.i).append(imgDraw);
+			draw_charts({'id':'imgDraw'+me.i,'city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});*///模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 		}
     }
 };
