@@ -53,7 +53,7 @@ ImageItem.prototype = {
 		if(!me.isImageLoaded){
 			$("#lunboImg" + me.i).html("");
 			$("#lunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>")
-			var image = document.createElement("img");
+			/*var image = document.createElement("img");
 			image.style.background="url(images/blank.gif)";
 			image.onload = function(event) {
 				if(this.complete){
@@ -69,11 +69,33 @@ ImageItem.prototype = {
 			image.height = imgH;
 			image.src = me.imgUrl;
 			image .id=me.i;
-			$("#lunboImg" + me.i).append(image);
-			/*var imgDraw=document.createElement('div');
-			imgDraw.id='imgDraw'+me.i;
-			$("#lunboImg" + me.i).append(imgDraw);
-			draw_charts({'id':'imgDraw'+me.i,'city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});*///模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+			$("#lunboImg" + me.i).append(image);*/
+			var city=me.imgUrl.split('?')[1].split('&')[0].split('=')[1];
+			var area=me.imgUrl.split('?')[1].split('&')[1].split('=')[1];
+			$.ajax({
+				type:'get',
+				url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/trafficIndexChartData?city='+city+'&area='+area,
+				dataType:'jsonp',
+				success:function(data){
+					//alert(JSON.stringify(data));
+					//alert(data.index_lastweek);
+					if(data.state.code==0){
+						var theData=data.indexData;
+						var imgDraw=document.createElement('div');
+						imgDraw.id='imgDraw'+me.i;
+						imgDraw.style.height=$("#lunboImg" + me.i).height()+'px';
+						$("#lunboImg" + me.i).append(imgDraw);
+						console.log(theData.index_lastweek);
+						draw_charts({'id':'imgDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+						//draw_charts({'id':'imgDraw'+me.i,'city':city,'place':area,'yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':theData.maxValue});
+					}
+					
+				},
+				error:function(xmlHttpReq,textStatus,errorThrown){
+					alert('遇到未知错误');	
+				}
+				
+			});
 		}
     }
 };
@@ -598,8 +620,8 @@ function generalLunboHtmlList() {
 	$(function(){
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
-		initByParam(window.indexInt.indexIntMethod());
-		//initByParam("{\"area\":\"上海-总路网(快速路)\",\"width\":360,\"height\":515,\"url\":\"http:\/\/mobile.trafficeye.com.cn:8000\",\"density\":\"2.0\"}");
+		//initByParam(window.indexInt.indexIntMethod());
+		initByParam("{\"area\":\"上海-总路网(快速路)\",\"width\":360,\"height\":515,\"url\":\"http:\/\/mobile.trafficeye.com.cn:8000\",\"density\":\"2.0\"}");
 		}else{
 			init();
 		}

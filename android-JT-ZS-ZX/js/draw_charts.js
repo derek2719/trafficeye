@@ -1,4 +1,5 @@
 // JavaScript Document
+$(function(){
 Highcharts.setOptions({ 
 	colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655','#FFF263', '#6AF9C4'] 
 }); //自定义栏目颜色
@@ -13,12 +14,13 @@ window.draw_charts=function(obj){
 	$('#'+id).highcharts({
 		chart:{
 			type:'spline',
-			borderRadius:0,
-			borderWidth:1,
-			borderColor:'#333',
+			//borderRadius:0,
+			//borderWidth:1,
+			//borderColor:'#333',
 			backgroundColor:'#fff',
 			plotBackgroundColor:'#ddd',
-			marginLeft:25
+			marginLeft:23,
+			marginRight:12
 		},//图表区选项	
 		plotOptions: {
           spline: {
@@ -38,6 +40,7 @@ window.draw_charts=function(obj){
 		},
 		xAxis:{
 			//categories:['00:00','03:00','06:00','09:00','12:00','15:00','18:00','21:00','24:00'],
+			tickInterval:3*3600000,
 			labels:{
 				style:{'font-size':'8px'}	
 			},
@@ -158,7 +161,7 @@ window.draw_charts=function(obj){
 		},
 		series:[{
 			name:'上周五指数',
-			data:yData1||[4,23,3,20,32,19].reverse()	
+			data:yData1||[4,23,3,20,32,19,4,23,3,20,32,19].reverse()	
 		},{
 			name:'今日指数',
 			data:yData2||[11,23,8,17,32,23]	
@@ -171,3 +174,4 @@ window.draw_charts=function(obj){
 		}//水印
 	});
 }//绘制图表
+});
