@@ -30,7 +30,7 @@ var htmlObj;
 var url = window.location.href;
  	if(url.indexOf("index_list.html")>-1){
  	}else{
- 	window.scrollTo(0,0)
+ 	//window.scrollTo(0,0)
 	}
  	 
      }
@@ -74,19 +74,25 @@ ImageItem.prototype = {
 			var area=me.imgUrl.split('?')[1].split('&')[1].split('=')[1];
 			$.ajax({
 				type:'get',
-				url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/trafficIndexChartData?city='+city+'&area='+area,
+				url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/trafficIndexChartData',
+				data:{
+					city:city,
+					area:area	
+				},
 				dataType:'jsonp',
 				success:function(data){
-					//alert(JSON.stringify(data));
-					//alert(data.index_lastweek);
 					if(data.state.code==0){
 						var theData=data.indexData;
 						var imgDraw=document.createElement('div');
 						imgDraw.id='imgDraw'+me.i;
-						imgDraw.style.height=$("#lunboImg" + me.i).height()+'px';
+						imgDraw.style.height='315px';
 						$("#lunboImg" + me.i).append(imgDraw);
-						console.log(theData.index_lastweek);
 						draw_charts({'id':'imgDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+						var reDraw=document.createElement('div');
+						reDraw.id='reDraw'+me.i;
+						reDraw.style.height='315px';
+						$("#lunboImg" + me.i).append(reDraw);
+						draw_charts({'id':'reDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 						//draw_charts({'id':'imgDraw'+me.i,'city':city,'place':area,'yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':theData.maxValue});
 					}
 					
@@ -222,9 +228,9 @@ function getJsonByParamStr(str) {
 function setContainer(width, height) {
 	var trafficContainerJQ = $("#trafficContainer");
 	var trafficContainerW = width || 320;
-	var trafficContainerH = height || 360;
+	var trafficContainerH ='auto'/*height || 360*/;
 	//设置背景容器的大小
-	trafficContainerJQ.css("width", trafficContainerW).css("height", trafficContainerH);
+	trafficContainerJQ.css("width", trafficContainerW)/*.css("height", trafficContainerH)*/;
 	//设置背景图片的大小
 	var myDate = new Date();
 	var hour = myDate.getHours()
@@ -620,8 +626,8 @@ function generalLunboHtmlList() {
 	$(function(){
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
-		//initByParam(window.indexInt.indexIntMethod());
-		initByParam("{\"area\":\"上海-总路网(快速路)\",\"width\":360,\"height\":515,\"url\":\"http:\/\/mobile.trafficeye.com.cn:8000\",\"density\":\"2.0\"}");
+		initByParam(window.indexInt.indexIntMethod());
+		//initByParam("{\"area\":\"上海-总路网(快速路)\",\"width\":360,\"height\":515,\"url\":\"http:\/\/mobile.trafficeye.com.cn:8000\",\"density\":\"2.0\"}");
 		}else{
 			init();
 		}

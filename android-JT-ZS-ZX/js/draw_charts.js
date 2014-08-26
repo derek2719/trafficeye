@@ -4,13 +4,15 @@ Highcharts.setOptions({
 	colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655','#FFF263', '#6AF9C4'] 
 }); //自定义栏目颜色
 	//测试数据
-	//draw_charts({'id':'indexCon','city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值
+	//draw_charts({'id':'indexCon','city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});//模块ID,城市,区域,上周今日数据,今日数据,Y轴最大值
+var aDay=['日','一','二','三','四','五','六'];
 window.draw_charts=function(obj){
 	var id=obj.id,city=obj.city,place=obj.place,yData1=obj.yData1,yData2=obj.yData2,maxData=obj.maxData;
 	var oDate=new Date();
 	var iY=oDate.getFullYear();
 	var iM=oDate.getMonth();
 	var iD=oDate.getDate();
+	var iDay=aDay[oDate.getDay()];
 	$('#'+id).highcharts({
 		chart:{
 			type:'spline',
@@ -160,7 +162,7 @@ window.draw_charts=function(obj){
 				})()
 		},
 		series:[{
-			name:'上周五指数',
+			name:'上周'+iDay+'指数',
 			data:yData1||[4,23,3,20,32,19,4,23,3,20,32,19].reverse()	
 		},{
 			name:'今日指数',
