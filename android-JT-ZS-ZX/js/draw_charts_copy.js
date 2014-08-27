@@ -1,12 +1,9 @@
 // JavaScript Document
 $(function(){
-Highcharts.setOptions({ 
-	colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655','#FFF263', '#6AF9C4'] 
-}); //自定义栏目颜色
 	//测试数据
-	//draw_charts({'id':'indexCon','city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});//模块ID,城市,区域,上周今日数据,今日数据,Y轴最大值
+	//draw_charts_copy({'id':'indexCon','city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});//模块ID,城市,区域,上周今日数据,今日数据,Y轴最大值
 var aDay=['日','一','二','三','四','五','六'];
-window.draw_charts=function(obj){
+window.draw_charts_copy=function(obj){
 	var id=obj.id,city=obj.city,place=obj.place,yData1=obj.yData1,yData2=obj.yData2,maxData=obj.maxData;
 	var oDate=new Date();
 	var iY=oDate.getFullYear();
@@ -41,8 +38,6 @@ window.draw_charts=function(obj){
 			text:city+place+'交通指数'	
 		},
 		xAxis:{
-			//categories:['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','24:00'],
-			//tickInterval:3,
 			tickInterval:3*3600000,
 			labels:{
 				style:{'font-size':'8px'}	
@@ -50,6 +45,21 @@ window.draw_charts=function(obj){
 			type:'datetime'
 		},
 		yAxis:{
+			tickPositions:(function(){
+					if(maxData==2){
+						return [0, 2]
+					}else if(maxData==4){
+						return [0, 2, 4]
+					}else if(maxData==7){
+						return [0, 2, 4,7]
+					}else if(maxData==10){
+						return [0, 2, 4,7,10]
+					}else if(maxData==18){
+						return [0, 2, 4,7,10,18]
+					}else if(maxData>18){
+						return [0, 2, 4,7,10,18,maxData]
+					};
+				})(),
 			minorGridLineWidth: 0,
 			gridLineWidth: 0,
 			alternateGridColor: null,//去掉参考线
@@ -63,102 +73,89 @@ window.draw_charts=function(obj){
 			labels:{
 				style:{'font-size':'9px'},
 				y:3,
-				x:-5
+				x:-5,
 			},
 			plotBands:(function(){
-				var signDate=[{ // Light air
+				var signDate=[];
+				var dataArea1={
 					  from: 0,
-					  to: maxData/5,
-					  color: 'rgba(2,121,2,0.3)',
+					  to: 2,
+					  color: 'rgba(0,136,0,0.3)',
 					  label: {
 						  text: '畅通',
 						  style: {
 							  color: '#666'
 						  }
 					  }
-				  }, { // Light breeze
-					  from: maxData/5,
-					  to: maxData/5*2,
-					  color: 'rgba(0,255,0,0.3)',
+				};
+				var dataArea2={
+					  from: 2,
+					  to: 4,
+					  color: 'rgba(153,220,0,0.3)',
 					  label: {
 						  text: '基本畅通',
 						  style: {
 							  color: '#666'
 						  }
 					  }
-				  }, { // Gentle breeze
-					  from: maxData/5*2,
-					  to: maxData/5*3,
-					  color: 'rgba(255,255,0,0.3)',
+				};
+				var dataArea3={
+					  from: 4,
+					  to: 7,
+					  color: 'rgba(255,255,1,0.3)',
 					  label: {
-						  text: '轻度拥堵',
+						  text: '缓慢',
 						  style: {
 							  color: '#666'
 						  }
 					  }
-				  }, { // Moderate breeze
-					  from: maxData/5*3,
-					  to: maxData/5*4,
-					  color: 'rgba(255,102,0,0.3)',
+				};
+				var dataArea4={
+					  from: 7,
+					  to: 10,
+					  color: 'rgba(255,187,0,0.3)',
 					  label: {
-						  text: '中度拥堵',
+						  text: '拥堵',
 						  style: {
 							  color: '#666'
 						  }
 					  }
-				  }, { // Fresh breeze
-					  from: maxData/5*4,
-					  to: maxData,
-					  color: 'rgba(204,0,0,0.3)',
+				};
+				var dataArea5={
+					  from: 10,
+					  to: 18,
+					  color: 'rgba(254,2,1,0.3)',
 					  label: {
 						  text: '严重拥堵',
 						  style: {
 							  color: '#666'
 						  }
 					  }
-				  }];
-				if(obj.maxData==100){
-				signDate=[{ // Light air
-					  from: 0,
-					  to: maxData/4,
-					  color: 'rgba(2,121,2,0.3)',
-					  label: {
-						  text: '畅通',
-						  style: {
-							  color: '#666'
+				};
+				if(maxData==2){
+					signDate=[dataArea1];
+				}else if(maxData==4){
+					signDate=[dataArea1,dataArea2];
+				}else if(maxData==7){
+					signDate=[dataArea1,dataArea2,dataArea3];
+				}else if(maxData==10){
+					signDate=[dataArea1,dataArea2,dataArea3,dataArea4];
+				}else if(maxData==18){
+					signDate=[dataArea1,dataArea2,dataArea3,dataArea4,dataArea5];
+				}else if(maxData>18){
+					var dataArea6={
+						  from: 18,
+						  to: maxData,
+						  color: 'rgba(139,1,1,0.3)',
+						  label: {
+							  text: '路网瘫痪',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }, { // Light breeze
-					  from: maxData/4,
-					  to: maxData/4*2,
-					  color: 'rgba(0,255,0,0.3)',
-					  label: {
-						  text: '较畅通',
-						  style: {
-							  color: '#666'
-						  }
-					  }
-				  }, { // Gentle breeze
-					  from: maxData/4*2,
-					  to: maxData/4*3,
-					  color: 'rgba(255,255,0,0.3)',
-					  label: {
-						  text: '拥挤',
-						  style: {
-							  color: '#666'
-						  }
-					  }
-				  }, { // Moderate breeze
-					  from: maxData/4*3,
-					  to: maxData,
-					  color: 'rgba(204,0,0,0.3)',
-					  label: {
-						  text: '堵塞',
-						  style: {
-							  color: '#666'
-						  }
-					  }
-				  }]};
+					};
+					signDate=[dataArea1,dataArea2,dataArea3,dataArea4,dataArea5,dataArea6];
+				};
 				  return signDate;
 				})()
 		},

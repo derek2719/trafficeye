@@ -92,7 +92,7 @@ ImageItem.prototype = {
 						reDraw.id='reDraw'+me.i;
 						reDraw.style.height='315px';
 						$("#lunboImg" + me.i).append(reDraw);
-						draw_charts({'id':'reDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+						draw_charts_copy({'id':'reDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':20});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 						//draw_charts({'id':'imgDraw'+me.i,'city':city,'place':area,'yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':theData.maxValue});
 					}
 					
@@ -626,8 +626,8 @@ function generalLunboHtmlList() {
 	$(function(){
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
-		initByParam(window.indexInt.indexIntMethod());
-		//initByParam("{\"area\":\"上海-总路网(快速路)\",\"width\":360,\"height\":515,\"url\":\"http:\/\/mobile.trafficeye.com.cn:8000\",\"density\":\"2.0\"}");
+		//initByParam(window.indexInt.indexIntMethod());
+		initByParam("{\"area\":\"上海-总路网(快速路)\",\"url\":\"http:\/\/mobile.trafficeye.com.cn:8000\",\"density\":\"2.0\"}");
 		}else{
 			init();
 		}
