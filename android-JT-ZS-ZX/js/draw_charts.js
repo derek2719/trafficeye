@@ -118,47 +118,48 @@ window.draw_charts=function(obj){
 					  }
 				  }];
 				if(obj.maxData==100){
-				signDate=[{ // Light air
-					  from: 0,
-					  to: maxData/4,
-					  color: 'rgba(2,121,2,0.3)',
-					  label: {
-						  text: '畅通',
-						  style: {
-							  color: '#666'
+					signDate=[{ // Light air
+						  from: 0,
+						  to: maxData/4,
+						  color: 'rgba(2,121,2,0.3)',
+						  label: {
+							  text: '畅通',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }, { // Light breeze
-					  from: maxData/4,
-					  to: maxData/4*2,
-					  color: 'rgba(0,255,0,0.3)',
-					  label: {
-						  text: '较畅通',
-						  style: {
-							  color: '#666'
+					  }, { // Light breeze
+						  from: maxData/4,
+						  to: maxData/4*2,
+						  color: 'rgba(0,255,0,0.3)',
+						  label: {
+							  text: '较畅通',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }, { // Gentle breeze
-					  from: maxData/4*2,
-					  to: maxData/4*3,
-					  color: 'rgba(255,255,0,0.3)',
-					  label: {
-						  text: '拥挤',
-						  style: {
-							  color: '#666'
+					  }, { // Gentle breeze
+						  from: maxData/4*2,
+						  to: maxData/4*3,
+						  color: 'rgba(255,255,0,0.3)',
+						  label: {
+							  text: '拥挤',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }, { // Moderate breeze
-					  from: maxData/4*3,
-					  to: maxData,
-					  color: 'rgba(204,0,0,0.3)',
-					  label: {
-						  text: '堵塞',
-						  style: {
-							  color: '#666'
+					  }, { // Moderate breeze
+						  from: maxData/4*3,
+						  to: maxData,
+						  color: 'rgba(204,0,0,0.3)',
+						  label: {
+							  text: '堵塞',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }]};
+					  }]
+					};
 				  return signDate;
 				})()
 		},
