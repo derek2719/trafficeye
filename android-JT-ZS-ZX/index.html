@@ -19,7 +19,6 @@
         <style type="text/css">
         #mySwipe{height:auto;}
 		.ly{margin-top:10px;}
-		.nav{bottom:10px;}
         </style>
 	</head>
 	<body style="overflow:hidden;">
@@ -92,13 +91,13 @@
 			}
 
 			//跳转到详细页面
-			function godetail(city,width,height) {
+			function godetail(city,code,typeIndex) {
 				window.localStorage.city = city;
-				window.localStorage.width = width;
-				window.localStorage.height = height;
+				window.localStorage.city_code = parseInt(code);
+				window.localStorage.typeIndex = typeIndex;
 				window.localStorage.pre = "index.html";
 				window.location.href = "index_list.html";
-				 clearInterval(iCount);
+				clearInterval(iCount);
 			}
 			
 		</script>

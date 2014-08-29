@@ -37,6 +37,9 @@ window.draw_charts_copy=function(obj){
 		title:{
 			text:city+place+'交通指数'	
 		},
+		subtitle:{
+			text:'四维路况指数'	
+		},
 		xAxis:{
 			tickInterval:3*3600000,
 			labels:{

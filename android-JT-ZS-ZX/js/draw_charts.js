@@ -13,6 +13,14 @@ window.draw_charts=function(obj){
 	var iM=oDate.getMonth();
 	var iD=oDate.getDate();
 	var iDay=aDay[oDate.getDay()];
+	var str = "北京市交通委员会(www.bjjtw.gov.cn)发布的公开数据";
+	if (city== "深圳") {
+		str = "深圳市交通委员会(szmap.sutpc.com)发布的公开数据";
+	}else if(city== "杭州"){
+		str = "杭州市综合交通研究中心(www.hzjtydzs.com)发布的公开数据"
+	}else if(city== "上海"){
+		str = "上海市城乡建设和交通发展研究院(www.jtcx.sh.cn)"
+	};
 	$('#'+id).highcharts({
 		chart:{
 			type:'spline',
@@ -40,6 +48,9 @@ window.draw_charts=function(obj){
 		title:{
 			text:city+place+'交通指数'	
 		},
+		subtitle:{
+			text:str	
+		},
 		xAxis:{
 			//categories:['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','24:00'],
 			//tickInterval:3,
@@ -55,7 +66,15 @@ window.draw_charts=function(obj){
 			alternateGridColor: null,//去掉参考线
 			lineWidth:1,
 			min:0,
-			max:maxData,
+			tickPositions:(function(){
+					if(maxData==5){
+						return [0,1,2,3,4,5]
+					}else if(maxData==10){
+						return [0,2,4,6,8,10]
+					}else if(maxData==100){
+						return [0,25,50,75,100]
+					};
+				})(),
 			allowDecimals:false,
 			title:{
 				style:{'display':'none'}	
@@ -66,59 +85,113 @@ window.draw_charts=function(obj){
 				x:-5
 			},
 			plotBands:(function(){
-				var signDate=[{ // Light air
-					  from: 0,
-					  to: maxData/5,
-					  color: 'rgba(2,121,2,0.3)',
-					  label: {
-						  text: '畅通',
-						  style: {
-							  color: '#666'
+				var signData=[];
+				if(maxData==5){
+					signData=[{ // Light air
+						  from: 0,
+						  to: maxData/5,
+						  color: 'rgba(2,121,2,0.3)',
+						  label: {
+							  text: '畅通',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }, { // Light breeze
-					  from: maxData/5,
-					  to: maxData/5*2,
-					  color: 'rgba(0,255,0,0.3)',
-					  label: {
-						  text: '基本畅通',
-						  style: {
-							  color: '#666'
+					  }, { // Light breeze
+						  from: maxData/5,
+						  to: maxData/5*2,
+						  color: 'rgba(0,255,0,0.3)',
+						  label: {
+							  text: '基本畅通',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }, { // Gentle breeze
-					  from: maxData/5*2,
-					  to: maxData/5*3,
-					  color: 'rgba(255,255,0,0.3)',
-					  label: {
-						  text: '轻度拥堵',
-						  style: {
-							  color: '#666'
+					  }, { // Gentle breeze
+						  from: maxData/5*2,
+						  to: maxData/5*3,
+						  color: 'rgba(255,255,0,0.3)',
+						  label: {
+							  text: '缓行',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }, { // Moderate breeze
-					  from: maxData/5*3,
-					  to: maxData/5*4,
-					  color: 'rgba(255,102,0,0.3)',
-					  label: {
-						  text: '中度拥堵',
-						  style: {
-							  color: '#666'
+					  }, { // Moderate breeze
+						  from: maxData/5*3,
+						  to: maxData/5*4,
+						  color: 'rgba(255,102,0,0.3)',
+						  label: {
+							  text: '轻度拥堵',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }, { // Fresh breeze
-					  from: maxData/5*4,
-					  to: maxData,
-					  color: 'rgba(204,0,0,0.3)',
-					  label: {
-						  text: '严重拥堵',
-						  style: {
-							  color: '#666'
+					  }, { // Fresh breeze
+						  from: maxData/5*4,
+						  to: maxData,
+						  color: 'rgba(204,0,0,0.3)',
+						  label: {
+							  text: '拥堵',
+							  style: {
+								  color: '#666'
+							  }
 						  }
-					  }
-				  }];
-				if(obj.maxData==100){
-					signDate=[{ // Light air
+					  }];	
+				}else if(maxData==10){
+					signData=[{ // Light air
+						  from: 0,
+						  to: maxData/5,
+						  color: 'rgba(2,121,2,0.3)',
+						  label: {
+							  text: '畅通',
+							  style: {
+								  color: '#666'
+							  }
+						  }
+					  }, { // Light breeze
+						  from: maxData/5,
+						  to: maxData/5*2,
+						  color: 'rgba(0,255,0,0.3)',
+						  label: {
+							  text: '基本畅通',
+							  style: {
+								  color: '#666'
+							  }
+						  }
+					  }, { // Gentle breeze
+						  from: maxData/5*2,
+						  to: maxData/5*3,
+						  color: 'rgba(255,255,0,0.3)',
+						  label: {
+							  text: '轻度拥堵',
+							  style: {
+								  color: '#666'
+							  }
+						  }
+					  }, { // Moderate breeze
+						  from: maxData/5*3,
+						  to: maxData/5*4,
+						  color: 'rgba(255,102,0,0.3)',
+						  label: {
+							  text: '中度拥堵',
+							  style: {
+								  color: '#666'
+							  }
+						  }
+					  }, { // Fresh breeze
+						  from: maxData/5*4,
+						  to: maxData,
+						  color: 'rgba(204,0,0,0.3)',
+						  label: {
+							  text: '严重拥堵',
+							  style: {
+								  color: '#666'
+							  }
+						  }
+					  }];	
+				}else if(maxData==100){
+					signData=[{ // Light air
 						  from: 0,
 						  to: maxData/4,
 						  color: 'rgba(2,121,2,0.3)',
@@ -159,8 +232,8 @@ window.draw_charts=function(obj){
 							  }
 						  }
 					  }]
-					};
-				  return signDate;
+				};
+				  return signData;
 				})()
 		},
 		series:[{

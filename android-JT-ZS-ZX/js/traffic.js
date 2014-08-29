@@ -1,9 +1,10 @@
 var baseUrl = "http://mobile.trafficeye.com.cn:8000";
+var testUrl='http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test';
 //var baseUrl = "http://mobile.trafficeye.com.cn:8008/TrafficeyeSevice_test";
 //上bar和下bar的高度之和
 var offsetHeight = 100;
-var imgOffsetW = 20;
-var imgOffsetH = 200;
+var window_h = document.documentElement.clientHeight;
+var window_w = document.documentElement.clientWidth;
 //轮播图对象集合
 var res = [];
 var imageUrlRes = [];
@@ -44,81 +45,113 @@ ImageItem.prototype = {
     //延迟加载图片页面中包含的img元素
     loadCharts : function() {
         var me = this;
-		$("#lunboImg" + me.i).html("");
-		$("#lunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>")
-		var city=$.trim(paramJson.settingArea.split(',')[me.i].split('-')[0]);
-		var area=$.trim(paramJson.settingArea.split(',')[me.i].split('-')[1]);
-		$.ajax({
-			type:'get',
-			url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/trafficIndexChartData',
-			data:{
-				city:city,
-				area:area	
-			},
-			dataType:'jsonp',
-			success:function(data){
-				//alert(JSON.stringify(data.state));
-				//alert(JSON.stringify(data));
-				console.log(city+'-'+area);
-				if(data.state.code==0){
-					var theData=data.indexData;
-					var imgDraw=document.createElement('div');
-					imgDraw.id='imgDraw'+me.i;
-					imgDraw.style.height='315px';
-					$("#lunboImg" + me.i).append(imgDraw);
-					draw_charts({'id':'imgDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
-				}else if(data.state.code==-9){
-					alert(data.state.dest);	
-				};
-				
-			},
-			error:function(xmlHttpReq,textStatus,errorThrown){
-				alert('加载数据失败!请稍后重试');	
-			}
-			
-		});
-		/*$.ajax({
-			type:'get',
-			url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/trafficIndexChartData',
-			data:{
-				city:city,
-				area:area	
-			},
-			dataType:'jsonp',
-			success:function(data){
-				if(data.state.code==0){
-					var theData=data.indexData;
-					alert(JSON.stringify(theData));
-					var reDraw=document.createElement('div');
-					reDraw.id='reDraw'+me.i;
-					reDraw.style.height='315px';
-					$("#relunboImg" + me.i).append(reDraw);
-					draw_charts_copy({'id':'reDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':20});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
-				}
-				
-			},
-			error:function(xmlHttpReq,textStatus,errorThrown){
-				alert('加载数据失败!请稍后重试');	
-			}
-			
-		});*/
+		var city=$.trim(paramJson.split(',')[me.i].split('-')[0]);
+		var city_code=$.trim(paramJson.split(',')[me.i].split('-')[1]);
+		var area=$.trim(paramJson.split(',')[me.i].split('-')[2]);
+		var area_code=$.trim(paramJson.split(',')[me.i].split('-')[3]);
+		var typeIndex=$.trim(paramJson.split(',')[me.i].split('-')[4])
+		//console.log(city+','+city_code+','+area+','+area_code+','+typeIndex);
+		if(typeIndex==0){
+			oldCharts(me,city,city_code,area,area_code);
+		}else if(typeIndex==1){
+			oldCharts(me,city,city_code,area,area_code);
+			newCharts(me,city,city_code,area,area_code);
+		}else if(typeIndex==2){
+			newCharts(me,city,city_code,area,area_code);
+		};
 	}
 };
+function oldCharts(me,city,city_code,area,area_code){
+	$("#lunboImg" + me.i).html("");
+	//$("#lunboImg" + me.i).height(window_h-190);
+			$("#lunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
+	$.ajax({
+		type:'get',
+		url:testUrl+'/api/v4/trafficIndexChartData',
+		data:{
+			city:city,
+			area:area	
+		},
+		dataType:'jsonp',
+		success:function(data){
+			//alert(JSON.stringify(data));
+			if(data.state.code==0){
+				var theData=data.indexData;
+				//console.log(JSON.stringify(theData));
+				$("#degree_" +me.i).text("").append(theData.degree);
+				$("#speed_" +me.i).text("").append(theData.speed);
+				$("#month_" +me.i).text("").append(theData.publishedTime.split(" ")[0].split('-')[1]);
+				$("#day_" +me.i).text("").append(theData.publishedTime.split(" ")[0].split('-')[2]);
+				$("#time_" +me.i).text("").append(theData.publishedTime.split(" ")[1]);
+				$("#trafficindex_" +me.i).text("").append(theData.index[theData.index.length-1]);
+					
+					
+				var imgDraw=document.createElement('div');
+				imgDraw.id='imgDraw'+me.i;
+				imgDraw.style.height=window_h-190+'px';
+				$("#lunboImg" + me.i).append(imgDraw);
+				draw_charts({'id':'imgDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+			$('#mySwipe').height($('.wgay').eq(me.i).height());
+			}else if(data.state.code==-9){
+				alert(data.state.dest);	
+			};
+			
+		},
+		error:function(xmlHttpReq,textStatus,errorThrown){
+			alert('加载数据失败!请稍后重试');	
+		}
+		
+	});
+};
+function newCharts(me,city,city_code,area,area_code){
+	$("#relunboImg" + me.i).html("");
+	$("#relunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
+	$.ajax({
+		type:'get',
+		url:testUrl+'/api/v4/ctrafficIndexChartData',
+		data:{
+			code:city_code,
+			area:area_code	
+		},
+		dataType:'jsonp',
+		success:function(data){
+			//console.log(JSON.stringify(data));
+			if(data.state.code==0){
+				var theData=data.indexData;
+				//console.log(JSON.stringify(theData));
+				$("#redegree_" +me.i).text("").append(theData.degree);
+				$("#respeed_" +me.i).text("").append(theData.speed);
+				$("#remonth_" +me.i).text("").append(theData.publishedTime.split(" ")[0].split('-')[1]);
+				$("#reday_" +me.i).text("").append(theData.publishedTime.split(" ")[0].split('-')[2]);
+				$("#retime_" +me.i).text("").append(theData.publishedTime.split(" ")[1]);
+				$("#retrafficindex_" +me.i).text("").append(theData.index[theData.index.length-1]);
 
+
+				var reDraw=document.createElement('div');
+				reDraw.id='reDraw'+me.i;
+				reDraw.style.height=window_h-190+'px';
+				$("#relunboImg" + me.i).append(reDraw);
+				draw_charts_copy({'id':'reDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+		$('#mySwipe').height($('.wgay').eq(me.i).height());
+			}
+			
+		},
+		error:function(xmlHttpReq,textStatus,errorThrown){
+			alert('加载数据失败!请稍后重试');	
+		}
+		
+	});//设置第二张指数图
+};
 /**
  * 设置首页请求参数
  */
 function initByParam(obj) {
 	if (obj) {
 		obj = $.parseJSON(obj);
-		var area = obj.area;
-		var width = obj.width;
-		var height = obj.height;
-		var exrtra = obj.exrtra;
+		var allData = obj.area;
 			//baseUrl = obj.url;
-			density = obj.density;
-		var paramStr = "settingArea=" + area + "&width=" + width + "&height=" + height;
-		initIndex(paramStr);
+			//density = obj.density;
+		initIndex(allData);
 		
 	}
 };
@@ -126,21 +159,22 @@ function initByParam(obj) {
  * 根据请求参数 请求数据 并显示页面
  */
 function initIndex(paramStr) {
-	paramJson = getJsonByParamStr(paramStr);
-	if (!paramJson.settingArea) {
+	paramJson = paramStr;
+	if (!paramJson) {
 		return;
-}
+	}
 //分析参数对象并创建轮播图对象
-var results = paramJson.settingArea.split(',');
+var results = paramJson.split(',');
+//console.log(results)
 for (var i = 0, len = results.length; i < len; i++) {
 	var result = results[i].split("-");
 	if (result.length > 0) {
-		var city = result[0];
-		var area = result[1];
 		var obj = new LunBoObj();
-		obj.city = city;
-		obj.area = area;
-		obj.index = i;
+		obj.city = result[0];
+		obj.city_code = result[1];
+		obj.area = result[2];
+		obj.area_code = result[3];
+		obj.typeIndex = result[4];
 		res.push(obj);
 	}
 }
@@ -151,21 +185,16 @@ for (var i = 0, len = results.length; i < len; i++) {
 // imgH = containerSize.height - imgOffsetH;
 //生成静态结构
 for (var i = 0; i < res.length; i++) {
-	$.trim(res[i].area)
-
-	var str = "北京市交通委员会(www.bjjtw.gov.cn)发布的公开数据";
+	var typeIndex=$.trim(res[i].typeIndex);
 	var heplpage = "beijing";
 	if ($.trim(res[i].city) == "深圳") {
-		str = "深圳市交通委员会(szmap.sutpc.com)发布的公开数据";
 		heplpage = "shenzhen";
 	}else if($.trim(res[i].city) == "杭州"){
-				str = "杭州市综合交通研究中心(www.hzjtydzs.com)发布的公开数据"
 				heplpage = "hangzhou";
 			}else if($.trim(res[i].city) == "上海"){
-				str = "上海市城乡建设和交通发展研究院(www.jtcx.sh.cn)"
 				heplpage = "shanghai";
 			};
-	htmlObj = generalLunboHtmlIndex(res[i].city, res[i].area, i, str, heplpage,paramJson.width, paramJson.height);
+	htmlObj = generalLunboHtmlIndex(res[i].city,res[i].city_code, res[i].area, i, heplpage,typeIndex);
 	//console.log(reHtmlObj.html);
 	//console.log(JSON.stringify(obj));
 	obj.imgId = htmlObj.imgId;
@@ -174,34 +203,32 @@ for (var i = 0; i < res.length; i++) {
 	$("#indexCon").append(obj.html);
 	//创建Tab DOM结构
 	var tabHtml;
-	/*if (!isNavTabInited) {
-		tabObj = generalTabHtml(tabIndex, true);
-		isNavTabInited = true;
-	} else {
-		tabObj = generalTabHtml(tabIndex, false);
-	}*/
 	tabObj = generalTabHtml(tabIndex);
 	tabIndex++;
 
 	//把Tab结构加入到轮播图导航组件中
 	$("#tabNav").append(tabObj.html);
 	obj.tabId = tabObj.id;
-	//var url = baseUrl + "/api2/v3/trafficIndexpic?cityname=" + $.trim(res[i].city) + "&area=" + $.trim(res[i].area) + "&width=" + Math.floor(imgW*density) + "&height=" + Math.floor(imgH*density);
-	//imageUrlRes.push(url);
 	var item = new ImageItem(i);
 	imageObjRes.push(item);
-	//$("#" + htmlObj.imgId).css("width", imgW).css("height", imgH);
 };
 if (typeof(localStorage.cid)=="undefined") {
 		localStorage.cid=0;
 };
-run(localStorage.cid);
-getData();
+window.addEventListener('load',function(){
+	
+	run(localStorage.cid);
+	$('.wimg').each(function(){
+		$(this).height(window_h-190);
+	})
+});
+//getData();
 //请求网络,获取指数数据
 //reflesh();
 
 
 };
+
 /**
  * 分析参数字符串返回JSON对象
  * @param  {String} str 参数字符串
@@ -210,35 +237,6 @@ getData();
  * var str = "str1=111&str2=222";
  * var json = getJsonByParamStr(str);
  */
-function getJsonByParamStr(str) {
-	var params = str.split("&");
-	var param, key, val, paramJson = {};
-	for (var i = 0, len = params.length; i < len; i++) {
-		param = params[i].split("=");
-		key = param[0];
-		val = param[1];
-		if (key) {
-			paramJson[key] = val;
-		}
-	}
-	return paramJson;
-};
-/**
- * 设置页面宽高
- */
-/*function setContainer(width, height) {
-	var trafficContainerJQ = $("#trafficContainer");
-	var trafficContainerW = width || 320;
-	var trafficContainerH =height || 360;
-	//设置背景容器的大小
-	trafficContainerJQ.css("width", trafficContainerW).css("height", trafficContainerH);
-	//设置背景图片的大小
-	
-	return {
-		width : trafficContainerW,
-		height : trafficContainerH
-	};
-};*/
 
 /**
  * 生成tab页DOM结构()
@@ -267,135 +265,93 @@ function generalTabHtml(index) {
 /**
  * 生成交通实时信息DOM结构
  */
-function generalLunboHtmlIndex(city, area, index, str, heplpage,width,height) {
-	var lunboImgId = "lunboImg" + index;
+function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) {
 	var htmls = [];
-	if(document.getElementsByTagName('wgay').length==0){
-		htmls.push("<div class='wgay'>");
+	htmls.push("<div class='wgay'>");
+	if(typeIndex==0||typeIndex==1){
+		var lunboImgId = "lunboImg" + index;
+		htmls.push("<div class='t'>");
+		htmls.push("<div class='add' id='city_" + index + "'>" + city + " </div>");
+		htmls.push("<div class='d'><div id='area_" + index + "'>" + area + " </div>");
+		htmls.push("<div id ='degree_" + index + "'> -- </div></div>");
+		htmls.push("<div class='p'>平均速度:" + "<span id ='speed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='month_" + index + "'> -- </span>" + "月" + "<span id ='day_" + index + "'> -- </span>" + "日" + " " + "<span id ='time_" + index + "'> -- </span>" + "</div>");
+		htmls.push("<div class='s'>" + "<span id ='trafficindex_" + index + "'> -- </span>" + "</div>");
+		htmls.push("<div class='b'>");
+		htmls.push("<img id='share_" + index + "'  class='img3' src='images/icon_share.png' >");
+		//htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick='godetail("+city+","+width+","+height+")'> ");
+		htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "','" + city_code + "','" + typeIndex + "')\"> ");
+		htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
+		htmls.push("</div></div>");
+		
+		htmls.push("<div class='wimg' id='");
+		htmls.push(lunboImgId);
+		htmls.push("'>");
+		htmls.push("<b d ='jiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
+		htmls.push("</div>");
+		htmls.push("<script type='text/javascript'>	"+
+		"$(function() {document.getElementById('share_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#share_" + index + "').attr('src','images/icon_share_pressed.png');});"+
+		"document.getElementById('share_" + index + "').addEventListener('touchend', function() {"+
+		"window.share.shareMethod($('#city_" + index + "').text()+' '+$('#area_" + index + "').text());"+
+		"$('#share_" + index + "').attr('src','images/icon_share.png');});});");
+		
+		htmls.push("$(function() {document.getElementById('list_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#list_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
+		"document.getElementById('list_" + index + "').addEventListener('touchend', function() {"+
+		"$('#list_" + index + "').attr('src','images/icon_detail.png');});});");
+	
+		htmls.push("$(function() {document.getElementById('help_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#help_" + index + "').attr('src','images/icon_help_pressed.png');});"+
+		"document.getElementById('help_" + index + "').addEventListener('touchend', function() {"+
+		"$('#help_" + index + "').attr('src','images/icon_help_pressed.png');});});");
+		htmls.push("</script>");//第一张图的dom
 	};
-	htmls.push("<div class='t'>");
-	htmls.push("<div class='add' id='city_" + index + "'>" + city + " </div>");
-	htmls.push("<div class='d'><div id='area_" + index + "'>" + area + " </div>");
-	htmls.push("<div id ='degree_" + index + "'> -- </div></div>");
-	htmls.push("<div class='p'>平均速度:" + "<span id ='speed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='month_" + index + "'> -- </span>" + "月" + "<span id ='day_" + index + "'> -- </span>" + "日" + " " + "<span id ='time_" + index + "'> -- </span>" + "</div>");
-	htmls.push("<div class='s'>" + "<span id ='trafficindex_" + index + "'> -- </span>" + "</div>");
-    htmls.push("<div class='b'>");
-	htmls.push("<img id='share_" + index + "'  class='img3' src='images/icon_share.png' >");
-	//htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick='godetail("+city+","+width+","+height+")'> ");
-	htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "'," + width + "," + height + ")\"> ");
-	htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
-	htmls.push("</div></div>");
-    
-	htmls.push("<div class='wimg' id='");
-	htmls.push(lunboImgId);
-	htmls.push("'>");
-	htmls.push("<b d ='jiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
-	htmls.push("</div>");
-	htmls.push("<div class='ly'>数据来源:" + str + "</div>");
-	htmls.push("<script type='text/javascript'>	"+
-	"$(function() {document.getElementById('share_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#share_" + index + "').attr('src','images/icon_share_pressed.png');});"+
-	"document.getElementById('share_" + index + "').addEventListener('touchend', function() {"+
-	"window.share.shareMethod($('#city_" + index + "').text()+' '+$('#area_" + index + "').text());"+
-	"$('#share_" + index + "').attr('src','images/icon_share.png');});});");
+	if(typeIndex==1||typeIndex==2){
+		
+		var relunboImgId = "relunboImg" + index;
+		htmls.push("<div class='t'>");
+		htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
+		htmls.push("<div class='d'><div id='rearea_" + index + "'>" + area + " </div>");
+		htmls.push("<div id ='redegree_" + index + "'> -- </div></div>");
+		htmls.push("<div class='p'>平均速度:" + "<span id ='respeed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='remonth_" + index + "'> -- </span>" + "月" + "<span id ='reday_" + index + "'> -- </span>" + "日" + " " + "<span id ='retime_" + index + "'> -- </span>" + "</div>");
+		htmls.push("<div class='s'>" + "<span id ='retrafficindex_" + index + "'> -- </span>" + "</div>");
+		htmls.push("<div class='b'>");
+		htmls.push("<img id='reshare_" + index + "'  class='img3' src='images/icon_share.png' >");
+		//htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick='godetail("+city+","+width+","+height+")'> ");
+		htmls.push("<img id='relist_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "','" + city_code + "','" + typeIndex + "')\"> ");
+		htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
+		htmls.push("</div></div>");
+		
+		htmls.push("<div class='wimg' id='");
+		htmls.push(relunboImgId);
+		htmls.push("'>");
+		htmls.push("<b d ='rejiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
+		htmls.push("</div>");
+		htmls.push("<script type='text/javascript'>	"+
+		"$(function() {document.getElementById('reshare_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#reshare_" + index + "').attr('src','images/icon_share_pressed.png');});"+
+		"document.getElementById('reshare_" + index + "').addEventListener('touchend', function() {"+
+		"window.share.shareMethod($('#recity_" + index + "').text()+' '+$('#rearea_" + index + "').text());"+
+		"$('#reshare_" + index + "').attr('src','images/icon_share.png');});});");
+		
+		htmls.push("$(function() {document.getElementById('relist_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#relist_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
+		"document.getElementById('relist_" + index + "').addEventListener('touchend', function() {"+
+		"$('#relist_" + index + "').attr('src','images/icon_detail.png');});});");
 	
-	htmls.push("$(function() {document.getElementById('list_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#list_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
-	"document.getElementById('list_" + index + "').addEventListener('touchend', function() {"+
-	"$('#list_" + index + "').attr('src','images/icon_detail.png');});});");
-
-	htmls.push("$(function() {document.getElementById('help_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#help_" + index + "').attr('src','images/icon_help_pressed.png');});"+
-	"document.getElementById('help_" + index + "').addEventListener('touchend', function() {"+
-	"$('#help_" + index + "').attr('src','images/icon_help_pressed.png');});});");
-	htmls.push("</script>");//第一张图的dom
+		htmls.push("$(function() {document.getElementById('rehelp_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#rehelp_" + index + "').attr('src','images/icon_help_pressed.png');});"+
+		"document.getElementById('rehelp_" + index + "').addEventListener('touchend', function() {"+
+		"$('#rehelp_" + index + "').attr('src','images/icon_help_pressed.png');});});");
+		htmls.push("</script></div>");//第二张图的dom
+	};
 	
 	
-	var relunboImgId = "relunboImg" + index;
-	htmls.push("<div class='t'>");
-	htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
-	htmls.push("<div class='d'><div id='rearea_" + index + "'>" + area + " </div>");
-	htmls.push("<div id ='redegree_" + index + "'> -- </div></div>");
-	htmls.push("<div class='p'>平均速度:" + "<span id ='respeed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='remonth_" + index + "'> -- </span>" + "月" + "<span id ='reday_" + index + "'> -- </span>" + "日" + " " + "<span id ='retime_" + index + "'> -- </span>" + "</div>");
-	htmls.push("<div class='s'>" + "<span id ='retrafficindex_" + index + "'> -- </span>" + "</div>");
-    htmls.push("<div class='b'>");
-	htmls.push("<img id='reshare_" + index + "'  class='img3' src='images/icon_share.png' >");
-	//htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick='godetail("+city+","+width+","+height+")'> ");
-	htmls.push("<img id='relist_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "'," + width + "," + height + ")\"> ");
-	htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
-	htmls.push("</div></div>");
-    
-	htmls.push("<div class='wimg' id='");
-	htmls.push(relunboImgId);
-	htmls.push("'>");
-	htmls.push("<b d ='rejiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
-	htmls.push("</div>");
-	htmls.push("<div class='ly'>数据来源:" + str + "</div>");
-	htmls.push("<script type='text/javascript'>	"+
-	"$(function() {document.getElementById('reshare_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#reshare_" + index + "').attr('src','images/icon_share_pressed.png');});"+
-	"document.getElementById('reshare_" + index + "').addEventListener('touchend', function() {"+
-	"window.share.shareMethod($('#recity_" + index + "').text()+' '+$('#rearea_" + index + "').text());"+
-	"$('#reshare_" + index + "').attr('src','images/icon_share.png');});});");
-	
-	htmls.push("$(function() {document.getElementById('relist_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#relist_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
-	"document.getElementById('relist_" + index + "').addEventListener('touchend', function() {"+
-	"$('#relist_" + index + "').attr('src','images/icon_detail.png');});});");
-
-	htmls.push("$(function() {document.getElementById('rehelp_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#rehelp_" + index + "').attr('src','images/icon_help_pressed.png');});"+
-	"document.getElementById('rehelp_" + index + "').addEventListener('touchend', function() {"+
-	"$('#rehelp_" + index + "').attr('src','images/icon_help_pressed.png');});});");
-	htmls.push("</script></div>");
 	return {
 		imgId : lunboImgId,
 		html : htmls.join("")
 	};
 };
-/*function reWriteHTML(city, area, index, str, heplpage,width,height) {
-	var relunboImgId = "relunboImg" + index;
-	htmls.push("<div class='t'>");
-	htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
-	htmls.push("<div class='d'><div id='rearea_" + index + "'>" + area + " </div>");
-	htmls.push("<div id ='redegree_" + index + "'> -- </div></div>");
-	htmls.push("<div class='p'>平均速度:" + "<span id ='respeed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='remonth_" + index + "'> -- </span>" + "月" + "<span id ='reday_" + index + "'> -- </span>" + "日" + " " + "<span id ='retime_" + index + "'> -- </span>" + "</div>");
-	htmls.push("<div class='s'>" + "<span id ='retrafficindex_" + index + "'> -- </span>" + "</div>");
-    htmls.push("<div class='b'>");
-	htmls.push("<img id='reshare_" + index + "'  class='img3' src='images/icon_share.png' >");
-	//htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick='godetail("+city+","+width+","+height+")'> ");
-	htmls.push("<img id='relist_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "'," + width + "," + height + ")\"> ");
-	htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
-	htmls.push("</div></div>");
-    
-	htmls.push("<div class='wimg' id='");
-	htmls.push(relunboImgId);
-	htmls.push("'>");
-	htmls.push("<b d ='rejiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
-	htmls.push("</div>");
-	htmls.push("<div class='ly'>数据来源:" + str + "</div>");
-	htmls.push("<script type='text/javascript'>	"+
-	"$(function() {document.getElementById('reshare_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#reshare_" + index + "').attr('src','images/icon_share_pressed.png');});"+
-	"document.getElementById('reshare_" + index + "').addEventListener('touchend', function() {"+
-	"window.share.shareMethod($('#recity_" + index + "').text()+' '+$('#rearea_" + index + "').text());"+
-	"$('#reshare_" + index + "').attr('src','images/icon_share.png');});});");
-	
-	htmls.push("$(function() {document.getElementById('relist_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#relist_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
-	"document.getElementById('relist_" + index + "').addEventListener('touchend', function() {"+
-	"$('#relist_" + index + "').attr('src','images/icon_detail.png');});});");
-
-	htmls.push("$(function() {document.getElementById('rehelp_" + index + "').addEventListener('touchstart', function() {"+
-	"$('#rehelp_" + index + "').attr('src','images/icon_help_pressed.png');});"+
-	"document.getElementById('rehelp_" + index + "').addEventListener('touchend', function() {"+
-	"$('#rehelp_" + index + "').attr('src','images/icon_help_pressed.png');});});");
-	htmls.push("</script></div>");
-	return {
-		imgId : lunboImgId,
-		html : htmls.join("")
-	};
-};*/
 
 
 
@@ -427,10 +383,7 @@ function run(index) {
         }
 	});
 }
-/**
- * 请求指数数据 并显示
- */
-function getData() {
+/*function reflesh() {
 	if(htmlObj==null){
 		alert("数据未加载完成,请稍候刷新!");
 		return;
@@ -438,108 +391,6 @@ function getData() {
 	if (!paramJson.settingArea) {
 		return;
 	}
-	var date = new Date();
-	var items = [];
-	//alert(paramJson.settingArea);
-	//请求网络,获取指数数据
-	$.ajax({
-		
-		url : baseUrl +"/api2/v3/trafficIndexJsonp",
-		type : 'GET',
-		//async : false,
-		data : {
-			cityname : $.trim(paramJson.settingArea),
-			areaname : true
-		},beforeSend: function(XMLHttpRequest){
-			//alert("请求发出啦!------"+date.getTime() );
-		},
-		dataType : 'jsonp',
-		jsonp : 'callback',
-		//timeout:3000,
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("暂时没有数据!");
-			//alert("请求失败啦!------"+date.getTime() );
-		},
-
-		success : function(result) {
-		//alert("请求成功啦!------"+date.getTime() );
-			$.each(result.trafficIndexList, function(i, item) {
-				items.push(item);
-			});
-			for (var i = 0; i < res.length; i++) {
-				for (var j = 0; j < items.length; j++) {
-
-					var item = items[j];
-					if ($.trim(res[i].area) == $.trim(item.area)) {
-						var obj = res[i];
-						$("#degree_" + i).text("").append(item.degree);
-						$("#speed_" + i).text("").append(item.speed);
-						$("#month_" + i).text("").append(item.publishedDate.split("-")[1]);
-						$("#day_" + i).text("").append(item.publishedDate.split("-")[2]);
-						$("#time_" + i).text("").append(item.publishedTime);
-						$("#trafficindex_" + i).text("").append(item.index);
-						obj.imgId = htmlObj.imgId;
-						obj.html = htmlObj.html;
-					}
-				}
-			}
-			//alert("数据更新成功!");
-		}
-	});
-	/*$.ajax({
-		
-		url : baseUrl +"/api2/v3/trafficIndexJsonp",
-		type : 'GET',
-		//async : false,
-		data : {
-			cityname : $.trim(paramJson.settingArea),
-			areaname : true
-		},beforeSend: function(XMLHttpRequest){
-			//alert("请求发出啦!------"+date.getTime() );
-		},
-		dataType : 'jsonp',
-		jsonp : 'callback',
-		//timeout:3000,
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("暂时没有数据!");
-			//alert("请求失败啦!------"+date.getTime() );
-		},
-
-		success : function(result) {
-		//alert("请求成功啦!------"+date.getTime() );
-			$.each(result.trafficIndexList, function(i, item) {
-				items.push(item);
-			});
-			for (var i = 0; i < res.length; i++) {
-				for (var j = 0; j < items.length; j++) {
-
-					var item = items[j];
-					if ($.trim(res[i].area) == $.trim(item.area)) {
-						var obj = res[i];
-						$("#redegree_" + i).text("").append(item.degree);
-						$("#respeed_" + i).text("").append(item.speed);
-						$("#remonth_" + i).text("").append(item.publishedDate.split("-")[1]);
-						$("#reday_" + i).text("").append(item.publishedDate.split("-")[2]);
-						$("#retime_" + i).text("").append(item.publishedTime);
-						$("#retrafficindex_" + i).text("").append(item.index);
-						obj.html = htmlObj.html;
-					}
-				}
-			}
-			//alert("数据更新成功!");
-		}
-	});*/
-	 
-}
-function reflesh() {
-	if(htmlObj==null){
-		alert("数据未加载完成,请稍候刷新!");
-		return;
-	}
-	if (!paramJson.settingArea) {
-		return;
-	}
-	var date = new Date();
 	var items = [];
 	//请求网络,获取指数数据
 	$.ajax({
@@ -572,10 +423,10 @@ function reflesh() {
 					//alert(item);
 					if ($.trim(res[i].area) == $.trim(item.area)) {
 						var obj = res[i];
-						obj.imgW = imgW;
-						obj.imgH = imgH;
+						//obj.imgW = imgW;
+						//obj.imgH = imgH;
 						//alert(imgW+"-"+imgH);
-						$("#test").html("width=" + Math.floor(imgW*density) + "&height=" + Math.floor(imgH*density));
+						//$("#test").html("width=" + Math.floor(imgW*density) + "&height=" + Math.floor(imgH*density));
 						$("#degree_" + i).text("").append(item.degree);
 						$("#speed_" + i).text("").append(item.speed);
 						$("#month_" + i).text("").append(item.publishedDate.split("-")[1]);
@@ -592,7 +443,7 @@ function reflesh() {
 			alert("数据更新成功!");
 		}
 	});
-}
+}*/
 //-------------------------------------------indexList-----------------------------------
 /**
  * 初始化调用
@@ -616,6 +467,8 @@ var myScroll = null;
  */
 function generalLunboHtmlList() {
 	var city = $.trim(localStorage.city);
+	var city_code=$.trim(localStorage.city_code);
+	var typeIndex=$.trim(localStorage.typeIndex);
 	var helppage = "beijing";
 	if (city == "深圳") {
 		helppage = "shenzhen";
@@ -642,92 +495,153 @@ function generalLunboHtmlList() {
 	htmls.push("<div class='waiting' id='waiting'>");
 	htmls.push("<b  style='margin:0 auto;position:absolute;top:35%;left:30%;' >正在努力加载中...</b>");
 	htmls.push("</div>");
+	htmls.push("<script type='text/javascript'>	" + "$(function() {document.getElementById('share').addEventListener('touchstart', function() {$('#share').attr('src','images/icon_share_pressed.png');});" + "document.getElementById('share').addEventListener('touchend', function() {" + "window.share.shareMethod($('#city').text());$('#share').attr('src','images/icon_share.png');});});");
+
+
+	htmls.push("$(function() {document.getElementById('help').addEventListener('touchstart', function() {" + "$('#help').attr('src','images/icon_help_pressed.png');});" + "document.getElementById('help').addEventListener('touchend', function() {" + "$('#help').attr('src','images/icon_help.png');});});");
+	htmls.push("</script>");
 	
 	var html = htmls.join("")
 	$("#shadow").append(html);
 	
-	$.ajax({
-		url : baseUrl+"/api2/v3/trafficIndexJsonp",
+	//alert(typeIndex);
+	if(typeIndex==0||typeIndex==1){
+		//alert('不该执行');
+		$.ajax({
+			url : baseUrl+"/api2/v3/trafficIndexJsonp",
+			type : 'GET',
+			async : false,
+			data : {
+				cityname : city,
+				areaname : false
+			},
+			dataType : 'jsonp',
+			jsonp : 'callback',
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("error:" + errorThrown);
+			},
+	
+			success : function(result) {
+				var htmls1 = [];
+				var str = "北京市交通委员会";
+				if (city == "深圳") {
+					str = "深圳市交通委员会";
+				}else if(city == "杭州"){
+					str = "杭州市综合交通研究中心"
+				}else if(city == "上海"){
+					str = "上海市城乡建设和交通发展研究院"
+				};
+				htmls1.push('<h3 class="zsTit">'+str+'</h3>');
+				$.each(result.trafficIndexList, function(i, item) {
+					if (!time) {
+						time = item.publishedDate.substring(5) + " " + item.publishedTime
+					};
+					var bgcolor = "#008000";
+					var textcolor = "white";
+					if (item.degree == "畅通") {
+						bgcolor = "#008000";
+	
+					} else if (item.degree == "基本畅通"||item.degree == "较畅通") {
+						bgcolor = "#00FF00";
+						textcolor = "black";
+					} else if (item.degree == "轻度拥堵"||item.degree == "拥挤") {
+						textcolor = "black";
+						if (item.cityName == "北京"||item.cityName == "上海") {
+							bgcolor = "#FFFF00";
+						} else {
+							bgcolor = "#FF6600";
+						};
+	
+					} else if (item.degree == "中度拥堵") {
+						textcolor = "black";
+						bgcolor = "#FF6600";
+					} else if (item.degree == "严重拥堵"||item.degree == "堵塞") {
+						bgcolor = "#CC0000";
+					} else if (item.degree == "拥堵") {
+						bgcolor = "#CC0000";
+					} else if (item.degree == "缓行") {
+						textcolor = "black";
+						bgcolor = "#FFFF00";
+					};
+					
+			
+					htmls1.push("<div  style='background: " + bgcolor + "; opacity: .60;display:block ;margin:0px;padding:0px;border-bottom:1px #ccc solid;border-left:1px #ccc solid;border-right:1px #ccc solid;font-size: 13px ;height:24px'>	<span style='text-align:center;float:left;margin-left: 8px;width:130px;color:" + textcolor + "'>" + item.area + " </span><span  style='margin-left: 10px;color:" + textcolor + ";'> " + item.index + " </span><span style='margin-left: 20px;color:" + textcolor + ";'>  " + item.degree + "</span><span style='float:right;margin-right:15px;color:" + textcolor + ";'> " + item.speed + "km/h </span></div>");
+	
+				});//老数据列表
+				
+				var html = htmls1.join("")
+				// $("#shadow").append(html);
+				$("#listRes").html(html);
+				$("#time").html(time);
+				$("#waiting").hide();
+				
+				if (!myScroll) {
+					myScroll = new IScroll('#listContainer', {mouseWheel:true});
+				}
+				setTimeout(function () {
+					myScroll.refresh();
+				}, 10);
+			}
+		});
+	};
+	if(typeIndex==1||typeIndex==2){
+		$.ajax({
+		url : testUrl+"/api/v4/ctrafficIndexList",
 		type : 'GET',
-		async : false,
 		data : {
-			cityname : city,
-			areaname : false
+			code : city_code
 		},
 		dataType : 'jsonp',
-		jsonp : 'callback',
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			alert("error:" + errorThrown);
 		},
 
 		success : function(result) {
-		var htmls1 = [];
-			var str = "北京市交通委员会(www.bjjtw.gov.cn)发布的公开数据";
-			if (city == "深圳") {
-				str = "深圳市交通委员会(szmap.sutpc.com)发布的公开数据";
-			}else if(city == "杭州"){
-				str = "杭州市综合交通研究中心(www.hzjtydzs.com)发布的公开数据"
-			}else if(city == "上海"){
-				str = "上海市城乡建设和交通发展研究院<br>(www.jtcx.sh.cn)"
-			};
-			$.each(result.trafficIndexList, function(i, item) {
-				if (!time) {
-					time = item.publishedDate.substring(5) + " " + item.publishedTime
-				};
-				var bgcolor = "#008000";
-				var textcolor = "white";
-				if (item.degree == "畅通") {
-					bgcolor = "#008000";
-
-				} else if (item.degree == "基本畅通"||item.degree == "较畅通") {
-					bgcolor = "#00FF00";
-					textcolor = "black";
-				} else if (item.degree == "轻度拥堵"||item.degree == "拥挤") {
-					textcolor = "black";
-					if (item.cityName == "北京"||item.cityName == "上海") {
-						bgcolor = "#FFFF00";
-					} else {
-						bgcolor = "#FF6600";
+			if(result.state.code==0){
+				var htmls1 = [];
+				htmls1.push('<h3 class="zsTit">四维路况指数</h3>');
+				var time=result.publishedTime.split(' ')[0].substring(5)+' '+result.publishedTime.split(' ')[1].substring(0,5)
+				console.log(JSON.stringify(result.trafficIndexList));
+				$.each(result.trafficIndexList, function(i, item) {
+					var bgcolor = "#008000";
+					var textcolor = "#000";
+					
+					if(item.degree=='畅通'){
+						bgcolor='rgb(0,136,0)';
+					}else if(item.degree=='基本畅通'){
+						bgcolor='rgb(153,220,0)';
+					}else if(item.degree=='缓慢'){
+						bgcolor='rgb(255,255,1)';
+					}else if(item.degree=='拥堵'){
+						bgcolor='rgb(255,187,0)';
+					}else if(item.degree=='严重拥堵'){
+						bgcolor='rgb(254,2,1)';
+					}else if(item.degree=='路网瘫痪'){
+						bgcolor='rgb(139,1,1)';
+						textcolor = "#fff";
 					};
-
-				} else if (item.degree == "中度拥堵") {
-					textcolor = "black";
-					bgcolor = "#FF6600";
-				} else if (item.degree == "严重拥堵"||item.degree == "堵塞") {
-					bgcolor = "#CC0000";
-				} else if (item.degree == "拥堵") {
-					bgcolor = "#CC0000";
-				} else if (item.degree == "缓行") {
-					textcolor = "black";
-					bgcolor = "#FFFF00";
+			
+					htmls1.push("<div  style='background: " + bgcolor + "; opacity: .60;display:block ;margin:0px;padding:0px;border-bottom:1px #ccc solid;border-left:1px #ccc solid;border-right:1px #ccc solid;font-size: 13px ;height:24px'>	<span style='text-align:center;float:left;margin-left: 8px;width:130px;color:" + textcolor + "'>" + item.area + " </span><span  style='margin-left: 10px;color:" + textcolor + ";'> " + item.index + " </span><span style='margin-left: 20px;color:" + textcolor + ";'>  " + item.degree + "</span><span style='float:right;margin-right:15px;color:" + textcolor + ";'> " + item.speed + "km/h </span></div>");
+	
+				});//老数据列表
+				
+				var html = htmls1.join("")
+				$("#listRes").html($("#listRes").html()+html);
+				$("#time").html()==''&&($("#time").html(time));
+				$("#waiting")&&($("#waiting").hide());
+				if (!myScroll) {
+					myScroll = new IScroll('#listContainer', {mouseWheel:true});
 				}
-				;
-		
-				htmls1.push("<div  style='background: " + bgcolor + "; opacity: .60;display:block ;margin:0px;padding:0px;border-bottom:1px #ccc solid;border-left:1px #ccc solid;border-right:1px #ccc solid;font-size: 13px ;height:24px'>	<span style='text-align:center;float:left;margin-left: 8px;width:130px;color:" + textcolor + "'>" + item.area + " </span><span  style='margin-left: 10px;color:" + textcolor + ";'> " + item.index + " </span><span style='margin-left: 20px;color:" + textcolor + ";'>  " + item.degree + "</span><span style='float:right;margin-right:15px;color:" + textcolor + ";'> " + item.speed + "km/h </span></div>");
-
-			});
-			
-			// htmls1.push("<div class='ly2' >数据来源:" + str + "</div>");
-			htmls1.push("<script type='text/javascript'>	" + "$(function() {document.getElementById('share').addEventListener('touchstart', function() {$('#share').attr('src','images/icon_share_pressed.png');});" + "document.getElementById('share').addEventListener('touchend', function() {" + "window.share.shareMethod($('#city').text());$('#share').attr('src','images/icon_share.png');});});");
-
-
-			htmls1.push("$(function() {document.getElementById('help').addEventListener('touchstart', function() {" + "$('#help').attr('src','images/icon_help_pressed.png');});" + "document.getElementById('help').addEventListener('touchend', function() {" + "$('#help').attr('src','images/icon_help.png');});});");
-			htmls1.push("</script>");
-			var html = htmls1.join("")
-			// $("#shadow").append(html);
-			$("#listRes").html(html);
-			$("#time").html(time);
-			//$("#datasource").html("数据来源:" + str );
-			$("#waiting").hide();
-			
-			if (!myScroll) {
-				myScroll = new IScroll('#listContainer', {mouseWheel:true});
-			}
-			setTimeout(function () {
-		        myScroll.refresh();
-		    }, 10);
+				setTimeout(function () {
+					myScroll.refresh();
+				}, 10);
+			}else if(result.state.code==-9){
+				alert('遇到未知错误');	
+			};
 		}
 	});
+	};
+	
 
 };
 (function() {
@@ -735,7 +649,7 @@ function generalLunboHtmlList() {
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
 		//initByParam(window.indexInt.indexIntMethod());
-		initByParam("{\"area\":\"上海-总路网(快速路),深圳-全市, 北京-二环内\",\"url\":\"http:\/\/mobile.trafficeye.com.cn:8000\",\"density\":\"2.0\"}");
+		initByParam('{"area":"北京-110000-全路网-110000-1,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
 
 		}else{
 			init();
