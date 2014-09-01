@@ -642,8 +642,8 @@ function generalLunboHtmlList() {
 	$(function(){
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
-		//initByParam(window.indexInt.indexIntMethod());
-		initByParam('{"area":"北京-110000-全路网-110000-1,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
+		initByParam(window.indexInt.indexIntMethod());
+		//initByParam('{"area":"北京-110000-全路网-110000-1,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
 
 		}else{
 			init();
