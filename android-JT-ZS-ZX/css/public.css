@@ -58,6 +58,9 @@ a:active {
 	top:5px;
 }
 .t {
+	overflow:hidden;
+	width:100%;
+	clear:both;
 	color:#181818;
 	position:relative
 }
