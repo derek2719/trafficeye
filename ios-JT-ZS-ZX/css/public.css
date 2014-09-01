@@ -57,6 +57,7 @@ a:active {
 	position:relative;
 	top:5px;
 }
+.dataSource{position:absolute;right:10px;top:45px;display:inline;padding:0px 5px;border-radius:5px;background:#ED202E;font-size:13px;color:#fff;font-family:Microsoft Yahei;}
 .t {
 	color:#181818;
 	position:relative
@@ -176,6 +177,7 @@ a:active {
 	line-height:140%
 }
 .wimg {
+	position:relative;
 	background:rgba(255, 255, 255, 0.5);
 	min-height:170px;
 	margin:10px 5px 5px 9px;
@@ -203,15 +205,14 @@ a:active {
  	width:100%;
 }
 .nav {
-	position:absolute;
+	/*position:absolute;
 	bottom:5px;
 	left:0;
-	right:0;
+	right:0;*/
 	text-align:center;
 	font-size:0;
 	line-height:0;
-	margin-top:5px;
-	margin-bottom:10px
+	padding:10px 0;
 }
 .nav1 {
 	position:absolute;

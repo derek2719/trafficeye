@@ -9,7 +9,7 @@
  * date:2014-07-06
  */
 
-(function(window){
+(function(window,$){
 	var theCityhull='北京';
 	var theAreahull='全路网';
 	function UserInfoManager(){
@@ -93,7 +93,6 @@
 			//保存请求URL
 			this.SERVERURL = Trafficeye.BASE_RIDE_URL + "/api/v4/";
 			//this.SERVERURL = "http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test" + "/api/v4/";
-
 			$(window).onbind("load",this.pageLoad,this);
 			$(window).onbind("touchmove",this.pageMove,this);
 			this.bindEvent();
@@ -844,7 +843,8 @@
 			html.push('<div class="map_2">');
 			html.push('<h3 class="map_bt" id="theTrafficItem'+id+'">交通指数<span>当前指数: </span><span id="theTrafficItem_index'+id+'" style="color:#157dfb;margin-left:0;"></span><span id="trafficIndexTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
 			html.push('<div id="theTrafficWrap" style="display:none;">');
-			html.push('<img id="trafficIndexImg' + id + '" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
+			html.push('<img id="trafficIndexImg'+id+'" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
+			html.push('<div id="reDraw'+id+'" style="width:'+w+'px;height:'+h+'px;"></div>');
 			html.push('</div></div></div>');
 			return html.join('');
 			
@@ -852,6 +852,7 @@
 		getTrafficIndex:function(){
 			var _this=this;
 			var code = this.cityList[this.cityIndex];
+			//console.log(code);
 			//是否当前定位城市 0是 / 1否
 			var isLoc = this.currentCityCode == code ? 0 : 1;
 			var options = {};
@@ -871,10 +872,43 @@
 				_this.initiScroll();
 				e.stopPropagation();
 			});
-			$.ajaxJSONP({
+			$.ajax({
+				url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/ctrafficIndexChartData',
+				data:{
+					code:code,
+					area:code	
+				},
+				dataType:"jsonp",
+				success:function(data){
+					console.log(JSON.stringify(data));
+					if(data.state.code==0){
+					var data=data.indexData;
+					var time=data.publishedTime.substring(11);
+					var index=data.index[data.index.length-1];
+					$("#trafficIndexTime" + code).html(time);
+					$('#theTrafficItem_index'+code).html(index);
+					//var reDraw=document.createElement('div');
+					//reDraw.id='reDraw';
+					//reDraw.style.width=document.documentElement.clientWidth-20+'px';
+					//$("#theTrafficWrap").append(reDraw);
+					//console.log(draw_charts_copy);
+					$('#co_reDraw'+code).html();
+					draw_charts_copy({'id':'reDraw'+code,'city':data.city,'place':'全市','yData1':data.index_lastweek,'yData2':data.index,'maxData':data.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+					//draw_charts_copy({'id':'reDraw'+code,'city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});
+					$("#trafficIndexImg"+code).hide();
+					}else{
+						alert('遇到未知错误!');	
+					};
+				},
+				error: function(){
+					alert('请求失败!');
+				}
+			});
+			/*$.ajaxJSONP({
 				url:reqUrl,
 				context:this,
 				success:function(data){
+					//console.log(JSON.stringify(data));
 					var state = data.state.code - 0;
 					if(state === 0){
 						var imgUrl = data.url || "";
@@ -885,7 +919,7 @@
 							//获取图片dom
 							var img = $("#trafficIndexImg" + code);
 							//加载图片
-							Trafficeye.imageLoaded(img,imgUrl);
+							//Trafficeye.imageLoaded(img,imgUrl);
 							theCityhull=imgUrl.split('?')[1].split('&')[0].split('=')[1];
 							theAreahull=imgUrl.split('?')[1].split('&')[1].split('=')[1]
 							//注册交通指数图片点击事件
@@ -913,7 +947,7 @@
 						//Trafficeye.trafficeyeAlert(msg);
 					}
 				}
-			});
+			});*/
 		},
 		/**
 		 * 获取交通资讯数据
@@ -1122,6 +1156,7 @@
 				url:reqUrl,
 				context:this,
 				success:function(data){
+					//console.log(JSON.stringify(data));
 					var state = data.state.code - 0;
 					if(state === 0){
 						var imgUrl = data.url || "";
@@ -1222,4 +1257,4 @@
 			Trafficeye.pageManager.sendCityServer(index);
 		};
 	});
-}(window));
+}(window,Zepto));

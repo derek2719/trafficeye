@@ -16,10 +16,13 @@
         <link rel="stylesheet" href="css/base.css" type="text/css">
 		<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:1.5)" href="css/mdpibase.css">
 		<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:2.0)" href="css/hdpibase.css">
+        <style type="text/css">
+		.zsTit{font-size:16px;font-weight:normal;text-align:center;margin:10px 0 5px;line-height:14px;}
+        </style>
 		<script type="text/javascript" src="js/jquery1.9.1.js"></script>
 		<script type="text/javascript" src="js/iscroll.js"></script>
 	</head>
-	<body>
+	<body style="overflow:hidden;">
 
 		<div style="position:relative;z-index:99;height:44px;line-height:44px;text-align:center;-webkit-box-shadow:0 2px 3px rgba(0, 0, 0, .2);background:#fff;">
 			<img src="images/icon_back.png" style="float:left;width:22px;height:22px;padding:10px;" id="back" onclick="window.location.href='index.html';"/>
@@ -33,7 +36,7 @@
 			<!--<div id="loading" align="center"><img src="images/waiting.gif" align="center">loadings</div>-->
 			<div id="indexCon" style="position: relative; left: 0px; top: 0px; width: 100%;">
 				<div id='shadow'></div>
-				<div id="listContainer" style="position:absolute;top:60px;bottom:60px;width:360px;overflow:hidden;">
+				<div id="listContainer" style="position:absolute;top:60px;bottom:60px;width:100%;overflow:hidden;">
 					<div id="listRes" style="position:absolute;top:0px;width:100%;"></div>
 				</div>
 				<div class='ly2' id="datasource" style="color:#181818;"></div>

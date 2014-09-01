@@ -51,13 +51,11 @@ ImageItem.prototype = {
 		var area_code=$.trim(paramJson.split(',')[me.i].split('-')[3]);
 		var typeIndex=$.trim(paramJson.split(',')[me.i].split('-')[4])
 		//console.log(city+','+city_code+','+area+','+area_code+','+typeIndex);
-		if(typeIndex==0){
-			oldCharts(me,city,city_code,area,area_code);
-		}else if(typeIndex==1){
-			oldCharts(me,city,city_code,area,area_code);
+		if(typeIndex==1||typeIndex==2){
 			newCharts(me,city,city_code,area,area_code);
-		}else if(typeIndex==2){
-			newCharts(me,city,city_code,area,area_code);
+		}
+		if(typeIndex==0||typeIndex==1){
+			oldCharts(me,city,city_code,area,area_code);
 		};
 	}
 };
@@ -211,9 +209,6 @@ if (typeof(localStorage.cid)=="undefined") {
 window.addEventListener('load',function(){
 	
 	run(localStorage.cid);
-	/*$('.wimg').each(function(){
-		$(this).height(window_h-190);
-	})*/
 });
 //getData();
 //请求网络,获取指数数据
@@ -261,43 +256,6 @@ function generalTabHtml(index) {
 function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) {
 	var htmls = [];
 	htmls.push("<div class='wgay' style='width:"+window_w+"px;'>");
-	if(typeIndex==0||typeIndex==1){
-		var lunboImgId = "lunboImg" + index;
-		htmls.push("<div class='t'>");
-		htmls.push("<div class='add' id='city_" + index + "'>" + city + " </div>");
-		htmls.push("<div class='d'><div id='area_" + index + "'>" + area + " </div>");
-		htmls.push("<div id ='degree_" + index + "'> -- </div></div>");
-		htmls.push("<div class='p'>平均速度:" + "<span id ='speed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='month_" + index + "'> -- </span>" + "月" + "<span id ='day_" + index + "'> -- </span>" + "日" + " " + "<span id ='time_" + index + "'> -- </span>" + "</div>");
-		htmls.push("<div class='s'>" + "<span id ='trafficindex_" + index + "'> -- </span>" + "</div>");
-		htmls.push("<div class='b'>");
-		htmls.push("<img id='share_" + index + "'  class='img3' src='images/icon_share.png' >");
-		htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "','" + city_code + "','" + typeIndex + "')\"> ");
-		htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
-		htmls.push("</div></div>");
-		
-		htmls.push("<div class='wimg' style='height:"+(window_h-190)+"px;' id='");
-		htmls.push(lunboImgId);
-		htmls.push("'>");
-		htmls.push("<b d ='jiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
-		htmls.push("</div>");
-		htmls.push("<script type='text/javascript'>	"+
-		"$(function() {document.getElementById('share_" + index + "').addEventListener('touchstart', function() {"+
-		"$('#share_" + index + "').attr('src','images/icon_share_pressed.png');});"+
-		"document.getElementById('share_" + index + "').addEventListener('touchend', function() {"+
-		"window.share.shareMethod($('#city_" + index + "').text()+' '+$('#area_" + index + "').text());"+
-		"$('#share_" + index + "').attr('src','images/icon_share.png');});});");
-		
-		htmls.push("$(function() {document.getElementById('list_" + index + "').addEventListener('touchstart', function() {"+
-		"$('#list_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
-		"document.getElementById('list_" + index + "').addEventListener('touchend', function() {"+
-		"$('#list_" + index + "').attr('src','images/icon_detail.png');});});");
-	
-		htmls.push("$(function() {document.getElementById('help_" + index + "').addEventListener('touchstart', function() {"+
-		"$('#help_" + index + "').attr('src','images/icon_help_pressed.png');});"+
-		"document.getElementById('help_" + index + "').addEventListener('touchend', function() {"+
-		"$('#help_" + index + "').attr('src','images/icon_help_pressed.png');});});");
-		htmls.push("</script>");//第一张图的dom
-	};
 	if(typeIndex==1||typeIndex==2){
 		
 		var relunboImgId = "relunboImg" + index;
@@ -305,6 +263,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
 		htmls.push("<div class='d'><div id='rearea_" + index + "'>" + area + " </div>");
 		htmls.push("<div id ='redegree_" + index + "'> -- </div></div>");
+		htmls.push("<div class='dataSource'>四维路况</div>");
 		htmls.push("<div class='p'>平均速度:" + "<span id ='respeed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='remonth_" + index + "'> -- </span>" + "月" + "<span id ='reday_" + index + "'> -- </span>" + "日" + " " + "<span id ='retime_" + index + "'> -- </span>" + "</div>");
 		htmls.push("<div class='s'>" + "<span id ='retrafficindex_" + index + "'> -- </span>" + "</div>");
 		htmls.push("<div class='b'>");
@@ -334,7 +293,53 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		"$('#rehelp_" + index + "').attr('src','images/icon_help_pressed.png');});"+
 		"document.getElementById('rehelp_" + index + "').addEventListener('touchend', function() {"+
 		"$('#rehelp_" + index + "').attr('src','images/icon_help_pressed.png');});});");
-		htmls.push("</script></div>");//第二张图的dom
+		htmls.push("</script>");//第二张图的dom
+	};
+	if(typeIndex==0||typeIndex==1){
+		var str = "北京交委";
+		if (city== "深圳") {
+			str = "深圳交委";
+		}else if(city== "杭州"){
+			str = "杭州交委"
+		}else if(city== "上海"){
+			str = "上海交委"
+		};
+		var lunboImgId = "lunboImg" + index;
+		htmls.push("<div class='t'>");
+		htmls.push("<div class='add' id='city_" + index + "'>" + city + " </div>");
+		htmls.push("<div class='d'><div id='area_" + index + "'>" + area + " </div>");
+		htmls.push("<div id ='degree_" + index + "'> -- </div></div>");
+		htmls.push("<div class='dataSource' style='background:#F89E4C;'>"+str+"</div>");
+		htmls.push("<div class='p'>平均速度:" + "<span id ='speed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='month_" + index + "'> -- </span>" + "月" + "<span id ='day_" + index + "'> -- </span>" + "日" + " " + "<span id ='time_" + index + "'> -- </span>" + "</div>");
+		htmls.push("<div class='s'>" + "<span id ='trafficindex_" + index + "'> -- </span>" + "</div>");
+		htmls.push("<div class='b'>");
+		htmls.push("<img id='share_" + index + "'  class='img3' src='images/icon_share.png' >");
+		htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "','" + city_code + "','" + typeIndex + "')\"> ");
+		htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
+		htmls.push("</div></div>");
+		
+		htmls.push("<div class='wimg' style='height:"+(window_h-190)+"px;' id='");
+		htmls.push(lunboImgId);
+		htmls.push("'>");
+		htmls.push("<b d ='jiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
+		htmls.push("</div>");
+		htmls.push("<script type='text/javascript'>	"+
+		"$(function() {document.getElementById('share_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#share_" + index + "').attr('src','images/icon_share_pressed.png');});"+
+		"document.getElementById('share_" + index + "').addEventListener('touchend', function() {"+
+		"window.share.shareMethod($('#city_" + index + "').text()+' '+$('#area_" + index + "').text());"+
+		"$('#share_" + index + "').attr('src','images/icon_share.png');});});");
+		
+		htmls.push("$(function() {document.getElementById('list_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#list_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
+		"document.getElementById('list_" + index + "').addEventListener('touchend', function() {"+
+		"$('#list_" + index + "').attr('src','images/icon_detail.png');});});");
+	
+		htmls.push("$(function() {document.getElementById('help_" + index + "').addEventListener('touchstart', function() {"+
+		"$('#help_" + index + "').attr('src','images/icon_help_pressed.png');});"+
+		"document.getElementById('help_" + index + "').addEventListener('touchend', function() {"+
+		"$('#help_" + index + "').attr('src','images/icon_help_pressed.png');});});");
+		htmls.push("</script></div>");//第一张图的dom
 	};
 	
 	
@@ -648,7 +653,6 @@ function generalLunboHtmlList() {
 		}else{
 			init();
 		}
-	$(".wgay *").css("color","#181818");
-	$(".wgay").css("background","none");
+	//$(".wgay *").css("color","#181818");
 	});
 })();
