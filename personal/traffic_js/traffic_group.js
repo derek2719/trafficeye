@@ -880,19 +880,16 @@
 				},
 				dataType:"jsonp",
 				success:function(data){
-					console.log(JSON.stringify(data));
+					//console.log(JSON.stringify(data));
 					if(data.state.code==0){
 					var data=data.indexData;
 					var time=data.publishedTime.substring(11);
 					var index=data.index[data.index.length-1];
 					$("#trafficIndexTime" + code).html(time);
 					$('#theTrafficItem_index'+code).html(index);
-					//var reDraw=document.createElement('div');
-					//reDraw.id='reDraw';
-					//reDraw.style.width=document.documentElement.clientWidth-20+'px';
-					//$("#theTrafficWrap").append(reDraw);
-					//console.log(draw_charts_copy);
-					$('#co_reDraw'+code).html();
+					//注册交通指数图片点击事件
+					$("#reDraw" + code).rebind("touchstart",this.btnDown,this);
+					$("#reDraw" + code).rebind("touchend",this.trafficIndexBtnUp,this);
 					draw_charts_copy({'id':'reDraw'+code,'city':data.city,'place':'全市','yData1':data.index_lastweek,'yData2':data.index,'maxData':data.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 					//draw_charts_copy({'id':'reDraw'+code,'city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});
 					$("#trafficIndexImg"+code).hide();

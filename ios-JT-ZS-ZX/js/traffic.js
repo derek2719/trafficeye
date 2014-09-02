@@ -278,7 +278,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
 		htmls.push("<div class='d'><div id='rearea_" + index + "'>" + area + " </div>");
 		htmls.push("<div id ='redegree_" + index + "'> -- </div></div>");
-		htmls.push("<div class='dataSource'>四维路况</div>");
+		htmls.push("<div class='dataSource'>四维指数</div>");
 		htmls.push("<div class='p'>平均速度:" + "<span id ='respeed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='remonth_" + index + "'> -- </span>" + "月" + "<span id ='reday_" + index + "'> -- </span>" + "日" + " " + "<span id ='retime_" + index + "'> -- </span>" + "</div>");
 		htmls.push("<div class='s'>" + "<span id ='retrafficindex_" + index + "'> -- </span>" + "</div>");
 		htmls.push("<div class='b'>");
@@ -622,6 +622,7 @@ function gohelp(heplpage) {
 		if(url.indexOf("index.html")!=-1){
       
 		//initByParam('{"area":"北京-110000-全路网-110000-1,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
+		//initByParam('{"area":"上海-310000-瑞金医院-000000-0,北京-110000-海淀区-110108-1","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}')
 		}else{
 			init();
 		}

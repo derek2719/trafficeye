@@ -35,7 +35,7 @@ window.draw_charts_copy=function(obj){
             shared: true
         },
 		title:{
-			text:city+place+'交通指数'	
+			text:city+place+'路况指数'	
 		},
 		subtitle:{
 			text:'四维路况指数'	
