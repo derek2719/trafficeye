@@ -112,9 +112,9 @@
 
 			//测试调用
 			
-			callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
+			/*callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
 			
-			/*setTimeout(function(){
+			setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","101230101_101210101");
 			},2000);
 			
