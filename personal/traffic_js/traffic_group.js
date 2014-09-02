@@ -112,9 +112,9 @@
 
 			//测试调用
 			
-			/*callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
+			callbackInitTrafficPage("116.37313","39.835876","101010100_101230101_101210101");
 			
-			setTimeout(function(){
+			/*setTimeout(function(){
 				callbackInitTrafficPage("116.37313","39.835876","101230101_101210101");
 			},2000);
 			
@@ -614,8 +614,8 @@
 							//Trafficeye.trafficeyeAlert("没有返回全市简图地址");
 						}
 						//注册按钮事件,交通简图事件
-						$("#trafficMapType" + code + " > a").rebind("touchstart",this.btnDown,this);
-						$("#trafficMapType" + code + " > a").rebind("touchend",this.trafficMapTypeBtnUp,this);
+						$("#cityMapImg" + code).rebind("touchstart",this.btnDown,this);
+						$("#cityMapImg" + code).rebind("touchend",this.trafficMapTypeBtnUp,this);
 						//注册简图跳转事件
 						$("#cityMapImg" + code).rebind("touchstart",this.btnDown,this);
 						$("#cityMapImg" + code).rebind("touchend",this.cityMapImgBtnUp,this);
