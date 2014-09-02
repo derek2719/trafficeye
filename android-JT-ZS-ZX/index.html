@@ -17,16 +17,18 @@
 		<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:1.5)" href="css/mdpibase.css">
 		<link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:2.0)" href="css/hdpibase.css">
         <style type="text/css">
+		body,html{height:auto;}
         #mySwipe{height:auto;}
 		.ly{margin-top:10px;}
+		.t{margin-top:2px;}
         </style>
 	</head>
-	<body style="overflow:hidden;">
+	<body style="overflow:hidden;padding-top:45px;">
 
-		<div style="position:relative;z-index:99;height:44px;line-height:44px;text-align:center;-webkit-box-shadow:0 2px 3px rgba(0, 0, 0, .2);background:#fff;">
+		<div style="position:fixed;left:0;top:0;width:100%;z-index:99;height:44px;line-height:44px;text-align:center;-webkit-box-shadow:0 2px 3px rgba(0, 0, 0, .2);background:#fff;">
 			<img src="images/icon_back.png" style="float:left;width:22px;height:22px;padding:10px;" id="back"/>
 			<img src="images/icon_refresh.png" style="float:right;width:20px;height:20px;padding:10px;" id="refresh" onClick="reflesh();"/>
-			<img src="images/icon_setting.png" style="position:absolute;right:40px;top:0;width:22px;height:22px;padding:10px;" id="setting" />
+			<img src="images/icon_setting.png" style="float:right;width:22px;height:22px;padding:10px;" id="setting" />
 			<div  style="font-size:15px ;color: #464646;text-align:center;height:45px;line-height:45px;">
 				交通指数
 			</div>

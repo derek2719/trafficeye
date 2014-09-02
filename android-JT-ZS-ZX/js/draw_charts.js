@@ -1,5 +1,5 @@
 // JavaScript Document
-$(function(){
+(function($){
 Highcharts.setOptions({ 
 	colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655','#FFF263', '#6AF9C4'] 
 }); //自定义栏目颜色
@@ -251,4 +251,4 @@ window.draw_charts=function(obj){
 		}//水印
 	});
 }//绘制图表
-});
+})(jQuery);

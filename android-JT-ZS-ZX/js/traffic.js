@@ -5,6 +5,7 @@ var testUrl='http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test';
 var offsetHeight = 100;
 var window_h = document.documentElement.clientHeight;
 var window_w = document.documentElement.clientWidth;
+var target_scroll_top=0;
 //轮播图对象集合
 var res = [];
 var imageUrlRes = [];
@@ -52,7 +53,7 @@ ImageItem.prototype = {
 		var typeIndex=$.trim(paramJson.split(',')[me.i].split('-')[4])
 		//console.log(city+','+city_code+','+area+','+area_code+','+typeIndex);
 		if(typeIndex==1||typeIndex==2){
-			newCharts(me,city,city_code,area,area_code);
+			newCharts(me,city,city_code,area,area_code,typeIndex);
 		}
 		if(typeIndex==0||typeIndex==1){
 			oldCharts(me,city,city_code,area,area_code);
@@ -61,8 +62,10 @@ ImageItem.prototype = {
 };
 function oldCharts(me,city,city_code,area,area_code){
 	$("#lunboImg" + me.i).html("");
-	//$("#lunboImg" + me.i).height(window_h-190);
 			$("#lunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
+	document.getElementById('share_'+me.i).addEventListener('touchstart',function() {
+		window.scrollTo(0,target_scroll_top);
+	},false);//分享当前指数图	
 	$.ajax({
 		type:'get',
 		url:testUrl+'/api/v4/trafficIndexChartData',
@@ -83,10 +86,9 @@ function oldCharts(me,city,city_code,area,area_code){
 				$("#time_" +me.i).text("").append(theData.publishedTime.split(" ")[1]);
 				$("#trafficindex_" +me.i).text("").append(theData.index[theData.index.length-1]);
 					
-					
 				var imgDraw=document.createElement('div');
 				imgDraw.id='imgDraw'+me.i;
-				imgDraw.style.height=window_h-190+'px';
+				imgDraw.style.height=window_h-195+'px';
 				$("#lunboImg" + me.i).append(imgDraw);
 				draw_charts({'id':'imgDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 			$('#mySwipe').height($('.wgay').eq(me.i).height());
@@ -101,7 +103,10 @@ function oldCharts(me,city,city_code,area,area_code){
 		
 	});
 };
-function newCharts(me,city,city_code,area,area_code){
+function newCharts(me,city,city_code,area,area_code,typeIndex){
+	document.getElementById('reshare_'+me.i).addEventListener('touchstart',function() {
+		window.scrollTo(0,0);
+	},false);//分享当前指数图	
 	$("#relunboImg" + me.i).html("");
 	$("#relunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
 	$.ajax({
@@ -127,7 +132,10 @@ function newCharts(me,city,city_code,area,area_code){
 
 				var reDraw=document.createElement('div');
 				reDraw.id='reDraw'+me.i;
-				reDraw.style.height=window_h-190+'px';
+				reDraw.style.height=window_h-195+'px';
+				if(typeIndex==1){
+					reDraw.style.height=window_h-185+'px';
+				};
 				$("#relunboImg" + me.i).append(reDraw);
 				draw_charts_copy({'id':'reDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 		$('#mySwipe').height($('.wgay').eq(me.i).height());
@@ -206,8 +214,11 @@ for (var i = 0; i < res.length; i++) {
 if (typeof(localStorage.cid)=="undefined") {
 		localStorage.cid=0;
 };
+window.addEventListener('scroll',function(){
+	target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
+});
 window.addEventListener('load',function(){
-	
+	window.scrollTo(0,0);
 	run(localStorage.cid);
 });
 //getData();
@@ -255,9 +266,12 @@ function generalTabHtml(index) {
  */
 function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) {
 	var htmls = [];
+	var theH=window_h-195;
+	if(typeIndex==1){
+		theH=window_h-185;
+	};
 	htmls.push("<div class='wgay' style='width:"+window_w+"px;'>");
 	if(typeIndex==1||typeIndex==2){
-		
 		var relunboImgId = "relunboImg" + index;
 		htmls.push("<div class='t'>");
 		htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
@@ -272,7 +286,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
 		htmls.push("</div></div>");
 		
-		htmls.push("<div class='wimg' style='height:"+(window_h-190)+"px;' id='");
+		htmls.push("<div class='wimg' style='height:"+theH+"px;' id='");
 		htmls.push(relunboImgId);
 		htmls.push("'>");
 		htmls.push("<b d ='rejiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
@@ -304,6 +318,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		}else if(city== "上海"){
 			str = "上海交委"
 		};
+		var T_css='';
 		var lunboImgId = "lunboImg" + index;
 		htmls.push("<div class='t'>");
 		htmls.push("<div class='add' id='city_" + index + "'>" + city + " </div>");
@@ -318,7 +333,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
 		htmls.push("</div></div>");
 		
-		htmls.push("<div class='wimg' style='height:"+(window_h-190)+"px;' id='");
+		htmls.push("<div class='wimg' style='height:"+(window_h-195)+"px;' id='");
 		htmls.push(lunboImgId);
 		htmls.push("'>");
 		htmls.push("<b d ='jiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
@@ -364,7 +379,6 @@ function run(index) {
 		disableScroll : false,
 		//auto:3000,
 		callback : function(index) {
-			
 			var id = "lunboli" + index;
 			
 			$("#lunboli" + localStorage.cid).removeClass("active");
@@ -376,10 +390,14 @@ function run(index) {
         //transitionEnd用于整体轮播图动画结束后触发的回调函数
         transitionEnd: function(index, element) {
             imageObjRes[index].loadCharts();
+			window.addEventListener('scroll',function(){
+				target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
+			});
         }
 	});
 }
 function reflesh(){
+	window.scrollTo(0,0);
 	window.location.reload('get');	
 };
 /*function reflesh() {
@@ -643,7 +661,7 @@ function generalLunboHtmlList() {
 	
 
 };
-(function() {
+(function($) {
 	$(function(){
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
@@ -655,4 +673,4 @@ function generalLunboHtmlList() {
 		}
 	//$(".wgay *").css("color","#181818");
 	});
-})();
+})(jQuery);

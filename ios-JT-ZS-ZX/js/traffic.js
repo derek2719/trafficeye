@@ -4,6 +4,7 @@ var testUrl='http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test';
 //上bar和下bar的高度之和
 var window_h = document.documentElement.clientHeight;
 var window_w = document.documentElement.clientWidth;
+var target_scroll_top=0;
 var offsetHeight = 100;
 var imgOffsetW = 20;
 var imgOffsetH = 180;
@@ -46,7 +47,7 @@ ImageItem.prototype = {
 		var typeIndex=$.trim(paramJson.split(',')[me.i].split('-')[4])
 		//console.log(city+','+city_code+','+area+','+area_code+','+typeIndex);
 		if(typeIndex==1||typeIndex==2){
-			newCharts(me,city,city_code,area,area_code);
+			newCharts(me,city,city_code,area,area_code,typeIndex);
 		}
 		if(typeIndex==0||typeIndex==1){
 			oldCharts(me,city,city_code,area,area_code);
@@ -55,8 +56,10 @@ ImageItem.prototype = {
 };
 function oldCharts(me,city,city_code,area,area_code){
 	$("#lunboImg" + me.i).html("");
-	//$("#lunboImg" + me.i).height(window_h-190);
 			$("#lunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
+	document.getElementById('share_'+me.i).addEventListener('touchstart',function() {
+		window.scrollTo(0,target_scroll_top);
+	},false);//分享当前指数图	
 	$.ajax({
 		type:'get',
 		url:testUrl+'/api/v4/trafficIndexChartData',
@@ -77,7 +80,6 @@ function oldCharts(me,city,city_code,area,area_code){
 				$("#time_" +me.i).text("").append(theData.publishedTime.split(" ")[1]);
 				$("#trafficindex_" +me.i).text("").append(theData.index[theData.index.length-1]);
 					
-					
 				var imgDraw=document.createElement('div');
 				imgDraw.id='imgDraw'+me.i;
 				imgDraw.style.height=window_h-190+'px';
@@ -95,7 +97,10 @@ function oldCharts(me,city,city_code,area,area_code){
 		
 	});
 };
-function newCharts(me,city,city_code,area,area_code){
+function newCharts(me,city,city_code,area,area_code,typeIndex){
+	document.getElementById('reshare_'+me.i).addEventListener('touchstart',function() {
+		window.scrollTo(0,0);
+	},false);//分享当前指数图	
 	$("#relunboImg" + me.i).html("");
 	$("#relunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
 	$.ajax({
@@ -122,8 +127,11 @@ function newCharts(me,city,city_code,area,area_code){
 				var reDraw=document.createElement('div');
 				reDraw.id='reDraw'+me.i;
 				reDraw.style.height=window_h-190+'px';
+				if(typeIndex==1){
+					reDraw.style.height=window_h-180+'px';
+				};
 				$("#relunboImg" + me.i).append(reDraw);
-				draw_charts_copy({'id':'reDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周数据,今日数据,Y轴最大值
+				draw_charts_copy({'id':'reDraw'+me.i,'city':city,'place':area,'yData1':theData.index_lastweek,'yData2':theData.index,'maxData':theData.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 		$('#mySwipe').height($('.wgay').eq(me.i).height());
 			}
 			
@@ -201,8 +209,11 @@ if (typeof(localStorage.cid)=="undefined") {
 		localStorage.cid=0;
 };
 //请求网络,获取指数数据
+window.addEventListener('scroll',function(){
+	target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
+});
 window.addEventListener('load',function(){
-	
+	window.scrollTo(0,0);
 	run(localStorage.cid);
 });
     
@@ -256,9 +267,12 @@ function generalTabHtml(index) {
  */
 function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) {
 	var htmls = [];
+	var theH=window_h-190;
+	if(typeIndex==1){
+		theH=window_h-180;
+	};
 	htmls.push("<div class='wgay' style='width:"+window_w+"px;'>");
 	if(typeIndex==1||typeIndex==2){
-		
 		var relunboImgId = "relunboImg" + index;
 		htmls.push("<div class='t'>");
 		htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
@@ -273,7 +287,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
 		htmls.push("</div></div>");
 		
-		htmls.push("<div class='wimg' style='height:"+(window_h-190)+"px;' id='");
+		htmls.push("<div class='wimg' style='height:"+theH+"px;' id='");
 		htmls.push(relunboImgId);
 		htmls.push("'>");
 		htmls.push("<b d ='rejiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
@@ -305,6 +319,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		}else if(city== "上海"){
 			str = "上海交委"
 		};
+		var T_css='';
 		var lunboImgId = "lunboImg" + index;
 		htmls.push("<div class='t'>");
 		htmls.push("<div class='add' id='city_" + index + "'>" + city + " </div>");
@@ -380,69 +395,13 @@ function run(index) {
 	});
 }
 function reflesh(){
+	window.scrollTo(0,0);
 	window.location.reload('get');	
 };
 /**
  * 请求指数数据 并显示
  */
 
-/*function reflesh() {
-	if(htmlObj==null){
-		alert("数据未加载完成,请稍候刷新!");
-		return;
-	}
-	if (!paramJson.settingArea) {
-		return;
-	}
-	var items = [];
-	//请求网络,获取指数数据
-	$.ajax({
-		url : baseUrl +"/api2/v3/trafficIndexJsonp",
-		type : 'GET',
-		async : false,
-		data : {
-			cityname : $.trim(paramJson.settingArea),
-			areaname : true
-		},
-		dataType : 'jsonp',
-		jsonp : 'callback',
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-		},
-
-		success : function(result) {
-			$.each(result.trafficIndexList, function(i, item) {
-				items.push(item);
-			});
-
-			for (var i = 0; i < res.length; i++) {
-				for (var j = 0; j < items.length; j++) {
-
-					var item = items[j];
-					//alert(item);
-					if ($.trim(res[i].area) == $.trim(item.area)) {
-						var obj = res[i];
-						obj.imgW = imgW;
-						obj.imgH = imgH;
-						$("#degree_" + i).text("").append(item.degree);
-						$("#speed_" + i).text("").append(item.speed);
-						$("#month_" + i).text("").append(item.publishedDate.split("-")[1]);
-						$("#day_" + i).text("").append(item.publishedDate.split("-")[2]);
-						$("#time_" + i).text("").append(item.publishedTime);
-						$("#trafficindex_" + i).text("").append(item.index);
-						obj.imgId = htmlObj.imgId;
-						obj.html = htmlObj.html;
-          
-					}
-				}
-			}
-			if (typeof(localStorage.cid)=="undefined"||res.length==1) {
-				localStorage.cid=0;
-				};
-			imageObjRes[localStorage.cid].isImageLoaded=false;
-			imageObjRes[localStorage.cid].loadImage();
-			}
-	});
-}*/
 //-------------------------------------------indexList-----------------------------------
 /**
  * 初始化调用
@@ -659,8 +618,8 @@ function gohelp(heplpage) {
 
  	$(function(){
 
-		/*var url = window.location.href;
-		if(url.indexOf("index.html")!=-1){
+		var url = window.location.href;
+		/*if(url.indexOf("index.html")!=-1){
       
 		initByParam('{"area":"北京-110000-全路网-110000-1,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
 		}else{
