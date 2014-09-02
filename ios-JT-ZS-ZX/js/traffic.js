@@ -293,11 +293,11 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<b d ='rejiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
 		htmls.push("</div>");
 		htmls.push("<script type='text/javascript'>	"+
-		"$(function() {document.getElementById('reshare_" + index + "').addEventListener('touchstart', function() {"+
-		"$('#reshare_" + index + "').attr('src','images/icon_share_pressed.png');});"+
-		"document.getElementById('reshare_" + index + "').addEventListener('touchend', function() {"+
-		"window.share.shareMethod($('#recity_" + index + "').text()+' '+$('#rearea_" + index + "').text());"+
-		"$('#reshare_" + index + "').attr('src','images/icon_share.png');});});");
+               "$(function() {document.getElementById('reshare_" + index + "').addEventListener('touchstart', function() {"+
+               "$('#reshare_" + index + "').attr('src','images/icon_share_pressed.png');});"+
+               "document.getElementById('reshare_" + index + "').addEventListener('touchend', function() {"+
+               "share($('#city_" + index + "').text()+' '+$('#area_" + index + "').text());  "+
+               "$('#reshare_" + index + "').attr('src','images/icon_share.png');});});");
 		
 		htmls.push("$(function() {document.getElementById('relist_" + index + "').addEventListener('touchstart', function() {"+
 		"$('#relist_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
@@ -340,11 +340,11 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<b d ='jiazai_"+index+"' style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
 		htmls.push("</div>");
 		htmls.push("<script type='text/javascript'>	"+
-		"$(function() {document.getElementById('share_" + index + "').addEventListener('touchstart', function() {"+
-		"$('#share_" + index + "').attr('src','images/icon_share_pressed.png');});"+
-		"document.getElementById('share_" + index + "').addEventListener('touchend', function() {"+
-		"window.share.shareMethod($('#city_" + index + "').text()+' '+$('#area_" + index + "').text());"+
-		"$('#share_" + index + "').attr('src','images/icon_share.png');});});");
+               "$(function() {document.getElementById('share_" + index + "').addEventListener('touchstart', function() {"+
+               "$('#share_" + index + "').attr('src','images/icon_share_pressed.png');});"+
+               "document.getElementById('share_" + index + "').addEventListener('touchend', function() {"+
+               "share($('#city_" + index + "').text()+' '+$('#area_" + index + "').text());  "+
+               "$('#share_" + index + "').attr('src','images/icon_share.png');});});");
 		
 		htmls.push("$(function() {document.getElementById('list_" + index + "').addEventListener('touchstart', function() {"+
 		"$('#list_" + index + "').attr('src','images/icon_detail_pressed.png');});"+
@@ -453,8 +453,7 @@ function generalLunboHtmlList() {
 	htmls.push("<div class='waiting' id='waiting'>");
 	htmls.push("<b  style='margin:0 auto;position:absolute;top:35%;left:30%;' >正在努力加载中...</b>");
 	htmls.push("</div>");
-	htmls.push("<script type='text/javascript'>	" + "$(function() {document.getElementById('share').addEventListener('touchstart', function() {$('#share').attr('src','images/icon_share_pressed.png');});" + "document.getElementById('share').addEventListener('touchend', function() {" + "window.share.shareMethod($('#city').text());$('#share').attr('src','images/icon_share.png');});});");
-
+	htmls.push("<script type='text/javascript'>	" + "$(function() {document.getElementById('share').addEventListener('touchstart', function() {$('#share').attr('src','images/icon_share_pressed.png');});" + "document.getElementById('share').addEventListener('touchend', function() {" + "share($('#city').text()+' '+$('#area').text()); $('#share').attr('src','images/icon_share.png');});});");
 
 	htmls.push("$(function() {document.getElementById('help').addEventListener('touchstart', function() {" + "$('#help').attr('src','images/icon_help_pressed.png');});" + "document.getElementById('help').addEventListener('touchend', function() {" + "$('#help').attr('src','images/icon_help.png');});});");
 	htmls.push("</script>");
@@ -559,7 +558,7 @@ function generalLunboHtmlList() {
 				var htmls1 = [];
 				htmls1.push('<h3 class="zsTit">四维路况指数</h3>');
 				var time=result.publishedTime.split(' ')[0].substring(5)+' '+result.publishedTime.split(' ')[1].substring(0,5)
-				console.log(JSON.stringify(result.trafficIndexList));
+				//console.log(JSON.stringify(result.trafficIndexList));
 				$.each(result.trafficIndexList, function(i, item) {
 					var bgcolor = "#008000";
 					var textcolor = "#000";

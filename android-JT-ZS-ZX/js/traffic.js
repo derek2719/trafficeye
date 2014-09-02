@@ -618,7 +618,7 @@ function generalLunboHtmlList() {
 				var htmls1 = [];
 				htmls1.push('<h3 class="zsTit">四维路况指数</h3>');
 				var time=result.publishedTime.split(' ')[0].substring(5)+' '+result.publishedTime.split(' ')[1].substring(0,5)
-				console.log(JSON.stringify(result.trafficIndexList));
+				//console.log(JSON.stringify(result.trafficIndexList));
 				$.each(result.trafficIndexList, function(i, item) {
 					var bgcolor = "#008000";
 					var textcolor = "#000";
