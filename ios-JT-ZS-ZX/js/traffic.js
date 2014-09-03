@@ -164,59 +164,61 @@ function initIndex(paramStr) {
 		return;
 	}
 //分析参数对象并创建轮播图对象
-var results = paramJson.split(',');
-//console.log(results)
-for (var i = 0, len = results.length; i < len; i++) {
-	var result = results[i].split("-");
-	if (result.length > 0) {
-		var obj = new LunBoObj();
-		obj.city = result[0];
-		obj.city_code = result[1];
-		obj.area = result[2];
-		obj.area_code = result[3];
-		obj.typeIndex = result[4];
-		res.push(obj);
+	var results = paramJson.split(',');
+	//console.log(results)
+	for (var i = 0, len = results.length; i < len; i++) {
+		var result = results[i].split("-");
+		if (result.length > 0) {
+			var obj = new LunBoObj();
+			obj.city = result[0];
+			obj.city_code = result[1];
+			obj.area = result[2];
+			obj.area_code = result[3];
+			obj.typeIndex = result[4];
+			res.push(obj);
+		}
 	}
-}
-//生成静态结构
-for (var i = 0; i < res.length; i++) {
-	var typeIndex=$.trim(res[i].typeIndex);
-	var heplpage = "beijing";
-	if ($.trim(res[i].city) == "深圳") {
-		heplpage = "shenzhen";
-	}else if($.trim(res[i].city) == "杭州"){
-				heplpage = "hangzhou";
-			}else if($.trim(res[i].city) == "上海"){
-				heplpage = "shanghai";
-			};
-	htmlObj = generalLunboHtmlIndex(res[i].city,res[i].city_code, res[i].area, i, heplpage,typeIndex);
-	obj.imgId = htmlObj.imgId;
-	obj.html = htmlObj.html;
-	//把轮播图DOM结构添加到轮播图组件容器中
-	$("#indexCon").append(obj.html);
-	//创建Tab DOM结构
-	var tabHtml;
-	tabObj = generalTabHtml(tabIndex);
-	tabIndex++;
-
-	//把Tab结构加入到轮播图导航组件中
-	$("#tabNav").append(tabObj.html);
-	obj.tabId = tabObj.id;
-	var item = new ImageItem(i);
-	imageObjRes.push(item);
-};
-if (typeof(localStorage.cid)=="undefined") {
-		localStorage.cid=0;
-};
-//请求网络,获取指数数据
-window.addEventListener('scroll',function(){
-	target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
-});
-window.addEventListener('load',function(){
-	window.scrollTo(0,0);
+	//生成静态结构
+	for (var i = 0; i < res.length; i++) {
+		var typeIndex=$.trim(res[i].typeIndex);
+		var heplpage = "beijing";
+		if ($.trim(res[i].city) == "深圳") {
+			heplpage = "shenzhen";
+		}else if($.trim(res[i].city) == "杭州"){
+					heplpage = "hangzhou";
+				}else if($.trim(res[i].city) == "上海"){
+					heplpage = "shanghai";
+				};
+		htmlObj = generalLunboHtmlIndex(res[i].city,res[i].city_code, res[i].area, i, heplpage,typeIndex);
+		obj.imgId = htmlObj.imgId;
+		obj.html = htmlObj.html;
+		//把轮播图DOM结构添加到轮播图组件容器中
+		$("#indexCon").append(obj.html);
+		//创建Tab DOM结构
+		var tabHtml;
+		tabObj = generalTabHtml(tabIndex);
+		tabIndex++;
+	
+		//把Tab结构加入到轮播图导航组件中
+		$("#tabNav").append(tabObj.html);
+		obj.tabId = tabObj.id;
+		var item = new ImageItem(i);
+		imageObjRes.push(item);
+	};
+	alert(localStorage.cid+','+'加载完结构了!');
+	if (typeof(localStorage.cid)=="undefined") {
+			localStorage.cid=0;
+	};
+	//请求网络,获取指数数据
+	window.addEventListener('scroll',function(){
+		target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
+	});
+	window.addEventListener('load',function(){
+		window.scrollTo(0,0);
+	});
+	alert('加载数据前!');
 	run(localStorage.cid);
-});
-    
+	alert('加载数据后!');
 };
 /**
  * 分析参数字符串返回JSON对象
@@ -580,7 +582,7 @@ function generalLunboHtmlList() {
 			
 					htmls1.push("<div  style='background: " + bgcolor + "; opacity: .60;display:block ;margin:0px;padding:0px;border-bottom:1px #ccc solid;border-left:1px #ccc solid;border-right:1px #ccc solid;font-size: 13px ;height:24px'>	<span style='text-align:center;float:left;margin-left: 8px;width:130px;color:" + textcolor + "'>" + item.area + " </span><span  style='margin-left: 10px;color:" + textcolor + ";'> " + item.index + " </span><span style='margin-left: 20px;color:" + textcolor + ";'>  " + item.degree + "</span><span style='float:right;margin-right:15px;color:" + textcolor + ";'> " + item.speed + "km/h </span></div>");
 	
-				});//老数据列表
+				});//新数据列表
 				
 				var html = htmls1.join("")
 				$("#listRes").html($("#listRes").html()+html);

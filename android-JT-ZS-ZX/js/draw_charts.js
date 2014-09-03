@@ -46,7 +46,7 @@ window.draw_charts=function(obj){
             shared: true
         },
 		title:{
-			text:city+place+'路况指数'	
+			text:city+place+'交通指数'	
 		},
 		subtitle:{
 			text:str	

@@ -199,14 +199,14 @@
 		/**
 		 * 交通指数点击跳转
 		*/
-		/*trafficIndexBtnUp:function(evt){
+		trafficIndexBtnUp:function(evt){
 			var ele = evt.currentTarget;
 			$(ele).removeClass("curr");
 			if(!this.moved){
 				//通知平台跳转到交通指数
 				Trafficeye.sendNativeEvent("gotoPage","index");
 			}
-		},*/
+		},
 		/**
 		 * 交通资讯点击跳转
 		*/
@@ -890,7 +890,12 @@
 					$('#theTrafficItem_index'+code).html(index);
 					//注册交通指数图片点击事件
 					//$("#reDraw" + code).next().rebind("touchstart",this.btnDown,this);
-					$("#reDraw" + code).next().rebind("touchend",function(){Trafficeye.sendNativeEvent("gotoPage","index");},this);
+					$("#reDraw" + code).next().rebind("touchstart",function(){
+						_this.moved=false;
+					},this);
+					$("#reDraw" + code).next().rebind("touchend",function(){
+						!_this.moved && Trafficeye.sendNativeEvent("gotoPage","index");
+					},this);
 					draw_charts_copy({'id':'reDraw'+code,'city':data.city,'place':'全市','yData1':data.index_lastweek,'yData2':data.index,'maxData':data.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 					//draw_charts_copy({'id':'reDraw'+code,'city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});
 					$("#trafficIndexImg"+code).hide();
