@@ -775,9 +775,24 @@
 								$(this).next().hide();
 								$(this).find('.jiantou').attr('src','traffic_img/sanjiao.png');
 							};
-							e.stopPropagation();
 							_this.initiScroll();
 						});
+						$('#theHotWeather' + code).rebind('touchstart', _this.btnDown, _this);
+						$('#theHotWeather' + code).rebind('touchend', touchWeather, _this);
+						
+						function touchWeather() {
+							if (!_this.moved) {
+								if($('#theHotWeather' + code).next().css('display')!='block'){
+									$('#theHotWeather' + code).next().show();
+									$('#theHotWeather' + code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
+								}else{
+									$('#theHotWeather' + code).next().hide();
+									$('#theHotWeather' + code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
+								};
+								_this.initiScroll();
+							}
+							_this.initiScroll();
+						}
 				}
 			});
 		},
@@ -863,8 +878,10 @@
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//alert(code);
 			if(code!=101280800){//如果不是佛山
-				$('#theTrafficItem'+code).rebind('touchstart',touchShow);
+				$('#theTrafficItem'+code).rebind('touchstart',_this.btnDown,_this);
+				$('#theTrafficItem'+code).rebind('touchend',touchShow,_this);
 				function touchShow(){
+					if(!_this.moved){
 					if($('#theTrafficItem'+code).next().css('display')!='none'){
 						$('#theTrafficItem'+code).next().hide();
 						$('#theTrafficItem'+code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
@@ -872,7 +889,7 @@
 						$('#theTrafficItem'+code).next().show();
 						$('#theTrafficItem'+code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
 					};
-					//alert(0);
+					}
 					_this.initiScroll();
 				}
 				touchShow();
@@ -893,12 +910,14 @@
 						$('#theTrafficItem_index'+code).html(index);
 						//注册交通指数图片点击事件
 						//$("#reDraw" + code).next().rebind("touchstart",this.btnDown,this);
-						$("#reDraw" + code).next().rebind("touchstart",function(){
+						$("#reDraw" + code).next().rebind("touchstart",_this.btnDown,_this);
+						$("#reDraw" + code).next().rebind("touchend",_this.trafficIndexBtnUp,_this);
+						/*$("#reDraw" + code).next().rebind("touchstart",function(){
 							_this.moved=false;
 						},this);
 						$("#reDraw" + code).next().rebind("touchend",function(){
 							!_this.moved && Trafficeye.sendNativeEvent("gotoPage","index");
-						},this);
+						},this);*/
 						draw_charts_copy({'id':'reDraw'+code,'city':data.city,'place':'全市','yData1':data.index_lastweek,'yData2':data.index,'maxData':data.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
 						$("#trafficIndexImg"+code).hide();
 						_this.initiScroll();
