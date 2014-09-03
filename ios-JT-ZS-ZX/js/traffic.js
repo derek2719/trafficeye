@@ -205,7 +205,6 @@ function initIndex(paramStr) {
 		var item = new ImageItem(i);
 		imageObjRes.push(item);
 	};
-	alert(localStorage.cid+','+'加载完结构了!');
 	if (typeof(localStorage.cid)=="undefined") {
 			localStorage.cid=0;
 	};
@@ -213,12 +212,8 @@ function initIndex(paramStr) {
 	window.addEventListener('scroll',function(){
 		target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
 	});
-	window.addEventListener('load',function(){
-		window.scrollTo(0,0);
-	});
-	alert('加载数据前!');
+	window.scrollTo(0,0);
 	run(localStorage.cid);
-	alert('加载数据后!');
 };
 /**
  * 分析参数字符串返回JSON对象

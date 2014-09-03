@@ -842,7 +842,7 @@
 			html.push('<div class="map_2_box">');
 			html.push('<div class="map_2">');
 			html.push('<h3 class="map_bt" id="theTrafficItem'+id+'">交通指数<span>当前指数: </span><span id="theTrafficItem_index'+id+'" style="color:#157dfb;margin-left:0;"></span><span id="trafficIndexTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
-			html.push('<div id="theTrafficWrap" style="display:none;position:relative;">');
+			html.push('<div id="theTrafficWrap" style="position:relative;display:none;">');
 			html.push('<img id="trafficIndexImg'+id+'" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
 			html.push('<div id="reDraw'+id+'" style="width:'+w+'px;height:'+h+'px;"></div><div style="width:'+w+'px;height:'+h+'px;position:absolute;bottom:0;left:0;background:#fff;z-index:99999;opacity:0.001;"></div>');
 			html.push('</div></div></div>');
@@ -862,95 +862,55 @@
 			options.isLoc = isLoc;
 			var reqUrl = this.bulidSendUrl("combinedPage",options);
 			//alert(code);
-			$('#theTrafficItem'+code).rebind('touchstart',function(e){
-				if($(this).next().css('display')!='block'){
-					$(this).next().show();
-					$(this).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
-				}else{
-					$(this).next().hide();
-					$(this).find('.jiantou').attr('src','traffic_img/sanjiao.png');
-				};
-				_this.initiScroll();
-				e.stopPropagation();
-			});
-			$.ajax({
-				url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/ctrafficIndexChartData',
-				data:{
-					code:code,
-					area:code	
-				},
-				dataType:"jsonp",
-				success:function(data){
-					//console.log(JSON.stringify(data));
-					if(data.state.code==0){
-					var data=data.indexData;
-					var time=data.publishedTime.substring(11);
-					var index=data.index[data.index.length-1];
-					$("#trafficIndexTime" + code).html(time);
-					$('#theTrafficItem_index'+code).html(index);
-					//注册交通指数图片点击事件
-					//$("#reDraw" + code).next().rebind("touchstart",this.btnDown,this);
-					$("#reDraw" + code).next().rebind("touchstart",function(){
-						_this.moved=false;
-					},this);
-					$("#reDraw" + code).next().rebind("touchend",function(){
-						!_this.moved && Trafficeye.sendNativeEvent("gotoPage","index");
-					},this);
-					draw_charts_copy({'id':'reDraw'+code,'city':data.city,'place':'全市','yData1':data.index_lastweek,'yData2':data.index,'maxData':data.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
-					//draw_charts_copy({'id':'reDraw'+code,'city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});
-					$("#trafficIndexImg"+code).hide();
+			if(code!=101280800){//如果不是佛山
+				$('#theTrafficItem'+code).rebind('touchstart',touchShow);
+				function touchShow(){
+					if($('#theTrafficItem'+code).next().css('display')!='none'){
+						$('#theTrafficItem'+code).next().hide();
+						$('#theTrafficItem'+code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
 					}else{
-						alert('遇到未知错误!');	
+						$('#theTrafficItem'+code).next().show();
+						$('#theTrafficItem'+code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
 					};
-				},
-				error: function(){
-					alert('交通指数请求失败!');
+					//alert(0);
+					_this.initiScroll();
 				}
-			});
-			/*$.ajaxJSONP({
-				url:reqUrl,
-				context:this,
-				success:function(data){
-					//console.log(JSON.stringify(data));
-					var state = data.state.code - 0;
-					if(state === 0){
-						var imgUrl = data.url || "";
-						if(imgUrl != ""){
-							var time = data.publishedTime || "10:00";
-							//更新时间
-							$("#trafficIndexTime" + code).html(time);
-							//获取图片dom
-							var img = $("#trafficIndexImg" + code);
-							//加载图片
-							//Trafficeye.imageLoaded(img,imgUrl);
-							theCityhull=imgUrl.split('?')[1].split('&')[0].split('=')[1];
-							theAreahull=imgUrl.split('?')[1].split('&')[1].split('=')[1]
-							//注册交通指数图片点击事件
-							$("#trafficIndexImg" + code).rebind("touchstart",this.btnDown,this);
-							$("#trafficIndexImg" + code).rebind("touchend",this.trafficIndexBtnUp,this);
-							$.ajax({
-								type:'get',
-								dataType:"jsonp",
-								url:'http://mobile.trafficeye.com.cn:8000/api2/v3/trafficIndexJsonp',
-								//context:this,
-								data:{cityname:theCityhull+'-'+theAreahull,areaname:true},
-								success:function(data){
-									var iNum=data.trafficIndexList[0].index;
-									$('#theTrafficItem_index'+code).html(iNum);
-								}
-							});
-						
-						}
-						else{
-							//Trafficeye.trafficeyeAlert("没有返回交通指数图片地址");
-						}
+				touchShow();
+				$.ajax({
+					url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/ctrafficIndexChartData',
+					data:{
+						code:code,
+						area:code	
+					},
+					dataType:"jsonp",
+					success:function(data){
+						//console.log(JSON.stringify(data));
+						if(data.state.code==0){
+						var data=data.indexData;
+						var time=data.publishedTime.substring(11);
+						var index=data.index[data.index.length-1];
+						$("#trafficIndexTime" + code).html(time);
+						$('#theTrafficItem_index'+code).html(index);
+						//注册交通指数图片点击事件
+						//$("#reDraw" + code).next().rebind("touchstart",this.btnDown,this);
+						$("#reDraw" + code).next().rebind("touchstart",function(){
+							_this.moved=false;
+						},this);
+						$("#reDraw" + code).next().rebind("touchend",function(){
+							!_this.moved && Trafficeye.sendNativeEvent("gotoPage","index");
+						},this);
+						draw_charts_copy({'id':'reDraw'+code,'city':data.city,'place':'全市','yData1':data.index_lastweek,'yData2':data.index,'maxData':data.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+						$("#trafficIndexImg"+code).hide();
+						_this.initiScroll();
+						}else{
+							alert('遇到未知错误!');	
+						};
+					},
+					error: function(){
+						alert('交通指数请求失败!');
 					}
-					else{
-						var msg = "获取交通指数:" + data.state.desc + "(" + state + ")";
-						//Trafficeye.trafficeyeAlert(msg);
-					}
-				}
-			});*/
+				});
+			}
 		},
 		/**
 		 * 获取交通资讯数据

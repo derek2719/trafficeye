@@ -1,5 +1,8 @@
 // JavaScript Document
 (function($){
+Highcharts.setOptions({ 
+	colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655','#FFF263', '#6AF9C4'] 
+}); //自定义栏目颜色
 	//测试数据
 	//draw_charts_copy({'id':'indexCon','city':'北京','place':'全城区','yData1':[0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,0.4,1.3,3,2,1.4,1.9,1,3,1],'yData2':[4,1.3,3,2,1.4,1.9,1,3,0].reverse(),'maxData':100});//模块ID,城市,区域,上周今日数据,今日数据,Y轴最大值
 var aDay=['日','一','二','三','四','五','六'];
@@ -38,7 +41,7 @@ window.draw_charts_copy=function(obj){
 			text:city+place+'交通指数'	
 		},
 		subtitle:{
-			text:'四维路况指数'	
+			text:'四维交通指数'	
 		},
 		xAxis:{
 			tickInterval:3*3600000,
