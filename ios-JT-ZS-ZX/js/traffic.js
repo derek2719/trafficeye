@@ -62,7 +62,7 @@ function oldCharts(me,city,city_code,area,area_code){
 	},false);//分享当前指数图	
 	$.ajax({
 		type:'get',
-		url:testUrl+'/api/v4/trafficIndexChartData',
+		url:baseUrl+'/api/v4/trafficIndexChartData',
 		data:{
 			city:city,
 			area:area	
@@ -105,7 +105,7 @@ function newCharts(me,city,city_code,area,area_code,typeIndex){
 	$("#relunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
 	$.ajax({
 		type:'get',
-		url:testUrl+'/api/v4/ctrafficIndexChartData',
+		url:baseUrl+'/api/v4/ctrafficIndexChartData',
 		data:{
 			code:city_code,
 			area:area_code	
@@ -540,7 +540,7 @@ function generalLunboHtmlList() {
 	};
 	if(typeIndex==1||typeIndex==2){
 		$.ajax({
-		url : testUrl+"/api/v4/ctrafficIndexList",
+		url : baseUrl+"/api/v4/ctrafficIndexList",
 		type : 'GET',
 		data : {
 			code : city_code
@@ -618,7 +618,6 @@ function gohelp(heplpage) {
 		if(url.indexOf("index.html")!=-1){
       
 		//initByParam('{"area":"北京-110000-全路网-110000-1,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
-		//initByParam('{"area":"上海-310000-瑞金医院-000000-0,北京-110000-海淀区-110108-1","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}')
 		}else{
 			init();
 		}

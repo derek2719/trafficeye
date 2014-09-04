@@ -894,7 +894,7 @@
 				}
 				touchShow();
 				$.ajax({
-					url:'http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test/api/v4/ctrafficIndexChartData',
+					url:'http://mobile.trafficeye.com.cn:8000/api/v4/ctrafficIndexChartData',
 					data:{
 						code:code,
 						area:code	

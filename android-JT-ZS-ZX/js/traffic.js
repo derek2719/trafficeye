@@ -68,7 +68,7 @@ function oldCharts(me,city,city_code,area,area_code){
 	},false);//分享当前指数图	
 	$.ajax({
 		type:'get',
-		url:testUrl+'/api/v4/trafficIndexChartData',
+		url:baseUrl+'/api/v4/trafficIndexChartData',
 		data:{
 			city:city,
 			area:area	
@@ -111,7 +111,7 @@ function newCharts(me,city,city_code,area,area_code,typeIndex){
 	$("#relunboImg" + me.i).append("<b id ='jiazai_"+me.i+"'style='margin:0 auto;position:absolute;top:50%;left:30%;' >正在努力加载中...</b>");
 	$.ajax({
 		type:'get',
-		url:testUrl+'/api/v4/ctrafficIndexChartData',
+		url:baseUrl+'/api/v4/ctrafficIndexChartData',
 		data:{
 			code:city_code,
 			area:area_code	
@@ -400,67 +400,6 @@ function reflesh(){
 	window.scrollTo(0,0);
 	window.location.reload('get');	
 };
-/*function reflesh() {
-	if(htmlObj==null){
-		alert("数据未加载完成,请稍候刷新!");
-		return;
-	}
-	if (!paramJson.settingArea) {
-		return;
-	}
-	var items = [];
-	//请求网络,获取指数数据
-	$.ajax({
-		url : baseUrl +"/api2/v3/trafficIndexJsonp",
-		type : 'GET',
-		//async : false,
-		data : {
-			cityname : $.trim(paramJson.settingArea),
-			areaname : true
-		},
-		
-		dataType : 'jsonp',
-		jsonp : 'callback',
-		//timeout:3000,
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("暂时没有数据!");
-			//alert("请求失败啦!------"+date.getTime() );
-		},
-
-		success : function(result) {
-		//alert("请求成功啦!------"+date.getTime() );
-			$.each(result.trafficIndexList, function(i, item) {
-				items.push(item);
-			});
-
-			for (var i = 0; i < res.length; i++) {
-				for (var j = 0; j < items.length; j++) {
-
-					var item = items[j];
-					//alert(item);
-					if ($.trim(res[i].area) == $.trim(item.area)) {
-						var obj = res[i];
-						//obj.imgW = imgW;
-						//obj.imgH = imgH;
-						//alert(imgW+"-"+imgH);
-						//$("#test").html("width=" + Math.floor(imgW*density) + "&height=" + Math.floor(imgH*density));
-						$("#degree_" + i).text("").append(item.degree);
-						$("#speed_" + i).text("").append(item.speed);
-						$("#month_" + i).text("").append(item.publishedDate.split("-")[1]);
-						$("#day_" + i).text("").append(item.publishedDate.split("-")[2]);
-						$("#time_" + i).text("").append(item.publishedTime);
-						$("#trafficindex_" + i).text("").append(item.index);
-						obj.imgId = htmlObj.imgId;
-						obj.html = htmlObj.html;
-						
-					}
-				}
-			}
-			imageObjRes[localStorage.cid].loadCharts();
-			alert("数据更新成功!");
-		}
-	});
-}*/
 //-------------------------------------------indexList-----------------------------------
 /**
  * 初始化调用
@@ -603,7 +542,7 @@ function generalLunboHtmlList() {
 	};
 	if(typeIndex==1||typeIndex==2){
 		$.ajax({
-		url : testUrl+"/api/v4/ctrafficIndexList",
+		url : baseUrl+"/api/v4/ctrafficIndexList",
 		type : 'GET',
 		data : {
 			code : city_code
