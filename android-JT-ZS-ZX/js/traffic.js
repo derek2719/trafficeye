@@ -46,14 +46,20 @@ ImageItem.prototype = {
     //延迟加载图片页面中包含的img元素
     loadCharts : function() {
         var me = this;
-		var city=$.trim(paramJson.split(',')[me.i].split('-')[0]);
-		var city_code=$.trim(paramJson.split(',')[me.i].split('-')[1]);
-		var area=$.trim(paramJson.split(',')[me.i].split('-')[2]);
-		var area_code=$.trim(paramJson.split(',')[me.i].split('-')[3]);
-		var typeIndex=$.trim(paramJson.split(',')[me.i].split('-')[4])
+		var columnBar=paramJson.split(',')[me.i].split('-');
+		var city=$.trim(columnBar[0]);
+		var city_code=$.trim(columnBar[1]);
+		var area=$.trim(columnBar[2]);
+		var area_code=$.trim(columnBar[3]);
+		var typeIndex=$.trim(columnBar[4]);
+		var perArea=area;
+		if(columnBar.length>5){//如果新数据与老数据区域名不同
+			perArea=$.trim(columnBar[5]);
+			//alert('区域名称不同');
+		}
 		//console.log(city+','+city_code+','+area+','+area_code+','+typeIndex);
 		if(typeIndex==1||typeIndex==2){
-			newCharts(me,city,city_code,area,area_code,typeIndex);
+			newCharts(me,city,city_code,perArea,area_code,typeIndex);
 		}
 		if(typeIndex==0||typeIndex==1){
 			oldCharts(me,city,city_code,area,area_code);
@@ -122,6 +128,7 @@ function newCharts(me,city,city_code,area,area_code,typeIndex){
 			if(data.state.code==0){
 				var theData=data.indexData;
 				//console.log(JSON.stringify(theData));
+				$("#rearea_" +me.i).text("").append(area);
 				$("#redegree_" +me.i).text("").append(theData.degree);
 				$("#respeed_" +me.i).text("").append(theData.speed);
 				$("#remonth_" +me.i).text("").append(theData.publishedTime.split(" ")[0].split('-')[1]);
@@ -275,7 +282,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		var relunboImgId = "relunboImg" + index;
 		htmls.push("<div class='t'>");
 		htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
-		htmls.push("<div class='d'><div id='rearea_" + index + "'>" + area + " </div>");
+		htmls.push("<div class='d'><div id='rearea_" + index + "'></div>");
 		htmls.push("<div id ='redegree_" + index + "'> -- </div></div>");
 		htmls.push("<div class='dataSource'>四维指数</div>");
 		htmls.push("<div class='p'>平均速度:" + "<span id ='respeed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='remonth_" + index + "'> -- </span>" + "月" + "<span id ='reday_" + index + "'> -- </span>" + "日" + " " + "<span id ='retime_" + index + "'> -- </span>" + "</div>");
@@ -605,7 +612,7 @@ function generalLunboHtmlList() {
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
 		initByParam(window.indexInt.indexIntMethod());
-		//initByParam('{"area":"北京-110000-全路网-110000-1,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
+		//initByParam('{"area":"北京-110000-全路网-110000-1-市区,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
 
 		}else{
 			init();
