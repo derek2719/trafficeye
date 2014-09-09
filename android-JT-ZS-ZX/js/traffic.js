@@ -47,9 +47,11 @@ ImageItem.prototype = {
     loadCharts : function() {
         var me = this;
 		var columnBar=paramJson.split(',')[me.i].split('-');
+		//alert(columnBar);
 		var city=$.trim(columnBar[0]);
 		var city_code=$.trim(columnBar[1]);
 		var area=$.trim(columnBar[2]);
+		area.indexOf('~')!=-1 && (area=area.replace('~','-'));	
 		var area_code=$.trim(columnBar[3]);
 		var typeIndex=$.trim(columnBar[4]);
 		var perArea=area;
@@ -81,7 +83,7 @@ function oldCharts(me,city,city_code,area,area_code){
 		},
 		dataType:'jsonp',
 		success:function(data){
-			//alert(JSON.stringify(data));
+			//alert('返回的老数据:'+JSON.stringify(data));
 			if(data.state.code==0){
 				var theData=data.indexData;
 				//console.log(JSON.stringify(theData));
@@ -124,6 +126,7 @@ function newCharts(me,city,city_code,area,area_code,typeIndex){
 		},
 		dataType:'jsonp',
 		success:function(data){
+			//alert('返回的新数据:'+JSON.stringify(data));
 			//console.log(JSON.stringify(data));
 			if(data.state.code==0){
 				var theData=data.indexData;
@@ -612,7 +615,7 @@ function generalLunboHtmlList() {
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
 		initByParam(window.indexInt.indexIntMethod());
-		//initByParam('{"area":"北京-110000-全路网-110000-1-市区,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
+		//initByParam('{"area":"北京-110000-全路网~呵呵-110000-1-市区,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
 
 		}else{
 			init();
