@@ -40,6 +40,8 @@
 		iScrollY:[],
 		//服务地址
 		SERVERURL:null,
+		//客户端版本
+		ua:"",
 		lon:0,
 		lat:0,
 		//页面宽度
@@ -375,13 +377,17 @@
 		 * lon当前GPS经度
 		 * lat当前GPS纬度
 		*/
-		getCurrentCity:function(lon,lat,city){
+		getCurrentCity:function(lon,lat,city,ua){
 			//显示loading
 			Trafficeye.httpTip.opened();
 
 			if(this.lon !== 0){
 				//已经有显示的结果了,清除历史数据,初始化各种参数
 				this.initPage();
+			}
+			//保存ua,王雨修改简图服务后需要传
+			if(ua){
+				this.ua = ua;
 			}
 			this.lon = lon;
 			this.lat = lat;
@@ -1177,7 +1183,7 @@
 			//个人信息
 			var myInfo = Trafficeye.getMyInfo();
 			var data = {
-				"ua":myInfo.ua,
+				"ua":this.ua,
 				"pid":myInfo.pid,
 				"uid":myInfo.uid,
 				"lon":this.lon,
@@ -1219,9 +1225,9 @@
 	$(function(){
 		Trafficeye.pageManager = new PageManager();
 		//页面初始化平台回调函数,返回经纬度,选择城市数据citys = 10101010_101020100
-		window.callbackInitTrafficPage = function(lon,lat,citys){
+		window.callbackInitTrafficPage = function(lon,lat,citys,ua){
 			//根据经纬度获取当前城市信息
-			Trafficeye.pageManager.getCurrentCity(lon,lat,citys);
+			Trafficeye.pageManager.getCurrentCity(lon,lat,citys,ua);
 			//生成页面结构
 			//Trafficeye.pageManager.buildVisibleCityHtml(citys);
 			// callbackInitTrafficPage("116.37313","39.835876","101010100");
