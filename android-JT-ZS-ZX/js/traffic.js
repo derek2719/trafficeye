@@ -162,6 +162,7 @@ function initByParam(obj) {
 	if (obj) {
 		obj = $.parseJSON(obj);
 		var allData = obj.area;
+		alert(JSON.stringify(allData));
 			//baseUrl = obj.url;
 			//density = obj.density;
 		initIndex(allData);
