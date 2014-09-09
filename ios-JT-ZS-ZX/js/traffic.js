@@ -44,6 +44,7 @@ ImageItem.prototype = {
 		var city=$.trim(columnBar[0]);
 		var city_code=$.trim(columnBar[1]);
 		var area=$.trim(columnBar[2]);
+		area.indexOf('~')!=-1 && (area=area.replace('~','-'));	
 		var area_code=$.trim(columnBar[3]);
 		var typeIndex=$.trim(columnBar[4]);
 		var perArea=area;
