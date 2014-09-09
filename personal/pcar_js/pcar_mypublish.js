@@ -381,6 +381,7 @@
         
         window.initPageManager = function() {
              //把来源信息存储到本地
+             /*
              var presource = Trafficeye.fromSource();
              var fromSource = {
                  "sourcepage": presource.sourcepage,
@@ -389,7 +390,7 @@
              }
              var fromSourceStr = Trafficeye.json2Str(fromSource);
              Trafficeye.offlineStore.set("traffic_fromsource", fromSourceStr);
-
+            */
              
              //获取我的用户信息
              var myInfo = Trafficeye.getMyInfo();
