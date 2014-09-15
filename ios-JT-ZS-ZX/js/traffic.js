@@ -289,7 +289,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<div class='b'>");
 		htmls.push("<img id='reshare_" + index + "'  class='img3' src='images/icon_share.png' >");
 		htmls.push("<img id='relist_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "','" + city_code + "','" + typeIndex + "')\"> ");
-		htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
+		htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help.html';window.localStorage.pre='index.html';\" >");
 		htmls.push("</div></div>");
 		
 		htmls.push("<div class='wimg' style='height:"+theH+"px;' id='");
@@ -336,7 +336,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<div class='b'>");
 		htmls.push("<img id='share_" + index + "'  class='img3' src='images/icon_share.png' >");
 		htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "','" + city_code + "','" + typeIndex + "')\"> ");
-		htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
+		htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help.html';window.localStorage.pre='index.html';\" >");
 		htmls.push("</div></div>");
 		
 		htmls.push("<div class='wimg' style='height:"+(window_h-190)+"px;' id='");
@@ -452,7 +452,7 @@ function generalLunboHtmlList() {
 	htmls.push("<div class='p'> </div>");
 	htmls.push("<div class='c'><ul>");
 	htmls.push("<img id='share'  class='img4' src='images/icon_share.png' >");
-	htmls.push("<img id='help' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + helppage + ".html';window.localStorage.pre='index_list.html';\" >");
+	htmls.push("<img id='help' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help.html';window.localStorage.pre='index_list.html';\" >");
 	htmls.push("</ul></div></div>");
 	
 	htmls.push("<div class='waiting' id='waiting'>");
@@ -561,7 +561,7 @@ function generalLunboHtmlList() {
 		success : function(result) {
 			if(result.state.code==0){
 				var htmls1 = [];
-				htmls1.push('<h3 class="zsTit">四维路况指数</h3>');
+				htmls1.push('<h3 class="zsTit">四维交通指数</h3>');
 				var time=result.publishedTime.split(' ')[0].substring(5)+' '+result.publishedTime.split(' ')[1].substring(0,5)
 				//console.log(JSON.stringify(result.trafficIndexList));
 				$.each(result.trafficIndexList, function(i, item) {
@@ -614,7 +614,7 @@ function share(shareText){
 }
 function gohelp(heplpage) {
 	window.localStorage.pre = "index.html";
-	window.location.href = "index_help_" + heplpage + ".html";
+	window.location.href = "index_help.html";
 };
 (function() {
  window.Traffic = {};

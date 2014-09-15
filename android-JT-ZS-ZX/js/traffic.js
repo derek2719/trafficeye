@@ -287,13 +287,13 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
 		htmls.push("<div class='d'><div id='rearea_" + index + "'></div>");
 		htmls.push("<div id ='redegree_" + index + "'> -- </div></div>");
-		htmls.push("<div class='dataSource'>四维指数</div>");
+		htmls.push("<div class='dataSource'>四维交通指数</div>");
 		htmls.push("<div class='p'>平均速度:" + "<span id ='respeed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='remonth_" + index + "'> -- </span>" + "月" + "<span id ='reday_" + index + "'> -- </span>" + "日" + " " + "<span id ='retime_" + index + "'> -- </span>" + "</div>");
 		htmls.push("<div class='s'>" + "<span id ='retrafficindex_" + index + "'> -- </span>" + "</div>");
 		htmls.push("<div class='b'>");
 		htmls.push("<img id='reshare_" + index + "'  class='img3' src='images/icon_share.png' >");
 		htmls.push("<img id='relist_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "','" + city_code + "','" + typeIndex + "')\"> ");
-		htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
+		htmls.push("<img id='rehelp_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help.html';;window.localStorage.pre='index.html';\" >");
 		htmls.push("</div></div>");
 		
 		htmls.push("<div class='wimg' style='height:"+theH+"px;' id='");
@@ -340,7 +340,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<div class='b'>");
 		htmls.push("<img id='share_" + index + "'  class='img3' src='images/icon_share.png' >");
 		htmls.push("<img id='list_" + index + "' class='img4' src='images/icon_detail.png' onclick=\"godetail('" + city + "','" + city_code + "','" + typeIndex + "')\"> ");
-		htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + heplpage + ".html';window.localStorage.pre='index.html';\" >");
+		htmls.push("<img id='help_" + index + "' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help.html';window.localStorage.pre='index.html';\" >");
 		htmls.push("</div></div>");
 		
 		htmls.push("<div class='wimg' style='height:"+(window_h-195)+"px;' id='");
@@ -455,7 +455,7 @@ function generalLunboHtmlList() {
 	htmls.push("<div class='p'> </div>");
 	htmls.push("<div class='c'><ul>");
 	htmls.push("<img id='share'  class='img4' src='images/icon_share.png' >");
-	htmls.push("<img id='help' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help_" + helppage + ".html';window.localStorage.pre='index_list.html';\" >");
+	htmls.push("<img id='help' class='img5' src='images/icon_help.png' onclick=\"javaScript:location.href='index_help.html';window.localStorage.pre='index_list.html';\" >");
 	htmls.push("</ul></div></div>");
 	
 	htmls.push("<div class='waiting' id='waiting'>");
@@ -565,7 +565,7 @@ function generalLunboHtmlList() {
 		success : function(result) {
 			if(result.state.code==0){
 				var htmls1 = [];
-				htmls1.push('<h3 class="zsTit">四维路况指数</h3>');
+				htmls1.push('<h3 class="zsTit">四维交通指数</h3>');
 				var time=result.publishedTime.split(' ')[0].substring(5)+' '+result.publishedTime.split(' ')[1].substring(0,5)
 				//console.log(JSON.stringify(result.trafficIndexList));
 				$.each(result.trafficIndexList, function(i, item) {
@@ -615,11 +615,10 @@ function generalLunboHtmlList() {
 		var url = window.location.href;
 		if(url.indexOf("index.html")>-1){
 		initByParam(window.indexInt.indexIntMethod());
-		//initByParam('{"area":"北京-110000-全路网~呵呵-110000-1-市区,北京-110000-昌平区-110114-2,上海-310000-老北站-000000-0,成都-510100-全市-510100-2,上海-310000-上海火车站-000000-0,上海-310000-金桥-310000-0,上海-310000-沪太-000000-0,上海-310000-瑞金医院-000000-0","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
+		//initByParam('{"area":"北京-110000-全路网~呵呵-110000-2-市区,北京-110000-昌平区-110114-2,成都-510100-全市-510100-2","width":320,"height":465,"url":"http://mobile.trafficeye.com.cn:8000/"}');
 
 		}else{
 			init();
 		}
-	//$(".wgay *").css("color","#181818");
 	});
 })(jQuery);
