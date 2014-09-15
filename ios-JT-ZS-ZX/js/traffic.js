@@ -283,7 +283,7 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
 		htmls.push("<div class='add' id='recity_" + index + "'>" + city + " </div>");
 		htmls.push("<div class='d'><div id='rearea_" + index + "'></div>");
 		htmls.push("<div id ='redegree_" + index + "'> -- </div></div>");
-		htmls.push("<div class='dataSource'>四维指数</div>");
+		htmls.push("<div class='dataSource'>四维交通指数</div>");
 		htmls.push("<div class='p'>平均速度:" + "<span id ='respeed_" + index + "'> -- </span>" + "km/h<br/>" + "<span id ='remonth_" + index + "'> -- </span>" + "月" + "<span id ='reday_" + index + "'> -- </span>" + "日" + " " + "<span id ='retime_" + index + "'> -- </span>" + "</div>");
 		htmls.push("<div class='s'>" + "<span id ='retrafficindex_" + index + "'> -- </span>" + "</div>");
 		htmls.push("<div class='b'>");
