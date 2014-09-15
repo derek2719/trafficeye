@@ -213,7 +213,7 @@ function initIndex(paramStr) {
 		var item = new ImageItem(i);
 		imageObjRes.push(item);
 	};
-	if (typeof(localStorage.cid)=="undefined") {
+	if (typeof(localStorage.cid)=="undefined"||localStorage.cid>=res.length) {
 			localStorage.cid=0;
 	};
 	//请求网络,获取指数数据
@@ -254,7 +254,7 @@ function generalTabHtml(index) {
 		localStorage.cid=0;
 		html += "class='active'";
 	};
-	if(localStorage.transformid>res.length){
+	if(localStorage.cid>res.length){
 		localStorage.cid=0;
 		html += "class='active'";
 	}

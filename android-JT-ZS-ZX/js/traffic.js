@@ -221,7 +221,7 @@ for (var i = 0; i < res.length; i++) {
 	var item = new ImageItem(i);
 	imageObjRes.push(item);
 };
-if (typeof(localStorage.cid)=="undefined") {
+if (typeof(localStorage.cid)=="undefined"||localStorage.cid>=res.length) {
 		localStorage.cid=0;
 };
 window.addEventListener('scroll',function(){
@@ -229,8 +229,8 @@ window.addEventListener('scroll',function(){
 });
 window.addEventListener('load',function(){
 	window.scrollTo(0,0);
-	run(localStorage.cid);
 });
+run(localStorage.cid);
 //getData();
 //请求网络,获取指数数据
 //reflesh();
@@ -257,7 +257,7 @@ function generalTabHtml(index) {
 		localStorage.cid=0;
 		html += "class='active'";
 	};
-	if(localStorage.transformid>res.length){
+	if(localStorage.cid>res.length){
 		localStorage.cid=0;
 		html += "class='active'";
 	}
