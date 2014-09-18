@@ -105,6 +105,10 @@
 						//跳转到微博页面
 						Trafficeye.sendNativeEvent("gotoPage","weibo");
 					break;
+					case "trips":
+						//跳转到微博页面
+						Trafficeye.sendNativeEvent("gotoPage","trips");
+					break;
 				}
 			}
 		},

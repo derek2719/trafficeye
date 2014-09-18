@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+<meta name="format-detection" content="telephone=no,email=no">
+<title>路况定制</title>
+<link href="traffic_css/trip.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="traffic_js/zepto.js"></script>
+<script type="text/javascript" src="traffic_js/trip_set.js"></script>
+</head>
+<body>
+<div class="header">
+    <img src="trip_img/icon_back.png" class="icon_btn fl" id="back" />
+    <img src="trip_img/icon_refresh.png" class="icon_btn fr" id="refresh"/>
+    <h1>
+        路况定制
+    </h1>
+</div>
+<div class="container">
+		<table class="info">
+		<tr>
+			<td>家</td>
+			<td class="border-left" onclick="fnLocation('home');"><div id="set_home">点击添加</div></td>
+		</tr>
+		<tr>
+			<td >单位</td>
+			<td class="border-left" onclick="fnLocation('company');"><div id="set_company">点击添加</div></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

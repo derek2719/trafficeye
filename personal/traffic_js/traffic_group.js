@@ -147,17 +147,34 @@
 		/**
 		 * 点击简图跳转本地页面
 		*/
-		cityMapImgBtnUp:function(evt){
+		cityMapImgBtnUp:function(evt,city,roadId,roadName){
 			var ele = evt.currentTarget;
 			$(ele).removeClass("curr");
+			var AndroidJTcode=city+','+roadId+','+roadName;
+			var IosJTcode=city+':?'+roadId+':?'+roadName;
 			if(!this.moved){
 				var type = this.mapImgType;
 				switch(type){
 					case "cityMap":
+						if (navigator.userAgent.match(/android/i)) {
+							window.JSAndroidBridge.gotoPage('sigra',AndroidJTcode);														
+						} else if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/ipad/i)) {
+							window.location.href=("objc:??gotoPage::?"+"sigra"+":?"+IosJTcode);
+						} else {
+							alert("调用修改用户信息接口,PC不支持.");
+						}
+						//Trafficeye.sendNativeEvent("gotoPage","sigra:?"+city+":?"+area);
+					break;
 					case "peripheryMap":
-						//console.log("sigra");
 						//通知平台跳转到简图
-						Trafficeye.sendNativeEvent("gotoPage","sigra");
+						if (navigator.userAgent.match(/android/i)) {
+							window.JSAndroidBridge.gotoPage('sigra',AndroidJTcode);														
+						} else if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/ipad/i)) {
+							window.location.href=("objc:??gotoPage::?"+"sigra"+":?"+IosJTcode);
+						} else {
+							alert("调用修改用户信息接口,PC不支持.");
+						}
+						//Trafficeye.sendNativeEvent("gotoPage","sigra:?"+city+":?"+area);
 					break;
 					case "trafficMap":
 						//console.log("map");
@@ -558,7 +575,7 @@
 			var html = [];
 			html.push('<div class="map_1">');
 			html.push('<div class="map_l">');
-			html.push('<img id="cityMapImg' + id + '" src="traffic_img/loading.gif"  />');
+			html.push('<img id="cityMapImg' + id + '" src="traffic_img/loading.gif" style="min-height:260px;"  />');
 			html.push('</div>');
 			html.push('<div id="trafficMapType' + id + '" class="map_r">');
 			html.push('<a id="cityMap_' + id + '" class="qs selected">全市简图</a>');
@@ -624,7 +641,7 @@
 						$("#trafficMapType" + code + " > a").rebind("touchend",this.trafficMapTypeBtnUp,this);
 						//注册简图跳转事件
 						$("#cityMapImg" + code).rebind("touchstart",this.btnDown,this);
-						$("#cityMapImg" + code).rebind("touchend",this.cityMapImgBtnUp,this);
+						$("#cityMapImg" + code).rebind("touchend",function(e){this.cityMapImgBtnUp(e,'','','')},this);
 					}
 					else{
 						var msg = "获取全市简图:" + data.state.desc + "(" + state + ")";
@@ -655,7 +672,7 @@
 				url:reqUrl,
 				context:this,
 				success:function(data){
-					//console.log(data)
+					console.log(data)
 					var state = data.state.code - 0;
 					if(state === 0){
 						var imgUrl = data.url || "";
@@ -678,6 +695,9 @@
 						var msg = "获取周边简图:" + data.state.desc + "(" + state + ")";
 						//Trafficeye.trafficeyeAlert(msg);
 					}
+					var roadId=data.imgId,
+						roadName=data.imgName;
+					$("#cityMapImg" + code).rebind("touchend",function(e){this.cityMapImgBtnUp(e,code,roadId,roadName)},this);
 				}
 			});
 		},
@@ -740,7 +760,7 @@
 		*/
 		getWeatherHtml:function(id){
 			var html = [];
-			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" id="theHotWeather'+id+'">天气<span id="theHotVal'+id+'" style="color:#157dfb;"></span><strong id="theHotTxt'+id+'"></strong><span id="theHotVals'+id+'"></span><span id="weatherTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
+			html.push('<div class="map_2_box"><div class="map_2"><h3 class="map_bt" id="theHotWeather'+id+'">天气<span id="theHotVal'+id+'" style="color:#157dfb;">--</span><strong id="theHotTxt'+id+'">--</strong><span id="theHotVals'+id+'">--</span><span id="weatherTime' + id + '" class="titletime">00:00</span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
 			html.push('<div id="weather' +id + '" class="weather-warp"><div class="tdiv" id="nowWeather">');
 			html.push('<h4><img src="traffic_img/day/54.png" width="60" height="60"/><span></span></h4>');
 			html.push('<div class="tdivr"><span class="h">-°</span><span class="l">-°</span>');
@@ -848,10 +868,10 @@
 
 			var time = obj.publishedTime || "10:00";
 			//更新时间
-			$("#weatherTime" + code).html(time);
-			$('#theHotVal' + code).html(todayTemp+'°');
-			$('#theHotTxt' + code).html(todayDesc);
-			$('#theHotVals' + code).html(todayMaxTemp+'°/'+todayMinTemp+'°');
+			document.getElementById("weatherTime" + code).innerHTML=time;
+			document.getElementById('theHotVal' + code).innerHTML=todayTemp+'°';
+			document.getElementById('theHotTxt' + code).innerHTML=todayDesc;
+			document.getElementById('theHotVals' + code).innerHTML=todayMaxTemp+'°/'+todayMinTemp+'°';
 		},
 		/**
 		 * 获取交通指数图片html
@@ -862,7 +882,7 @@
 			var html = [];
 			html.push('<div class="map_2_box">');
 			html.push('<div class="map_2">');
-			html.push('<h3 class="map_bt" id="theTrafficItem'+id+'">交通指数<span>当前指数: </span><span id="theTrafficItem_index'+id+'" style="color:#157dfb;margin-left:0;"></span><span id="trafficIndexTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
+			html.push('<h3 class="map_bt" id="theTrafficItem'+id+'">交通指数<span>当前指数: </span><span id="theTrafficItem_index'+id+'" style="color:#157dfb;margin-left:0;">--</span><span id="trafficIndexTime' + id + '" class="titletime">00:00</span><img src="traffic_img/sanjiao.png" class="jiantou"></h3>');
 			html.push('<div id="theTrafficWrap" style="position:relative;display:none;">');
 			html.push('<img id="trafficIndexImg'+id+'" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
 			html.push('<div id="reDraw'+id+'" style="width:'+w+'px;height:'+h+'px;"></div><div style="width:'+w+'px;height:'+h+'px;position:absolute;bottom:0;left:0;background:#fff;z-index:99999;opacity:0.001;"></div>');
@@ -911,20 +931,16 @@
 						if(data.state.code==0){
 						var data=data.indexData;
 						var time=data.publishedTime.substring(11);
-						var index=data.index[data.index.length-1];
-						$("#trafficIndexTime" + code).html(time);
-						$('#theTrafficItem_index'+code).html(index);
+						var index=data.index[data.index.length-2];
+						document.getElementById("trafficIndexTime" + code).innerHTML=time;
+						document.getElementById("theTrafficItem_index" + code).innerHTML=index;
 						//注册交通指数图片点击事件
-						//$("#reDraw" + code).next().rebind("touchstart",this.btnDown,this);
+						
 						$("#reDraw" + code).next().rebind("touchstart",_this.btnDown,_this);
 						$("#reDraw" + code).next().rebind("touchend",_this.trafficIndexBtnUp,_this);
-						/*$("#reDraw" + code).next().rebind("touchstart",function(){
-							_this.moved=false;
-						},this);
-						$("#reDraw" + code).next().rebind("touchend",function(){
-							!_this.moved && Trafficeye.sendNativeEvent("gotoPage","index");
-						},this);*/
+						//alert(draw_charts_copy());
 						draw_charts_copy({'id':'reDraw'+code,'city':data.city,'place':'全市','yData1':data.index_lastweek,'yData2':data.index,'maxData':data.maxValue});//模块ID,城市,区域,上周五数据,今日数据,Y轴最大值//测试数据
+						//setTimeout(function(){alert(document.getElementById("theTrafficItem_index" + code).innerHTML);},1000);
 						$("#trafficIndexImg"+code).hide();
 						_this.initiScroll();
 						}else{
