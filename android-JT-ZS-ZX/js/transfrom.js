@@ -334,13 +334,13 @@ function initSwipe() {
 	var timer = null;
 	if (isEnableStore) {
 		var areaKey = getAreaKey();
-		if (areaKey && areas[areaKey]) {
-			slideNum = areas[areaKey].tabIndex;
-		} else {
+		//if (areaKey && areas[areaKey]) {
+			//slideNum = areas[areaKey].tabIndex;
+		//} else {
 			slideNum = 0;
 			saveAreaKey(temp_areaKey);
 			areaKey = temp_areaKey;
-		}
+		//}
 		if (areas[areaKey]) {
 			areas[areaKey].addActiveClass();
 			save_areaKey = areaKey;
@@ -480,6 +480,4 @@ $(function() {
 	});
 	//initByParam('{"area":[{"city":"北京","city_code":"101010100","route_id":"0010_103_001","route_name":"全市路况(新)","timep":""},{"city":"上海","city_code":"101020100","route_id":"0021_103_001","route_name":"全市路况(新)","timep":""},{"city":"广州","city_code":"101280101","route_id":"S120054","route_name":"全市路况","timep":""},{"city":"深圳","city_code":"101280601","route_id":"0755_103_001","route_name":"全市路况(新)","timep":""}],"width":320,"height":375,"density":"2.0","url":"http://mobile.trafficeye.com.cn:8088/GraphicService_trafficeye/v1/getPic/"}');
 
-	$(".wgay *").css("color","#181818");
-	$(".wgay").css("background","none");
 });

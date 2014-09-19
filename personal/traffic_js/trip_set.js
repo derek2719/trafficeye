@@ -42,6 +42,8 @@ function fnLocation(type){
 		
 	} else if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/ipad/i)) {
 		window.location.href=("objc:??chooseLocation::?"+type);
+		//if(type=='home'){callbackChooseLocation(type,"116.433158","39.909705","安华桥伦洋大厦")};
+		//if(type=='company'){callbackChooseLocation(type,"116.328524","39.902399","天安门东站C东南口")};
 		//alert('苹果设备');
 	} else {
 		alert("调用修改用户信息接口,PC不支持.");

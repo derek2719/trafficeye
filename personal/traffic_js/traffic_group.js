@@ -150,16 +150,15 @@
 		cityMapImgBtnUp:function(evt,city,roadId,roadName){
 			var ele = evt.currentTarget;
 			$(ele).removeClass("curr");
-			var AndroidJTcode=city+','+roadId+','+roadName;
-			var IosJTcode=city+':?'+roadId+':?'+roadName;
+			var JTcode=city+','+roadId+','+roadName;
 			if(!this.moved){
 				var type = this.mapImgType;
 				switch(type){
 					case "cityMap":
 						if (navigator.userAgent.match(/android/i)) {
-							window.JSAndroidBridge.gotoPage('sigra',AndroidJTcode);														
+							window.JSAndroidBridge.gotoPage('sigra','');														
 						} else if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/ipad/i)) {
-							window.location.href=("objc:??gotoPage::?"+"sigra"+":?"+IosJTcode);
+							window.location.href=("objc:??gotoPage::?"+"sigra"+":?"+'');
 						} else {
 							alert("调用修改用户信息接口,PC不支持.");
 						}
@@ -168,9 +167,9 @@
 					case "peripheryMap":
 						//通知平台跳转到简图
 						if (navigator.userAgent.match(/android/i)) {
-							window.JSAndroidBridge.gotoPage('sigra',AndroidJTcode);														
+							window.JSAndroidBridge.gotoPage('sigra',JTcode);														
 						} else if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/ipad/i)) {
-							window.location.href=("objc:??gotoPage::?"+"sigra"+":?"+IosJTcode);
+							window.location.href=("objc:??gotoPage::?"+"sigra"+":?"+JTcode);
 						} else {
 							alert("调用修改用户信息接口,PC不支持.");
 						}

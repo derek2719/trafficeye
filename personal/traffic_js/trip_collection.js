@@ -1,5 +1,4 @@
 // JavaScript Document
-(function($){
 var testUrl='http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test';
 var baseUrl='http://mobile.trafficeye.com.cn:8000';
 var currentPoint;
@@ -28,7 +27,7 @@ $(function(){
 	$('#back').bind('touchend',touchEnd_back);//返回
 	$('#refresh').bind('touchstart',touchStart_ref);
 	$('#refresh').bind('touchend',touchEnd_ref);//刷新		
-	callbackInitCustomPage('116.928524','39.302399');//测试
+	//callbackInitCustomPage('116.928524','39.302399');//测试
 });	
 function callbackInitCustomPage(current_lon,current_lat){
 	currentPoint=current_lon+','+current_lat;	
@@ -38,7 +37,7 @@ function getData(){
 	var homeData=JSON.parse(localStorage.getItem('homePoint'));	
 	var companyData=JSON.parse(localStorage.getItem('companyPoint'));	
 	var ePoint;
-	//sPoint="116.928524,39.302399";
+	sPoint="116.928524,39.302399";
 	homeData && (ajaxData($('#home_area'),homeData.point));
 	companyData && (ajaxData($('#company_area'),companyData.point));
 	function ajaxData(obj,ePoint){
@@ -69,12 +68,12 @@ function getData(){
 					obj.html(htmls);
 					if($('#home_area').children('img').length!=0){
 						$('#home_area')[0].onclick=function(){
-							goMapPage(sPoint,ePoint);
+							goMapPage(currentPoint,ePoint);
 						};//点击跳转地图
 					};
 					if($('#company_area').children('img').length!=0){
 						$('#company_area')[0].onclick=function(){
-							goMapPage(sPoint,ePoint);
+							goMapPage(currentPoint,ePoint);
 						};//点击跳转地图
 					};
 					
@@ -121,4 +120,3 @@ function touchEnd_ref(){
 	this.src='trip_img/icon_refresh.png';
 	window.location.reload();
 };
-})(Zepto);

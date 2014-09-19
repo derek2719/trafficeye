@@ -213,15 +213,13 @@ function initIndex(paramStr) {
 		var item = new ImageItem(i);
 		imageObjRes.push(item);
 	};
-	if (typeof(localStorage.cid)=="undefined"||localStorage.cid>=res.length) {
-			localStorage.cid=0;
-	};
 	//请求网络,获取指数数据
 	window.addEventListener('scroll',function(){
 		target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
 	});
 	window.scrollTo(0,0);
-	run(localStorage.cid);
+sessionStorage.cid=0;
+run(sessionStorage.cid);
 };
 /**
  * 分析参数字符串返回JSON对象
@@ -250,15 +248,8 @@ function getJsonByParamStr(str) {
 function generalTabHtml(index) {
 	var id = "lunboli" + index;
 	var html = "<li id='" + id + "' ";
-	if (typeof(localStorage.cid)=="undefined"||res.length==1) {
-		localStorage.cid=0;
-		html += "class='active'";
-	};
-	if(localStorage.cid>res.length){
-		localStorage.cid=0;
-		html += "class='active'";
-	}
-	if (index==localStorage.cid) {
+	sessionStorage.cid=0;
+	if (index==sessionStorage.cid) {
 		html += "class='active'";
 	}
 	html += "></li>";
@@ -379,7 +370,7 @@ function run(index) {
 	//imageObjRes[index].reLoadCharts();
 	var elem = document.getElementById("mySwipe");
 	Swipe(elem, {
-		startSlide :localStorage.cid,
+		startSlide :sessionStorage.cid,
 		continuous : false,
 		disableScroll : false,
 		//auto:3000,
@@ -387,11 +378,11 @@ function run(index) {
 			
 			var id = "lunboli" + index;
 			
-			$("#lunboli" + localStorage.cid).removeClass("active");
+			$("#lunboli" + sessionStorage.cid).removeClass("active");
 			$("#" + saveid).removeClass("active");
 			$("#" + id).addClass("active");
 			saveid = id;
-			localStorage.cid = index;
+			sessionStorage.cid = index;
 		},
         //transitionEnd用于整体轮播图动画结束后触发的回调函数
         transitionEnd: function(index, element) {

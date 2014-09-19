@@ -221,16 +221,14 @@ for (var i = 0; i < res.length; i++) {
 	var item = new ImageItem(i);
 	imageObjRes.push(item);
 };
-if (typeof(localStorage.cid)=="undefined"||localStorage.cid>=res.length) {
-		localStorage.cid=0;
-};
 window.addEventListener('scroll',function(){
 	target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
 });
 window.addEventListener('load',function(){
 	window.scrollTo(0,0);
 });
-run(localStorage.cid);
+sessionStorage.cid=0;
+run(sessionStorage.cid);
 //getData();
 //请求网络,获取指数数据
 //reflesh();
@@ -253,15 +251,8 @@ run(localStorage.cid);
 function generalTabHtml(index) {
 	var id = "lunboli" + index;
 	var html = "<li id='" + id + "' ";
-	if (typeof(localStorage.cid)=="undefined"||res.length==1) {
-		localStorage.cid=0;
-		html += "class='active'";
-	};
-	if(localStorage.cid>res.length){
-		localStorage.cid=0;
-		html += "class='active'";
-	}
-	if (index==localStorage.cid) {
+	sessionStorage.cid=0;
+	if (index==sessionStorage.cid) {
 		html += "class='active'";
 	}
 	html += "></li>";
@@ -381,24 +372,24 @@ function generalLunboHtmlIndex(city,city_code, area, index, heplpage,typeIndex) 
  */
 function run(index) {
 	imageObjRes[index].loadCharts();
-	//imageObjRes[index].reLoadCharts();
 	var elem = document.getElementById("mySwipe");
+	var lastIndex=0;
 	Swipe(elem, {
-		startSlide :localStorage.cid,
+		startSlide :sessionStorage.cid,
 		continuous : false,
 		disableScroll : false,
 		//auto:3000,
 		callback : function(index) {
 			var id = "lunboli" + index;
-			
-			$("#lunboli" + localStorage.cid).removeClass("active");
+			$("#lunboli" + sessionStorage.cid).removeClass("active");
 			$("#" + saveid).removeClass("active");
 			$("#" + id).addClass("active");
 			saveid = id;
-			localStorage.cid = index;
+			sessionStorage.cid = index;
 		},
         //transitionEnd用于整体轮播图动画结束后触发的回调函数
         transitionEnd: function(index, element) {
+			lastIndex=index;
             imageObjRes[index].loadCharts();
 			window.addEventListener('scroll',function(){
 				target_scroll_top=document.body.offsetHeight-document.documentElement.clientHeight;
