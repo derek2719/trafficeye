@@ -37,7 +37,6 @@ function getData(){
 	var homeData=JSON.parse(localStorage.getItem('homePoint'));	
 	var companyData=JSON.parse(localStorage.getItem('companyPoint'));	
 	var ePoint;
-	sPoint="116.928524,39.302399";
 	homeData && (ajaxData($('#home_area'),homeData.point));
 	companyData && (ajaxData($('#company_area'),companyData.point));
 	function ajaxData(obj,ePoint){
@@ -66,13 +65,12 @@ function getData(){
 					htmls+='</p>';
 					htmls+='<img src="'+data.imgUrl+'" style="width:85%;">';
 					obj.html(htmls);
-					if($('#home_area').children('img').length!=0){
-						$('#home_area')[0].onclick=function(){
-							goMapPage(currentPoint,ePoint);
-						};//点击跳转地图
-					};
 					if($('#company_area').children('img').length!=0){
 						$('#company_area')[0].onclick=function(){
+							goMapPage(currentPoint,ePoint);
+						};//点击跳转地图
+					}else if($('#home_area').children('img').length!=0){
+						$('#home_area')[0].onclick=function(){
 							goMapPage(currentPoint,ePoint);
 						};//点击跳转地图
 					};
