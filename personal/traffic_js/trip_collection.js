@@ -35,8 +35,8 @@ function callbackInitCustomPage(current_lon,current_lat){
 };
 function getData(){
 	var homeData=JSON.parse(localStorage.getItem('homePoint'));	
-	var companyData=JSON.parse(localStorage.getItem('companyPoint'));	
-	var ePoint;
+	var companyData=JSON.parse(localStorage.getItem('companyPoint'));
+	var bSign=false;//绑定事件标示符	
 	homeData && (ajaxData($('#home_area'),homeData.point));
 	companyData && (ajaxData($('#company_area'),companyData.point));
 	function ajaxData(obj,ePoint){
@@ -65,12 +65,14 @@ function getData(){
 					htmls+='</p>';
 					htmls+='<img src="'+data.imgUrl+'" style="width:85%;">';
 					obj.html(htmls);
-					if($('#company_area').children('img').length!=0){
-						$('#company_area')[0].onclick=function(){
+					if($('#home_area').children('img').length!=0 && !bSign){
+						$('#home_area')[0].onclick=function(){
+							//alert(ePoint);
 							goMapPage(currentPoint,ePoint);
 						};//点击跳转地图
-					}else if($('#home_area').children('img').length!=0){
-						$('#home_area')[0].onclick=function(){
+						bSign=true;
+					}else if($('#company_area').children('img').length!=0){
+						$('#company_area')[0].onclick=function(){
 							goMapPage(currentPoint,ePoint);
 						};//点击跳转地图
 					};

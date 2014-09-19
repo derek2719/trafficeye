@@ -150,6 +150,7 @@
 		cityMapImgBtnUp:function(evt,city,roadId,roadName){
 			var ele = evt.currentTarget;
 			$(ele).removeClass("curr");
+			var roadName=encodeURI(encodeURI(roadName));
 			var JTcode=city+','+roadId+','+roadName;
 			if(!this.moved){
 				var type = this.mapImgType;
