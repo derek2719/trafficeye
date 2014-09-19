@@ -35,7 +35,7 @@ html { overflow-x: hidden; }
 .go_place .arrow{border:23px solid transparent;position:absolute;left:0;top:0;}
 .go_place .go_home .arrow{border-left:23px solid #EA700D;}
 .go_place .go_company .arrow{border-left:23px solid #5880B3;}
-.go_place .focus>.arrowBox{display:none;}
+.go_place .focus>.arrowBox{opacity:0.001;filter:alpha(opacity=0.1);}
 .go_place .go_show{width:300px;height:46px;line-height:46px;text-align:center;color:#333;font-size:13px;position:absolute;right:0;top:0;z-index:0;}
 .go_home .go_show{background:#FBD7BB;}
 .go_home .go_show .arrow{border-left:23px solid #FBD7BB;}
