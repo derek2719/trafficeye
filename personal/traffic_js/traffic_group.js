@@ -157,9 +157,9 @@
 				switch(type){
 					case "cityMap":
 						if (navigator.userAgent.match(/android/i)) {
-							window.JSAndroidBridge.gotoPage('sigra','');														
+							window.JSAndroidBridge.gotoSigraPage('');														
 						} else if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/ipad/i)) {
-							window.location.href=("objc:??gotoPage::?"+"sigra"+":?"+'');
+							window.location.href=("objc:??gotoSigraPage::?"+'');
 						} else {
 							alert("调用修改用户信息接口,PC不支持.");
 						}
@@ -168,9 +168,9 @@
 					case "peripheryMap":
 						//通知平台跳转到简图
 						if (navigator.userAgent.match(/android/i)) {
-							window.JSAndroidBridge.gotoPage('sigra',JTcode);														
+							window.JSAndroidBridge.gotoSigraPage(JTcode);														
 						} else if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/ipad/i)) {
-							window.location.href=("objc:??gotoPage::?"+"sigra"+":?"+JTcode);
+							window.location.href=("objc:??gotoSigraPage::?"+JTcode);
 						} else {
 							alert("调用修改用户信息接口,PC不支持.");
 						}
