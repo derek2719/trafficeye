@@ -1,5 +1,6 @@
 // JavaScript Document
-var testUrl='http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test';
+(function($){
+var testUrl='http://mobiletest.trafficeye.com.cn:18080';
 var baseUrl='http://mobile.trafficeye.com.cn:8000';
 var currentPoint;
 $(function(){
@@ -27,13 +28,18 @@ $(function(){
 	$('#back').bind('touchend',touchEnd_back);//返回
 	$('#refresh').bind('touchstart',touchStart_ref);
 	$('#refresh').bind('touchend',touchEnd_ref);//刷新		
+	currentPoint && init();
 	//callbackInitCustomPage('116.928524','39.302399');//测试
 });	
-function callbackInitCustomPage(current_lon,current_lat){
-	currentPoint=current_lon+','+current_lat;	
-	getData();
+function init(){
+	currentPoint=localStorage.getItem('currentPoint');
+	getData(currentPoint);
+};//初始化页面数据
+window.callbackInitCustomPage=function(current_lon,current_lat){
+	localStorage.setItem('currentPoint',current_lon+','+current_lat);
+	init();	
 };
-function getData(){
+function getData(sPoint){
 	var homeData=JSON.parse(localStorage.getItem('homePoint'));	
 	var companyData=JSON.parse(localStorage.getItem('companyPoint'));
 	var bSign=false;//绑定事件标示符	
@@ -45,7 +51,7 @@ function getData(){
 			url:testUrl+'/api/v4/routequery',
 			dataType:"jsonp",
 			data:{
-				spoint:currentPoint,
+				spoint:sPoint,
 				epoint:ePoint
 			},
 			contentType:"application/json",
@@ -120,3 +126,4 @@ function touchEnd_ref(){
 	this.src='trip_img/icon_refresh.png';
 	window.location.reload();
 };
+})(Zepto);
