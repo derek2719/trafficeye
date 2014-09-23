@@ -28,15 +28,19 @@ $(function(){
 	$('#back').bind('touchend',touchEnd_back);//返回
 	$('#refresh').bind('touchstart',touchStart_ref);
 	$('#refresh').bind('touchend',touchEnd_ref);//刷新		
-	currentPoint && init();
+	if(localStorage.getItem('currentPoint')){
+		currentPoint=localStorage.getItem('currentPoint');
+		init();
+	};//如果已经定位过，加载数据
 	//callbackInitCustomPage('116.928524','39.302399');//测试
 });	
 function init(){
-	currentPoint=localStorage.getItem('currentPoint');
+	alert(0);
 	getData(currentPoint);
 };//初始化页面数据
 window.callbackInitCustomPage=function(current_lon,current_lat){
 	localStorage.setItem('currentPoint',current_lon+','+current_lat);
+	currentPoint=localStorage.getItem('currentPoint');
 	init();	
 };
 function getData(sPoint){

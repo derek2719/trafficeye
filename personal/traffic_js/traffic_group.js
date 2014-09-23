@@ -150,8 +150,8 @@
 		cityMapImgBtnUp:function(evt,city,roadId,roadName){
 			var ele = evt.currentTarget;
 			$(ele).removeClass("curr");
-			var roadName=encodeURI(encodeURI(roadName));
 			var JTcode=city+','+roadId+','+roadName;
+			var JT_ios_code=city+','+roadId+','+encodeURI(encodeURI(roadName));
 			if(!this.moved){
 				var type = this.mapImgType;
 				switch(type){
@@ -170,7 +170,7 @@
 						if (navigator.userAgent.match(/android/i)) {
 							window.JSAndroidBridge.gotoSigraPage(JTcode);														
 						} else if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/ipad/i)) {
-							window.location.href=("objc:??gotoSigraPage::?"+JTcode);
+							window.location.href=("objc:??gotoSigraPage::?"+JT_ios_code);
 						} else {
 							alert("调用修改用户信息接口,PC不支持.");
 						}
