@@ -35,7 +35,6 @@ $(function(){
 	//callbackInitCustomPage('116.928524','39.302399');//测试
 });	
 function init(){
-	alert(0);
 	getData(currentPoint);
 };//初始化页面数据
 window.callbackInitCustomPage=function(current_lon,current_lat){
