@@ -86,11 +86,7 @@ function getData(sPoint){
 						};//点击跳转地图
 					};
 					
-				}else if(data.state.code==1){
-					alert(data.state.desc);
-				}else if(data.state.code==2){
-					alert(data.state.desc);
-				}else if(data.state.code==-9){
+				}else if(data.state.code==1||data.state.code==2||data.state.code==-9){
 					alert(data.state.desc);
 				}else{
 					alert('遇到错误！');	
