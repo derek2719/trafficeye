@@ -51,7 +51,7 @@ function getData(sPoint){
 	function ajaxData(obj,ePoint){
 		$.ajax({
 			type:'get',
-			url:testUrl+'/api/v4/routequery',
+			url:baseUrl+'/api/v4/routequery',
 			dataType:"jsonp",
 			data:{
 				spoint:sPoint,
