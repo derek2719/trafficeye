@@ -32,7 +32,7 @@ $(function(){
 		currentPoint=localStorage.getItem('currentPoint');
 		init();
 	};//如果已经定位过，加载数据
-	//callbackInitCustomPage("116.433158","39.909705");//测试
+	//callbackInitCustomPage("116.433158","39.009705");//测试
 });	
 function init(){
 	getData(currentPoint);

@@ -12,7 +12,7 @@
 	};
 	function touchEnd_back(){
 		this.src='trip_img/icon_back.png';
-		history.go(-1);
+		window.location.href='trip_collection.html';
 	};
 	function touchStart_ref(){
 		this.src='trip_img/icon_refresh_pressed.png';
