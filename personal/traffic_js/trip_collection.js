@@ -32,7 +32,7 @@ $(function(){
 		currentPoint=localStorage.getItem('currentPoint');
 		init();
 	};//如果已经定位过，加载数据
-	//callbackInitCustomPage('116.928524','39.302399');//测试
+	//callbackInitCustomPage("116.433158","39.909705");//测试
 });	
 function init(){
 	getData(currentPoint);
@@ -86,10 +86,14 @@ function getData(sPoint){
 						};//点击跳转地图
 					};
 					
+				}else if(data.state.code==1){
+					alert(data.state.desc);
+				}else if(data.state.code==2){
+					alert(data.state.desc);
 				}else if(data.state.code==-9){
 					alert(data.state.desc);
 				}else{
-					alert('遇到未知错误');
+					alert('遇到错误！');	
 				};
 			}	
 		});
