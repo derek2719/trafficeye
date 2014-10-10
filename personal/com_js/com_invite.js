@@ -295,7 +295,7 @@
             if (Trafficeye.mobilePlatform.android) {
                 window.invitation.getList('sinaweibo',0,50);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                Trafficeye.toPage("objc:??lookupfriends::/0:/50:/sinaweibo");
+                Trafficeye.toPage("objc:??lookupfriends::?0:?50:?sinaweibo");
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
@@ -350,7 +350,7 @@
                         window.invitation.invation(inviteUserType,userData);
                     } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
                         var content = encodeURI(encodeURI(userData));
-                        Trafficeye.toPage("objc:??invitation::/"+content+":/"+inviteUserType);
+                        Trafficeye.toPage("objc:??invitation::?"+content+":?"+inviteUserType);
                     } else {
                         alert("调用本地invation方法,PC不支持.");
                     }
@@ -371,7 +371,7 @@
                    if (Trafficeye.mobilePlatform.android) {
                      window.invitation.binding(billingUserType);
                  } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                     Trafficeye.toPage("objc:??bingdingStep1::/"+billingUserType);
+                     Trafficeye.toPage("objc:??bingdingStep1::?"+billingUserType);
                  } else {
                      alert("调用本地goPersonal方法,PC不支持.");
                  }
@@ -399,7 +399,7 @@
             if (Trafficeye.mobilePlatform.android) {
                 window.invitation.getList('qqweibo',0,50);
             } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                Trafficeye.toPage("objc:??lookupfriends::/0:/50:/qqweibo");
+                Trafficeye.toPage("objc:??lookupfriends::?0:?50:?qqweibo");
             } else {
                 alert("调用本地goPersonal方法,PC不支持.");
             }
@@ -707,7 +707,7 @@
                 if (Trafficeye.mobilePlatform.android) {
                     window.invitation.getList('sinaweibo',page,count);
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                    Trafficeye.toPage("objc:??lookupfriends::/"+page+":/"+count+":/sinaweibo");
+                    Trafficeye.toPage("objc:??lookupfriends::?"+page+":?"+count+":?sinaweibo");
                 } else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
@@ -715,7 +715,7 @@
                 if (Trafficeye.mobilePlatform.android) {
                     window.invitation.getList('qqweibo',page,count);
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                    Trafficeye.toPage("objc:??lookupfriends::/"+page+":/"+count+":/qqweibo");
+                    Trafficeye.toPage("objc:??lookupfriends::?"+page+":?"+count+":?qqweibo");
                 } else {
                     alert("调用本地goPersonal方法,PC不支持.");
                 }
@@ -753,7 +753,7 @@
                     window.invitation.getList('all',0,50);
                     //  Trafficeye.toPage("invite.html");
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                    Trafficeye.toPage("objc:??lookupfriends::/0:/50:/all");
+                    Trafficeye.toPage("objc:??lookupfriends::?0:?50:?all");
                     //   Trafficeye.toPage("invite.html");
                 }else {            
                     alert("调用邀请.");
@@ -846,7 +846,7 @@
                     window.invitation.getList(inviteUserType,0,50);
                     //  Trafficeye.toPage("invite.html");
                 } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                    Trafficeye.toPage("objc:??lookupfriends::/0:/50:/"+inviteUserType);
+                    Trafficeye.toPage("objc:??lookupfriends::?0:?50:?"+inviteUserType);
                     //   Trafficeye.toPage("invite.html");
                 } else {            
                     alert("调用邀请.");
