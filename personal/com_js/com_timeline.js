@@ -338,7 +338,7 @@
                     if (Trafficeye.mobilePlatform.android) {
                         window.init.goPersonal();
                     } else if (Trafficeye.mobilePlatform.iphone || Trafficeye.mobilePlatform.ipad) {
-                        Trafficeye.toPage("objc://goUserEdit");
+                        Trafficeye.toPage("objc:??goUserEdit");
                     } else {
                         alert("调用本地goPersonal方法,PC不支持.");
                     }
@@ -799,7 +799,7 @@
                             reqAddLookSuccess(data,friendId,evt);
                         } else {
                             var content = encodeURI(encodeURI("关注未成功"));
-                            Trafficeye.toPage("objc://showAlert::/"+content); 
+                            Trafficeye.toPage("objc:??showAlert::?"+content); 
                         }
                     }
                 })
@@ -821,7 +821,7 @@
                 }
             }else{
                 var content = encodeURI(encodeURI(data.desc));
-                Trafficeye.toPage("objc://showAlert::/"+content);          
+                Trafficeye.toPage("objc:??showAlert::?"+content);          
             }
         },
         /**
@@ -884,7 +884,7 @@
                     }      
                 }else{
                     var content = encodeURI(encodeURI(data.desc));
-                    Trafficeye.toPage("objc://showAlert::/"+content);                           
+                    Trafficeye.toPage("objc:??showAlert::?"+content);                           
                 }            
         },
         reqCancelLookFail : function() {
