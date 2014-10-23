@@ -1014,6 +1014,7 @@
 		},
 		trafficInfoCallback:function(data,code){
 			//交通资讯数据
+			var _this=this;
 			var w = parseInt(this.bodyWidth * 0.35) || 106;
 			var h = parseInt(w * 0.7) || 70;
 
@@ -1023,16 +1024,38 @@
 			var address = obj.source || "";
 			var time = obj.publishedTime || "";
 			var html = [];
-			html.push('<h3 class="map_bt">交通资讯</h3>');
+			html.push('<h3 class="map_bt" id="infoTit'+code+'">交通资讯<img src="traffic_img/sanjiao2.png" class="jiantou"></h3>');
+			html.push('<div id="allTrafficInfo' + code + '">');
 			html.push('<div id="trafficInfoBtn' + code + '" class="zixun">');
 			html.push('<img id="trafficInfoImg' + code + '" src="traffic_img/loading.gif" width="' + w + '" height="' + h + '" />');
 			html.push('<h3>' + title + '</h3>');
 			html.push('<p>' + content + '</p></div>');
 			html.push('<p class="jiaot">' + address + '<span>' + time + '</span></p>');
+			html.push('</div>');
 			
 			var dom = $("#trafficInfo" + code);
 			dom.html(html.join(''));
 
+			$('#infoTit'+code).rebind('touchstart',_this.btnDown,_this);
+			$('#infoTit'+code).rebind('touchend',touchInfo,_this);
+			function touchInfo(){
+				(function($){
+					if(!_this.moved){
+						if($('#allTrafficInfo'+code).css('display')!='none'){
+							$('#allTrafficInfo'+code).slideToggle('fast',function(){
+								$('#infoTit'+code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
+								_this.initiScroll();
+							});
+						}else{
+							$('#allTrafficInfo'+code).slideToggle('fast',function(){
+								$('#infoTit'+code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
+								_this.initiScroll();
+							});
+						};
+					}
+				})(jQuery);
+			}
+			//touchInfo();
 			//注册交通指数图片点击事件
 			$("#trafficInfoBtn" + code).rebind("touchstart",this.btnDown,this);
 			$("#trafficInfoBtn" + code).rebind("touchend",this.trafficInfoBtnUp,this);
@@ -1059,11 +1082,11 @@
 			var h = parseInt(w * 0.75) || 163;
 			var html = [];
 			html.push('<div class="map_2_box">');
-			html.push('<div class="map_2"><h3 class="map_bt">打车指数<span id="taxiIndexTime' + id + '" class="titletime"></span></h3>');
-			html.push('<div class="dche">');
+			html.push('<h3 id="taxiTit'+id+'" class="map_bt" style="margin:0 10px;">打车指数<span id="taxiIndexTime' + id + '" class="titletime"></span><img src="traffic_img/sanjiao2.png" class="jiantou"></h3>');
+			html.push('<div id="allTaxi'+id+'"><div class="dche">');
 			html.push('当前位置打车指数:');
 			html.push('<div id="taxiIndex' + id + '" class="score"></div>');
-			html.push('</div></div>');
+			html.push('</div>');
 
 			if(m7 === 1 || m8 === 1){
 				html.push('<div class="map_2_img">');
@@ -1079,7 +1102,7 @@
 
 					this.taxiImgUrl["taxiHot" + id] = "traffic_img/loading.gif";
 				}
-				html.push('</div></div></div>');
+				html.push('</div></div></div></div>');
 			}
 			return html.join('');
 		},
@@ -1112,6 +1135,26 @@
 			});
 		},
 		taxiIndexCallback:function(data,code){
+			var _this=this;
+			$('#taxiTit'+code).rebind('touchstart',_this.btnDown,_this);
+			$('#taxiTit'+code).rebind('touchend',taxiInfo,_this);
+			function taxiInfo(){
+				(function($){
+					if(!_this.moved){
+						if($('#allTaxi'+code).css('display')!='none'){
+							$('#allTaxi'+code).slideToggle('fast',function(){
+								$('#taxiTit'+code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
+								_this.initiScroll();
+							});
+						}else{
+							$('#allTaxi'+code).slideToggle('fast',function(){
+								$('#taxiTit'+code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
+								_this.initiScroll();
+							});
+						};
+					}
+				})(jQuery);
+			}
 			var obj = {};
 			obj.level = data.index;
 			var html = [];
