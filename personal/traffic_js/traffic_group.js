@@ -815,16 +815,21 @@
 						$('#theHotWeather' + code).rebind('touchend', touchWeather, _this);
 						
 						function touchWeather() {
-							if (!_this.moved) {
-								if($('#theHotWeather' + code).next().css('display')!='block'){
-									$('#theHotWeather' + code).next().show();
-									$('#theHotWeather' + code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
-								}else{
-									$('#theHotWeather' + code).next().hide();
-									$('#theHotWeather' + code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
-								};
-								_this.initiScroll();
-							}
+							(function($){
+								if (!_this.moved) {
+									if($('#theHotWeather' + code).next().css('display')!='block'){
+										$('#theHotWeather' + code).next().slideToggle('fast',function(){
+											$('#theHotWeather' + code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
+											_this.initiScroll();
+										});
+									}else{
+										$('#theHotWeather' + code).next().slideToggle('fast',function(){
+											$('#theHotWeather' + code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
+											_this.initiScroll();
+										});
+									};
+								}
+							})(jQuery);
 							_this.initiScroll();
 						}
 				}
@@ -915,16 +920,22 @@
 				$('#theTrafficItem'+code).rebind('touchstart',_this.btnDown,_this);
 				$('#theTrafficItem'+code).rebind('touchend',touchShow,_this);
 				function touchShow(){
-					if(!_this.moved){
-					if($('#theTrafficItem'+code).next().css('display')!='none'){
-						$('#theTrafficItem'+code).next().hide();
-						$('#theTrafficItem'+code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
-					}else{
-						$('#theTrafficItem'+code).next().show();
-						$('#theTrafficItem'+code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
-					};
-					}
-					_this.initiScroll();
+					//alert($('#theTrafficItem'+code).next().show);
+					(function($){
+						if(!_this.moved){
+							if($('#theTrafficItem'+code).next().css('display')!='none'){
+								$('#theTrafficItem'+code).next().slideToggle('fast',function(){
+									$('#theTrafficItem'+code).find('.jiantou').attr('src','traffic_img/sanjiao.png');
+									_this.initiScroll();
+								});
+							}else{
+								$('#theTrafficItem'+code).next().slideToggle('fast',function(){
+									$('#theTrafficItem'+code).find('.jiantou').attr('src','traffic_img/sanjiao2.png');
+									_this.initiScroll();
+								});
+							};
+						}
+					})(jQuery);
 				}
 				touchShow();
 				$.ajax({
