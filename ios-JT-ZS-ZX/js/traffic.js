@@ -1,5 +1,5 @@
 var baseUrl = "http://mobile.trafficeye.com.cn:8000";
-var testUrl='http://mobiletest.trafficeye.com.cn:18080/TrafficeyeSevice_test';
+var testUrl='http://mobiletest.trafficeye.com.cn:18080';
 //var baseUrl = "http://mobile.trafficeye.com.cn:8008/TrafficeyeSevice_test";
 //上bar和下bar的高度之和
 var window_h = document.documentElement.clientHeight;

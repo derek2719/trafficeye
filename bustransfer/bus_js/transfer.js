@@ -190,7 +190,7 @@
 
 			if (global.mobilePlatform.android) {
 				window.JSAndroidBridge.displayRouteInMap(slon, slat, elon, elat, str);
-			} else if (global.mobilePlatform.iPhone) {
+			} else if (global.mobilePlatform.iPhone||global.mobilePlatform.ipad) {
 				window.location.href="objc:??displayRouteInMap::?"+slon+":?"+slat+":?"+elon+":?"+elat+":?"+str;
 			} else {
 				alert("调用本地invation方法,PC不支持.");

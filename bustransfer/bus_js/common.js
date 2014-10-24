@@ -18,7 +18,8 @@
 		//当浏览器运行在iPhone时，iPhone为true；
 		iPhone : /iPhone/i.test(navigator.platform),
 		//当浏览器运行在Android时，Android为true；
-		android : /Android/i.test(navigator.userAgent)
+		android : /Android/i.test(navigator.userAgent),
+		ipad : /ipad/i.test(navigator.userAgent)
 	};
 
 	/**

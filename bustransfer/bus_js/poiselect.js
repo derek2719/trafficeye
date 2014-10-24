@@ -175,7 +175,7 @@
 		//调用本地接口
 		if (global.mobilePlatform.android) {
 			window.JSAndroidBridge.routeCloseThisPage();
-		} else if (global.mobilePlatform.iPhone) {
+		} else if (global.mobilePlatform.iPhone||global.mobilePlatform.ipad) {
 			window.location.href="objc:??routeCloseThisPage";
 		} else {
 			alert("调用本地invation方法,PC不支持.");
@@ -202,7 +202,7 @@
 		if (isSelectEndSite) {
 			if (global.mobilePlatform.android) {
 				window.JSAndroidBridge.chooseLocation("end");
-			} else if (global.mobilePlatform.iPhone) {
+			} else if (global.mobilePlatform.iPhone||global.mobilePlatform.ipad) {
 				window.location.href="objc:??chooseLocation::?end";
 			} else {
 				alert("调用本地invation方法,PC不支持.");
@@ -210,7 +210,7 @@
 		} else {
 			if (global.mobilePlatform.android) {
 				window.JSAndroidBridge.chooseLocation("start");
-			} else if (global.mobilePlatform.iPhone) {
+			} else if (global.mobilePlatform.iPhone||global.mobilePlatform.ipad) {
 				window.location.href="objc:??chooseLocation::?start";
 			} else {
 				alert("调用本地invation方法,PC不支持.");
@@ -252,7 +252,7 @@
 			//调用本地接口
 			if (global.mobilePlatform.android) {
 				window.JSAndroidBridge.displayPointInMap(lonLat[0], lonLat[1], data.name, data.address, 1);
-			} else if (global.mobilePlatform.iPhone) {
+			} else if (global.mobilePlatform.iPhone||global.mobilePlatform.ipad) {
 				window.location.href="objc:??displayPointInMap::?"+lonLat[0]+":?"+lonLat[1]+":?"+data.name+":?"+data.address+":?"+1;
 			} else {
 				alert("调用本地invation方法,PC不支持.");
