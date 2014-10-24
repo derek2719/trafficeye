@@ -12,12 +12,26 @@
 window.onload=function(){
 	var oInput=document.getElementById('emailInput');
 	var oBtn=document.getElementById('sendBtn');
+	var regExp=/^[a-z1-9]+\w*@[a-z0-9]+\w*\.[a-z]+(\.[a-z]+)?$/i;
 	oBtn.onclick=function(){
-		alert(oInput.value);	
+		var iSign=regExp.test(oInput.value);
+		if(iSign){
+			alert('邮箱地址为：'+oInput.value);
+		}else{
+			alert('请输入有效的邮箱');
+			oInput.value='';
+		};				
 	};	
+	var oBack=document.getElementById('backpagebtn');
+	oBack.addEventListener('touchstart',backStart,false);
+	oBack.addEventListener('touchend',backEnd,false);
+function backStart(){
+	oBack.children[0].style.backgroundPosition='center top';	
 };
-function saveFunction(data){
-	alert(data);	
+function backEnd(){
+	oBack.children[0].style.backgroundPosition='center bottom';	
+	history.back();
+};
 };
 </script>
 </head>
@@ -29,7 +43,7 @@ function saveFunction(data){
 <ul class="register nccc">
   <li>
     <h2>
-      <input id="emailInput" name="" type="text" placeholder="请输入邮箱地址" required="true" pattern=""/>
+      <input id="emailInput" name="" type="text" placeholder="请输入邮箱地址" required />
     </h2>
   </li>
 </ul>
