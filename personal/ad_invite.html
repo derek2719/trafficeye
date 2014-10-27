@@ -8,8 +8,9 @@
 <link href="per_css/public.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:1.5)" href="per_css/mdpi.css" />
 <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:2.0)" href="per_css/hdpi.css" />
+<script type="text/javascript" src="com_js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript">
-window.onload=function(){
+window.addEventListener('load',function(){
 	var oInput=document.getElementById('emailInput');
 	var oBtn=document.getElementById('sendBtn');
 	var regExp=/^[a-z1-9]+\w*@[a-z0-9]+\w*\.[a-z]+(\.[a-z]+)?$/i;
@@ -32,23 +33,33 @@ function backEnd(){
 	oBack.children[0].style.backgroundPosition='center bottom';	
 	history.back();
 };
-};
+});
 </script>
+<style type="text/css">
+.emailTxt{line-height:1.2em;}
+.emailTxt h4{line-height:14px;line-heihgt:14px;margin-bottom:10px;}
+</style>
 </head>
 
 <body>
 <div class="header">
   <div class="tbtn-l"  id="backpagebtn"><a></a></div>
-  邮箱地址 </div>
-<ul class="register nccc">
+  四维交通指数报告 </div>
+<div class="itext emailTxt">
+	<h4>2014年Q3四维交通指数季度分析报告</h4>
+    <p style="font-size:13px;">主要内容包括：重点城市拥堵分析、城市内拥堵区域、拥堵道路排名、交通关联因素分析等，通过不同的维度表达城市的拥堵状况，为出行做出参考。</p>
+</div>
+<label class="itext" for="emailInput">请输入邮箱地址，即可订阅：</label>
+<ul class="register nccc" style="margin-top:10px;">
   <li>
     <h2>
-      <input id="emailInput" name="" type="text" placeholder="请输入邮箱地址" required />
+      <input id="emailInput" name="" type="text" placeholder="mrTang@foxmail.com" required />
     </h2>
   </li>
 </ul>
 <ul class="h-btn i-btn n-btn">
-  <li id="sendBtn"><a>发送</a></li>
+  <li id="sendBtn"><a>发送报告</a></li>
 </ul>
+<p class="itext" style="font-size:12px;">*访问 <a href="http://nitrafficindex.com/" style="display:inline;">http://nitrafficindex.com/</a> ，可查阅更多内容</p>
 </body>
 </html>
