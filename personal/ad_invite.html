@@ -8,7 +8,7 @@
 <link href="per_css/public.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:1.5)" href="per_css/mdpi.css" />
 <link rel="stylesheet" media="screen and (-webkit-device-pixel-ratio:2.0)" href="per_css/hdpi.css" />
-<script type="text/javascript" src="com_js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="traffic_js/zepto.js"></script>
 <script type="text/javascript">
 window.addEventListener('load',function(){
 	var oInput=document.getElementById('emailInput');
@@ -17,7 +17,22 @@ window.addEventListener('load',function(){
 	oBtn.onclick=function(){
 		var iSign=regExp.test(oInput.value);
 		if(iSign){
-			alert('邮箱地址为：'+oInput.value);
+			//alert('邮箱地址为：'+oInput.value);
+			$.ajax({
+				url:'http://119.254.195.133/traffic/sendMail.do?requestType=1&t='+Math.random(),
+				type:'get',
+				data:{
+					to:oInput.value
+				},
+				dataType:"jsonp",
+				success:function(data){
+					typeof data=='string'&&(data=JSON.parse(data));
+					alert(data.desc);	
+				},
+				error:function(xmlHttp,error){
+					alert('发生未知错误：'+error);	
+				}	
+			});
 		}else{
 			alert('请输入有效的邮箱');
 			oInput.value='';
