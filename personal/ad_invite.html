@@ -27,7 +27,7 @@ window.addEventListener('load',function(){
 				dataType:"jsonp",
 				success:function(data){
 					typeof data=='string'&&(data=JSON.parse(data));
-					alert(data.desc);	
+					showAlert(data.desc);	
 				},
 				error:function(xmlHttp,error){
 					alert('发生未知错误：'+error);	
@@ -74,7 +74,7 @@ function backEnd(){
 <ul class="register nccc" style="margin-top:10px;">
   <li>
     <h2>
-      <input id="emailInput" name="" type="text" placeholder="mrTang@foxmail.com" required />
+      <input id="emailInput" name="" type="text" placeholder="abc@abc.com" required />
     </h2>
   </li>
 </ul>
