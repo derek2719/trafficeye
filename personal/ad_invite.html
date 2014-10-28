@@ -14,7 +14,10 @@ window.addEventListener('load',function(){
 	var oInput=document.getElementById('emailInput');
 	var oBtn=document.getElementById('sendBtn');
 	var regExp=/^[a-z1-9]+\w*@[a-z0-9]+\w*\.[a-z]+(\.[a-z]+)?$/i;
-	oBtn.onclick=function(){
+	oBtn.addEventListener('touchstart',sendMsg,false);
+	oBtn.addEventListener('touchend',msgEnd,false);	
+	function sendMsg(){
+		oBtn.className='curr';
 		var iSign=regExp.test(oInput.value);
 		if(iSign){
 			//alert('邮箱地址为：'+oInput.value);
@@ -37,7 +40,10 @@ window.addEventListener('load',function(){
 			alert('请输入有效的邮箱');
 			oInput.value='';
 		};				
-	};	
+	};
+	function msgEnd(){
+		oBtn.className='';	
+	};
 	var oBack=document.getElementById('backpagebtn');
 	oBack.addEventListener('touchstart',backStart,false);
 	oBack.addEventListener('touchend',backEnd,false);
