@@ -31,7 +31,13 @@ function backStart(){
 };
 function backEnd(){
 	oBack.children[0].style.backgroundPosition='center bottom';	
-	history.back();
+	if(navigator.userAgent.match(/android/i)){
+		window.JSAndroidBridge.gotoPrePage();
+	}else if(navigator.userAgent.match(/iphone/i)||navigator.userAgent.match(/ipad/i)){
+		window.location.href=("objc:??gotoPrePage");
+	}else{
+		alert("调用本地goPersonal方法,PC不支持.");
+	};
 };
 });
 </script>
