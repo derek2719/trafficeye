@@ -15,9 +15,9 @@ window.addEventListener('load',function(){
 	var oBtn=document.getElementById('sendBtn');
 	var regExp=/^[a-z1-9]+\w*@[a-z0-9]+\w*\.[a-z]+(\.[a-z]+)?$/i;
 	oBtn.addEventListener('touchstart',sendMsg,false);
-	oBtn.addEventListener('touchend',msgEnd,false);	
+	//oBtn.addEventListener('touchend',msgEnd,false);	
 	function sendMsg(){
-		oBtn.className='curr';
+		//oBtn.className='curr';
 		var iSign=regExp.test(oInput.value);
 		if(iSign){
 			//alert('邮箱地址为：'+oInput.value);
@@ -30,7 +30,13 @@ window.addEventListener('load',function(){
 				dataType:"jsonp",
 				success:function(data){
 					typeof data=='string'&&(data=JSON.parse(data));
-					showAlert(data.desc);	
+					if(navigator.userAgent.match(/android/i)){
+						window.JSAndroidBridge.showAlert(data.desc);
+					}else if(navigator.userAgent.match(/iphone/i)||navigator.userAgent.match(/ipad/i)){
+						window.location.href=("objc:??showAlert::?"+encodeURI(encodeURI(data.desc)));
+					}else{
+						alert("调用本地showAlert方法,PC不支持.");
+					};
 				},
 				error:function(xmlHttp,error){
 					alert('发生未知错误：'+error);	
@@ -41,10 +47,9 @@ window.addEventListener('load',function(){
 			oInput.value='';
 		};				
 	};
-	function msgEnd(){
-		oInput.value='';
+	/*function msgEnd(){
 		oBtn.className='';	
-	};
+	};*/
 	var oBack=document.getElementById('backpagebtn');
 	oBack.addEventListener('touchstart',backStart,false);
 	oBack.addEventListener('touchend',backEnd,false);
