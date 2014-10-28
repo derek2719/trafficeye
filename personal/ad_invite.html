@@ -30,20 +30,14 @@ window.addEventListener('load',function(){
 				dataType:"jsonp",
 				success:function(data){
 					typeof data=='string'&&(data=JSON.parse(data));
-					if(navigator.userAgent.match(/android/i)){
-						window.JSAndroidBridge.showAlert(data.desc);
-					}else if(navigator.userAgent.match(/iphone/i)||navigator.userAgent.match(/ipad/i)){
-						window.location.href=("objc:??showAlert::?"+encodeURI(encodeURI(data.desc)));
-					}else{
-						alert("调用本地showAlert方法,PC不支持.");
-					};
+					layerTips(data.desc);
 				},
 				error:function(xmlHttp,error){
-					alert('发生未知错误：'+error);	
+					layerTips('发生未知错误：'+error);	
 				}	
 			});
 		}else{
-			alert('请输入有效的邮箱');
+			layerTips('请输入有效的邮箱');
 			oInput.value='';
 		};				
 	};
@@ -67,6 +61,15 @@ function backEnd(){
 	};
 };
 });
+function layerTips(tips){
+	if(navigator.userAgent.match(/android/i)){
+		window.JSAndroidBridge.showAlert(tips);
+	}else if(navigator.userAgent.match(/iphone/i)||navigator.userAgent.match(/ipad/i)){
+		window.location.href=("objc:??showAlert::?"+encodeURI(encodeURI(tips)));
+	}else{
+		alert("调用本地showAlert方法,PC不支持.");
+	};
+};//提示框
 </script>
 <style type="text/css">
 .emailTxt{line-height:1.2em;}
