@@ -63,7 +63,7 @@ function backEnd(){
 });
 function layerTips(tips){
 	if(navigator.userAgent.match(/android/i)){
-		window.JSAndroidBridge.showAlert(tips);
+		alert(tips);
 	}else if(navigator.userAgent.match(/iphone/i)||navigator.userAgent.match(/ipad/i)){
 		window.location.href=("objc:??showAlert::?"+encodeURI(encodeURI(tips)));
 	}else{
