@@ -617,10 +617,10 @@
 			$.ajaxJSONP({
 				url:reqUrl,
 				context:this,
-				timeout:3000,
+				timeout:6000,
 				error:function(xmlHttpReq,error){
 					if(error=='timeout'){
-						alert('简图请求超时，请稍后重试！');	
+						//alert('简图请求超时，请稍后重试！');	
 					}else{
 						alert('简图加载发生错误'+xmlHttpReq.status);	
 					};
