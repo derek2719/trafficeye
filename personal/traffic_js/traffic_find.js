@@ -106,11 +106,11 @@
 						Trafficeye.sendNativeEvent("gotoPage","weibo");
 					break;
 					case "trips":
-						//跳转到微博页面
+						//跳转到路况定制
 						Trafficeye.sendNativeEvent("gotoPage","trips");
 					break;
 					case "report":
-						//跳转到微博页面
+						//跳转到交通报告
 						Trafficeye.sendNativeEvent("gotoPage","report");
 					break;
 				}
